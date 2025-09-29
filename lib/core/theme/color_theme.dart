@@ -3,7 +3,7 @@ import 'package:skincare/widget/auth/custom_button.dart';
 
 class AppTheme {
   static ThemeData lightTheme = ThemeData(
-    scaffoldBackgroundColor: Colors.green,
+    scaffoldBackgroundColor: const Color.fromRGBO(217, 217, 217, 1),
     colorScheme: ColorScheme.fromSeed(
       seedColor: CustomButton.primary,
       primary: CustomButton.primary,
