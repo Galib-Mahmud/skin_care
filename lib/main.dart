@@ -4,6 +4,9 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:skincare/routes/app_route.dart';
 import 'package:skincare/routes/route_name.dart';
 
+
+import 'core/theme/color_theme.dart'; // import theme file
+
 void main() {
   runApp(const MyApp());
 }
@@ -19,17 +22,14 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(430, 932), // set your Figma/Design size
+      designSize: const Size(430, 932),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            fontFamily: 'Gayathri', // ✅ still works with ScreenUtil
-            primarySwatch: Colors.orange,
-          ),
-          initialRoute: RouteName.dailyFaith,
+          theme: AppTheme.lightTheme, // ✅ use theme here
+          initialRoute: RouteName.splashloading,
           getPages: AppRoute.pages,
         );
       },

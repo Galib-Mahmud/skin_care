@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:skincare/routes/route_name.dart';
 
 class SkincareScreen extends StatelessWidget {
@@ -9,130 +9,114 @@ class SkincareScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade400,
       body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Color.fromRGBO(2, 9, 83, 1),
-              Color.fromRGBO(2, 9, 83, 1),
-            ],
-          ),
+        decoration: BoxDecoration(
+
+          color: Color.fromRGBO(154, 154, 154, 1),
         ),
         child: Column(
           children: [
-            // Top navigation bar
+            // Top image section
             Expanded(
               flex: 3,
-              child: Container(
-
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Stack(
-                    children: [
-                      Image.asset(
-                        'assets/images/splash/Vector 2.png', // Replace with your image path
-                        fit: BoxFit.cover,
-                        width: double.infinity,
-                        height: double.infinity,
-                      ),
-                      // Bottom wave overlay
-                      Positioned(
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        child: Container(
-
-                          decoration: const BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Colors.transparent,
-                                Color.fromRGBO(2, 9, 83, 1),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            // Text content
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32.0),
-              child: Column(
+              child: Stack(
                 children: [
-                  const Text(
-                    'Skincare',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
+                  // Image
+                  ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(20.r),
+                      bottomRight: Radius.circular(20.r),
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  const Text(
-                    'Smarter Listings, Faster Sales.',
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: 16,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 32),
-                  // Next button
-                  Container(
-                    width: double.infinity,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [Colors.white, Color(0xFFF5F5F5)], // Using a specific light grey value similar to grey[100]
-                      ),
-                      borderRadius: BorderRadius.circular(30),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 10,
-                          offset: const Offset(0, 5),
-                        ),
-                      ],
-                    ),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Get.toNamed(RouteName.wellNess);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.transparent,
-                        shadowColor: Colors.transparent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                      ),
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Next',
-                            style: TextStyle(
-                              color: Color.fromRGBO(2, 9, 83, 1),
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(width: 8),
-                          Icon(Icons.arrow_forward, color: Color.fromRGBO(2, 9, 83, 1)),
-                        ],
-                      ),
+                    child: Image.asset(
+                      'assets/images/splash/Vector 2.png',
+                        width: double.infinity,
+                      height: double.infinity,
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 40),
+            // Text content
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 10.h),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Skincare',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 29.sp,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Gayathri',
+                    ),
+                  ),
+                  SizedBox(height: 4.h),
+                  Text(
+                    'Smarter Listings, Faster Sales.',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24.sp,
+                      fontFamily: 'Gayathri',
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // Next Button at bottom right
+            Padding(
+              padding: EdgeInsets.only(bottom: 30.h, right: 20.w),
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(25.r),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        blurRadius: 8.r,
+                        offset: Offset(0, 3.h),
+                      ),
+                    ],
+                  ),
+                  child: InkWell(
+                    onTap: () {
+                      Get.toNamed(RouteName.wellNess);
+                    },
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'Next',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        SizedBox(width: 8.w),
+                        Container(
+                          padding: EdgeInsets.all(6.w),
+                          decoration: const BoxDecoration(
+                            color: Colors.black,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Icons.arrow_forward,
+                            color: Colors.white,
+                            size: 18.sp,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

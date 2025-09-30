@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:skincare/routes/route_name.dart';
@@ -41,6 +42,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
     return SafeArea(
       child: Scaffold(
+
         body: SingleChildScrollView(
           child: ConstrainedBox(
             constraints: BoxConstraints(
@@ -56,7 +58,10 @@ class _SignInScreenState extends State<SignInScreen> {
                   const SizedBox(height: 16),
                   Center(
                     child: Image.asset(
-                      'assets/images/auth/logo.png',
+                      'assets/images/splash/beauty.jpg',
+                      width: 200.w,
+                      height: 200.h,
+
 
                       fit: BoxFit.contain,
                     ),

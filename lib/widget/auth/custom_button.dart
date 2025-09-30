@@ -6,7 +6,7 @@ class CustomButton extends StatelessWidget {
 
   const CustomButton({required this.text, required this.onPressed});
 
-  static const Color primary = Color.fromRGBO(2, 9, 83, 1); // Defined a proper primary color
+  static const Color primary = Colors.black;
 
   @override
   Widget build(BuildContext context) {

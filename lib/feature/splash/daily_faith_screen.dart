@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:skincare/routes/route_name.dart';
 
@@ -8,29 +9,24 @@ class DailyFaithScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade400,
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Theme.of(context).scaffoldBackgroundColor, // ✅ from AppTheme
-              Theme.of(context).scaffoldBackgroundColor, // ✅ from AppTheme
-            ],
+          color: Color.fromRGBO(154, 154, 154, 1),
           ),
-        ),
+
         child: Column(
           children: [
-            // Top image section with floating Next button
+            // Top image section
             Expanded(
               flex: 3,
               child: Stack(
                 children: [
                   // Image
                   ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(20.r),
+                      bottomRight: Radius.circular(20.r),
                     ),
                     child: Image.asset(
                       'assets/images/splash/Vector 3.png',
@@ -44,84 +40,76 @@ class DailyFaithScreen extends StatelessWidget {
             ),
             // Text content
             Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: Row(
+              padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 10.h),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text(
-                        'Daily Faith Sales.',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Gayathri',
-                        ),
-                      ),
-                      SizedBox(height: 8),
-                      Text(
-                        'Smarter Listings, Faster Sales.',
-                        style: TextStyle(
-                          color: Colors.white70,
-                          fontSize: 20,
-                          fontFamily: 'Gayathri',
-                        ),
-                      ),
-                    ],
+                  Text(
+                    'Daily Faith ',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 29.sp,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Gayathri',
+                    ),
+                  ),
+                  SizedBox(height: 4.h),
+                  Text(
+                    'Smarter Listings, Faster Sales.',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24.sp,
+                      fontFamily: 'Gayathri',
+                    ),
                   ),
                 ],
               ),
             ),
-            // ❌ Positioned can't be inside Column, moved inside a Stack if needed
+            // Next Button at bottom right
             Padding(
-              padding: const EdgeInsets.only(top: 20, right: 30),
+              padding: EdgeInsets.only(bottom: 30.h, right: 20.w),
               child: Align(
-                alignment: Alignment.centerRight,
+                alignment: Alignment.bottomRight,
                 child: Container(
-                  height: 40,
-                  width: 120,
+                  padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
                   decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [Colors.white, Color(0xFFF5F5F5)],
-                    ),
-                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(25.r),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 10,
-                        offset: const Offset(0, 5),
+                        color: Colors.black.withOpacity(0.2),
+                        blurRadius: 8.r,
+                        offset: Offset(0, 3.h),
                       ),
                     ],
                   ),
-                  child: ElevatedButton(
-                    onPressed: () {
+                  child: InkWell(
+                    onTap: () {
                       Get.toNamed(RouteName.skinCare);
                     },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.transparent,
-                      shadowColor: Colors.transparent,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                    ),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
                           'Next',
                           style: TextStyle(
-                            color: Color.fromRGBO(2, 9, 83, 1),
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
-                        SizedBox(width: 6),
-                        Icon(
-                          Icons.arrow_forward,
-                          color: Color.fromRGBO(2, 9, 83, 1),
-                          size: 20,
+                        SizedBox(width: 8.w),
+                        Container(
+                          padding: EdgeInsets.all(6.w),
+                          decoration: const BoxDecoration(
+                            color: Colors.black,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Icons.arrow_forward,
+                            color: Colors.white,
+                            size: 18.sp,
+                          ),
                         ),
                       ],
                     ),
@@ -129,7 +117,6 @@ class DailyFaithScreen extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 40),
           ],
         ),
       ),
