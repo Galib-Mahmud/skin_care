@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:skincare/routes/route_name.dart';
+import '../../widget/home/custom_navbar.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -14,53 +23,112 @@ class HomeScreen extends StatelessWidget {
           children: [
             // Header with welcome message and Bible verse
             Container(
-              padding: const EdgeInsets.all(16.0),
-              margin: const EdgeInsets.all(16.0),
+              margin: EdgeInsets.all(16.r),
               decoration: BoxDecoration(
-                color: const Color(0xFFE8632C), // Adjusted color to match the image tones
-                borderRadius: BorderRadius.circular(15),
+                color: Colors.grey[400],
+                borderRadius: BorderRadius.circular(20.r),
+                image: const DecorationImage(
+                  image: NetworkImage(
+                    'https://images.unsplash.com/photo-1416339306562-f3d12fefd36f?w=800&q=80',
+                  ),
+                  fit: BoxFit.cover,
+                  opacity: 0.4,
+                ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Welcome Back :',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+              child: Container(
+                padding: EdgeInsets.all(16.r),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20.r),
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.black.withOpacity(0.3),
+                      Colors.black.withOpacity(0.1),
+                    ],
                   ),
-                  const SizedBox(height: 8),
-                  const Text(
-                    'Glowing skin is always in take care of it, and it will take care of you!',
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: 14,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Container(
-                    padding: const EdgeInsets.all(12.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Text(
-                      'Bible Verse\n"Glowing skin is always in take care of it, and it will take care of you"',
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Welcome Back .',
                       style: TextStyle(
-                        color: Color(0xFFE8632C),
-                        fontSize: 14,
+                        color: Colors.white,
+                        fontSize: 24.sp,
+                        fontWeight: FontWeight.w600,
+                        shadows: const [
+                          Shadow(
+                            offset: Offset(0, 1),
+                            blurRadius: 3.0,
+                            color: Colors.black26,
+                          ),
+                        ],
                       ),
-                      textAlign: TextAlign.center,
                     ),
-                  ),
-                ],
+                    SizedBox(height: 8.h),
+                    Text(
+                      '"Glowing skin is always in take care of it, and it will take care of you"',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 13.sp,
+                        height: 1.4,
+                        shadows: const [
+                          Shadow(
+                            offset: Offset(0, 1),
+                            blurRadius: 2.0,
+                            color: Colors.black26,
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 16.h),
+                    Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.all(14.r),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.95),
+                        borderRadius: BorderRadius.circular(12.r),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 8.r,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Bible Verse',
+                            style: TextStyle(
+                              color: Colors.grey[700],
+                              fontSize: 11.sp,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 0.5,
+                            ),
+                          ),
+                          SizedBox(height: 6.h),
+                          Text(
+                            '"Glowing skin is always in take care of it, and it will take care of you"',
+                            style: TextStyle(
+                              color: Colors.black87,
+                              fontSize: 12.sp,
+                              height: 1.5,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
+            SizedBox(height: 16.h),
             // Water Goal and Mood Cards
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              padding: EdgeInsets.symmetric(horizontal: 16.r),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -83,17 +151,17 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             // Featured for You Section
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              padding: EdgeInsets.symmetric(horizontal: 16.r),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
+                  Text(
                     'Featured for You',
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 18.sp,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -101,27 +169,26 @@ class HomeScreen extends StatelessWidget {
                     onPressed: () {
                       Get.toNamed(RouteName.checkinScreen1);
                     },
-                    child: const Text(
+                    child: Text(
                       'View All >',
                       style: TextStyle(
                         color: Colors.blue,
-                        fontSize: 14,
+                        fontSize: 14.sp,
                       ),
                     ),
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             // Product Grid
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                padding: EdgeInsets.symmetric(horizontal: 8.r),
                 child: GridView.count(
                   crossAxisCount: 2,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                  padding: const EdgeInsets.all(8.0),
+                  crossAxisSpacing: 10.r,
+                  mainAxisSpacing: 10.r,
                   children: [
                     _buildProductCard('assets/images/home/Item1.png'),
                     _buildProductCard('assets/images/home/Item2.png'),
@@ -131,33 +198,16 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-            // Bottom Navigation Bar
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 10,
-                    offset: Offset(0, -2),
-                  ),
-                ],
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _buildNavItem(Icons.home, 'Home', true),
-                  _buildNavItem(Icons.search, 'Search', false),
-                  _buildNavItem(Icons.add, 'Add', false),
-                  _buildNavItem(Icons.favorite, 'Favorite', false),
-                  _buildNavItem(Icons.person, 'Profile', false),
-                ],
-              ),
-            ),
           ],
         ),
+      ),
+      bottomNavigationBar: CustomBottomNavBar(
+        selectedIndex: _selectedIndex,
+        onItemSelected: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
       ),
     );
   }
@@ -171,15 +221,15 @@ class HomeScreen extends StatelessWidget {
     required Color color,
   }) {
     return Container(
-      width: 150,
-      padding: const EdgeInsets.all(12.0),
+      width: 150.w,
+      padding: EdgeInsets.all(12.r),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(15.r),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.2),
-            blurRadius: 5,
+            blurRadius: 5.r,
             offset: const Offset(0, 2),
           ),
         ],
@@ -187,28 +237,28 @@ class HomeScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: color, size: 30),
-          const SizedBox(height: 8),
+          Icon(icon, color: color, size: 30.sp),
+          SizedBox(height: 8.h),
           Text(
             title,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: 4.h),
           Text(
             value,
-            style: TextStyle(fontSize: 18, color: color, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 18.sp, color: color, fontWeight: FontWeight.bold),
           ),
           if (title == 'Water Goal') ...[
-            const SizedBox(height: 4),
+            SizedBox(height: 4.h),
             LinearProgressIndicator(
               value: progress,
               backgroundColor: Colors.grey[300],
               color: color,
             ),
-            const SizedBox(height: 4),
-            Text(subtitle, style: const TextStyle(fontSize: 12, color: Colors.grey)),
+            SizedBox(height: 4.h),
+            Text(subtitle, style: TextStyle(fontSize: 12.sp, color: Colors.grey)),
           ] else ...[
-            Text(subtitle, style: const TextStyle(fontSize: 12, color: Colors.grey)),
+            Text(subtitle, style: TextStyle(fontSize: 12.sp, color: Colors.grey)),
           ],
         ],
       ),
@@ -218,18 +268,12 @@ class HomeScreen extends StatelessWidget {
   Widget _buildProductCard(String imagePath) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            blurRadius: 5,
-            offset: const Offset(0, 2),
-          ),
-        ],
+
+        borderRadius: BorderRadius.circular(15.r),
+
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(10.r),
         child: Image.asset(
           imagePath,
           fit: BoxFit.cover,
@@ -237,23 +281,6 @@ class HomeScreen extends StatelessWidget {
           height: double.infinity,
         ),
       ),
-    );
-  }
-
-  Widget _buildNavItem(IconData icon, String label, bool isActive) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(icon, color: isActive ? const Color(0xFF020953) : Colors.grey),
-        const SizedBox(height: 4),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 12,
-            color: isActive ? const Color(0xFF020953) : Colors.grey,
-          ),
-        ),
-      ],
     );
   }
 }
