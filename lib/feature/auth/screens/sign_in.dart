@@ -9,7 +9,6 @@ import '../../../widget/auth/custom_text_field.dart';
 
 /// Reusable custom back button
 
-
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
 
@@ -42,12 +41,9 @@ class _SignInScreenState extends State<SignInScreen> {
 
     return SafeArea(
       child: Scaffold(
-
         body: SingleChildScrollView(
           child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: screenHeight,
-            ),
+            constraints: BoxConstraints(minHeight: screenHeight),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -58,15 +54,39 @@ class _SignInScreenState extends State<SignInScreen> {
                   const SizedBox(height: 16),
                   Center(
                     child: Image.asset(
-                      'assets/images/splash/beauty.jpg',
+                      'assets/images/splash/signin.png',
                       width: 200.w,
                       height: 200.h,
-
 
                       fit: BoxFit.contain,
                     ),
                   ),
-                  const SizedBox(height: 32),
+
+                  Center(
+                    child: Column(
+                      children: [
+                        Text(
+                          "Welcome Back!",
+                          style: TextStyle(
+                            fontFamily: "Inter",
+                            fontSize: 24.sp,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 8.h),
+                        Text(
+                          "Log in to discover your perfect match",
+                          style: TextStyle(
+
+                            fontFamily: "Inter",
+                            fontSize: 16.sp,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 22),
                   CustomTextField(
                     icon: Icons.email,
                     labelText: 'Enter Email Address',
@@ -96,9 +116,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   CustomButton(
                     text: 'Sign In',
                     onPressed: () {
-
                       Get.toNamed(RouteName.homeScreen);
-
                     },
                   ),
                   const SizedBox(height: 16),

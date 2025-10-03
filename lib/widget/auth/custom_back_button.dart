@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomBackButton extends StatelessWidget {
   final Color backgroundColor;
@@ -8,9 +9,9 @@ class CustomBackButton extends StatelessWidget {
 
   const CustomBackButton({
     super.key,
-    this.backgroundColor = const Color.fromRGBO(2, 9, 83, 1), // ✅ same style
+    this.backgroundColor = Colors.black,
     this.iconColor = Colors.white,
-    this.size = 50,
+    this.size = 45,
     this.onTap,
   });
 

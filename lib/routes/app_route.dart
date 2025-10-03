@@ -1,15 +1,23 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
+import 'package:skincare/feature/auth/screens/account_create_successfully.dart';
 import 'package:skincare/feature/auth/screens/otp_screen.dart';
 import 'package:skincare/feature/auth/screens/reset_password.dart';
 import 'package:skincare/feature/auth/screens/sign_in.dart';
 import 'package:skincare/feature/auth/screens/signup.dart';
+import 'package:skincare/feature/auth/screens/update_password.dart';
 import 'package:skincare/feature/home/HomeScreen.dart';
 import 'package:skincare/feature/home/check_in_screen2.dart';
 import 'package:skincare/feature/home/checkin_screen1.dart';
 import 'package:skincare/feature/home/profile_screen.dart';
 import 'package:skincare/feature/splash/daily_faith_screen.dart';
+import 'package:skincare/feature/splash/question1.dart';
+import 'package:skincare/feature/splash/question2.dart';
+import 'package:skincare/feature/splash/question3.dart';
+import 'package:skincare/feature/splash/question4.dart';
+import 'package:skincare/feature/splash/question5.dart';
 import 'package:skincare/feature/splash/skincare_screen.dart';
+import 'package:skincare/feature/splash/subscription_screen.dart';
 
 import 'package:skincare/routes/route_name.dart';
 
@@ -51,6 +59,16 @@ class AppRoute {
       page: () =>OtpScreen(),
       transition: Transition.rightToLeft,
       transitionDuration: Duration(milliseconds: 300),
+    ), GetPage(
+      name: RouteName.updatePass,
+      page: () =>UpdatePassword(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 300),
+    ), GetPage(
+      name: RouteName.accountCreateSuccessfully,
+      page: () =>AccountCreateSuccessfully(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 300),
     ),GetPage(
       name: RouteName.dailyFaith,
       page: () =>DailyFaithScreen(),
@@ -84,6 +102,36 @@ class AppRoute {
     ),GetPage(
       name: RouteName.profileScreen,
       page: () =>ProfileScreen(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 300),
+    ),GetPage(
+      name: RouteName.question1,
+      page: () =>Question1(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 300),
+    ),GetPage(
+      name: RouteName.question2,
+      page: () =>Question2(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 300),
+    ),GetPage(
+      name: RouteName.question3,
+      page: () =>Question3(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 300),
+    ),GetPage(
+      name: RouteName.question4,
+      page: () =>Question4(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 300),
+    ),GetPage(
+      name: RouteName.question5,
+      page: () =>Question5(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 300),
+    ),GetPage(
+      name: RouteName.subscription,
+      page: () =>SubscriptionScreen(),
       transition: Transition.rightToLeft,
       transitionDuration: Duration(milliseconds: 300),
     ),

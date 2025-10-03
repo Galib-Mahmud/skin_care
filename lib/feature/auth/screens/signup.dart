@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:skincare/routes/route_name.dart';
 
 import '../../../widget/auth/custom_back_button.dart';
@@ -8,6 +8,8 @@ import '../../../widget/auth/custom_button.dart';
 import '../../../widget/auth/custom_text_field.dart';
 
 class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
+
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
 }
@@ -30,75 +32,100 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void _signUp() {
-    // Add sign-up logic here
     if (_passwordController.text == _rePasswordController.text) {
-      // Proceed with sign-up
       print('Sign up successful');
     } else {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Passwords do not match')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Passwords do not match')),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 16),
-                CustomBackButton(),
-                Center(child: Image.asset('assets/images/auth/logo.png',
+    return Scaffold(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 10.r, vertical: 10.h),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomBackButton(),
+              SizedBox(height: 20.h),
 
-                  fit: BoxFit.contain,
+              // Logo
+              Center(
+                child: SizedBox(
+                  width: 150.w,
+                  height: 150.h,
+                  child: Image.asset(
+                    'assets/images/splash/signin.png',
+                    fit: BoxFit.contain,
+                  ),
                 ),
-                ),
-                // Ensure logo.png is in assets
-                CustomTextField(
-                  icon: Icons.person,
-                  labelText: 'Enter Full Name',
-                  controller: _fullNameController,
-                  keyboardType: null,
-                ),
-                CustomTextField(
-                  icon: Icons.email,
-                  labelText: 'Enter Email Address',
-                  controller: _emailController,
-                  keyboardType: TextInputType.emailAddress,
-                ),
-                CustomTextField(
-                  icon: Icons.phone,
-                  labelText: 'Enter Mobile Number',
-                  controller: _mobileController,
-                  keyboardType: TextInputType.phone,
-                ),
-                CustomTextField(
-                  icon: Icons.lock,
-                  labelText: 'Enter Password',
-                  controller: _passwordController,
-                  obscureText: true,
-                  keyboardType: null,
-                ),
-                CustomTextField(
-                  icon: Icons.lock,
-                  labelText: 'Re-enter Password',
-                  controller: _rePasswordController,
-                  obscureText: true,
-                  keyboardType: null,
-                ),
-                CustomButton(
-                  text: 'Sign Up',
-                  onPressed: () {
-                    Get.toNamed(RouteName.signin);
-                  },
-                ),
-              ],
-            ),
+              ),
+              SizedBox(height: 10.h),
+
+              // Full Name
+              CustomTextField(
+                icon: Icons.person,
+                labelText: 'Enter Full Name',
+                controller: _fullNameController,
+              ),
+              SizedBox(height: 10.h),
+
+              // Email
+              CustomTextField(
+                icon: Icons.email,
+                labelText: 'Enter Email Address',
+                controller: _emailController,
+                keyboardType: TextInputType.emailAddress,
+              ),
+              SizedBox(height: 10.h),
+
+              // Mobile
+              CustomTextField(
+                icon: Icons.phone,
+                labelText: 'Enter Mobile Number',
+                controller: _mobileController,
+                keyboardType: TextInputType.phone,
+              ),
+              SizedBox(height: 10.h),
+
+              // Password
+              CustomTextField(
+                icon: Icons.lock,
+                labelText: 'Enter Password',
+                controller: _passwordController,
+                obscureText: true,
+              ),
+              SizedBox(height: 10.h),
+
+              // Re-enter Password
+              CustomTextField(
+                icon: Icons.lock,
+                labelText: 'Re-enter Password',
+                controller: _rePasswordController,
+                obscureText: true,
+              ),
+              SizedBox(height: 30.h),
+
+              // Sign Up Button
+              CustomButton(
+                text: 'Sign Up',
+                onPressed: _signUp,
+              ),
+              SizedBox(height: 10.h),
+              CustomButton(
+                text: 'Sign In',
+                onPressed: () {
+                  Get.toNamed(RouteName.signin);
+                },
+              ),
+
+
+              SizedBox(height: 30.h),
+            ],
           ),
         ),
       ),

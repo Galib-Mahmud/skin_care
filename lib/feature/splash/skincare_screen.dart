@@ -50,7 +50,7 @@ class SkincareScreen extends StatelessWidget {
                       color: Colors.white,
                       fontSize: 29.sp,
                       fontWeight: FontWeight.w500,
-                      fontFamily: 'Gayathri',
+                      fontFamily: 'Poppins',
                     ),
                   ),
                   SizedBox(height: 4.h),
@@ -59,7 +59,7 @@ class SkincareScreen extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 24.sp,
-                      fontFamily: 'Gayathri',
+                      fontFamily: 'Poppins',
                     ),
                   ),
                 ],
@@ -94,11 +94,12 @@ class SkincareScreen extends StatelessWidget {
                           'Next',
                           style: TextStyle(
                             color: Colors.black,
-                            fontSize: 16.sp,
+                            fontSize: 20.sp,
                             fontWeight: FontWeight.w600,
+                            fontFamily: 'Rubik'
                           ),
                         ),
-                        SizedBox(width: 8.w),
+                        SizedBox(width: 15.w),
                         Container(
                           padding: EdgeInsets.all(6.w),
                           decoration: const BoxDecoration(
@@ -108,7 +109,7 @@ class SkincareScreen extends StatelessWidget {
                           child: Icon(
                             Icons.arrow_forward,
                             color: Colors.white,
-                            size: 18.sp,
+                            size: 20.sp,
                           ),
                         ),
                       ],

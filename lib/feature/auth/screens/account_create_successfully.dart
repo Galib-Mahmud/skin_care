@@ -10,14 +10,14 @@ import '../../../widget/auth/custom_text_field.dart';
 /// Reusable custom back button
 
 
-class ResetPassword extends StatefulWidget {
-  const ResetPassword({super.key});
+class AccountCreateSuccessfully extends StatefulWidget {
+  const AccountCreateSuccessfully({super.key});
 
   @override
-  _ResetPasswordState createState() => _ResetPasswordState();
+  _AccountCreateSuccessfullyState createState() => _AccountCreateSuccessfullyState();
 }
 
-class _ResetPasswordState extends State<ResetPassword> {
+class _AccountCreateSuccessfullyState extends State<AccountCreateSuccessfully> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -66,7 +66,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                     child: Column(
                       children: [
                         Text(
-                          "Forgot password",
+                          "Password Reset",
                           style: TextStyle(
                             fontFamily: "Inter",
                             fontSize: 24.sp,
@@ -75,22 +75,21 @@ class _ResetPasswordState extends State<ResetPassword> {
                           ),
                         ),
                         SizedBox(height: 8.h),
-                        Text(
-                          "Please enter your email to reset the password",
-                          style: TextStyle(
 
-                            fontFamily: "Inter",
-                            fontSize: 16.sp,
-                          ),
-                        ),
                       ],
                     ),
                   ),
 
-                  const SizedBox(height: 32),
+                  const SizedBox(height: 12),
                   CustomTextField(
-                    icon: Icons.email,
-                    labelText: 'Enter Email Address',
+                    icon: Icons.lock,
+                    labelText: 'Enter New Password',
+                    controller: _emailController,
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                  CustomTextField(
+                    icon: Icons.lock,
+                    labelText: 'Re-Enter New Password',
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                   ),
@@ -102,9 +101,11 @@ class _ResetPasswordState extends State<ResetPassword> {
                   ),
                   const SizedBox(height: 16),
                   CustomButton(
-                    text: 'Reset Password',
+                    text: 'Update Password',
                     onPressed: () {
-                      Get.toNamed(RouteName.otpScreen);
+
+                      Get.toNamed(RouteName.homeScreen);
+
 
                     },
                   ),

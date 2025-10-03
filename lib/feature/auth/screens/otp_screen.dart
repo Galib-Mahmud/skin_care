@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:skincare/routes/route_name.dart';
@@ -67,20 +68,36 @@ class _OtpScreenState extends State<OtpScreen> {
                   const SizedBox(height: 32),
                   Center(
                     child: Image.asset(
-                      'assets/images/auth/logo.png',
+                      'assets/images/splash/signin.png',
 
                       fit: BoxFit.contain,
                     ),
                   ),
-                  const SizedBox(height: 32),
-                  const Text(
-                    'We sent a Code your email@dsd.com. Enter 6 digit code mentioned in the email',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black87,
+                  Center(
+                    child: Column(
+                      children: [
+                        Text(
+                          "Forgot password",
+                          style: TextStyle(
+                            fontFamily: "Inter",
+                            fontSize: 24.sp,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 8.h),
+                        Text(
+                          "We sent a Code your email@dsd.com. Enter 6 digit code mentioned in the email",
+                          style: TextStyle(
+
+                            fontFamily: "Inter",
+                            fontSize: 16.sp,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
+
                   const SizedBox(height: 40),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -124,7 +141,9 @@ class _OtpScreenState extends State<OtpScreen> {
                   const SizedBox(height: 40),
                   CustomButton(
                     text: 'Verify Code',
-                    onPressed: _verifyCode,
+                    onPressed: () {
+                      Get.toNamed(RouteName.updatePass);
+                    },
                   ),
                   const SizedBox(height: 16),
                   TextButton(
