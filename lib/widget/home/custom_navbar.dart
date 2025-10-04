@@ -1,6 +1,11 @@
 // Custom Bottom Navigation Bar Widget
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:skincare/routes/route_name.dart';
+
+import '../../feature/home/checkin_screen1.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   final int selectedIndex;
@@ -41,7 +46,9 @@ class CustomBottomNavBar extends StatelessWidget {
             _NavItem(
               icon: Icons.layers,
               isSelected: selectedIndex == 1,
-              onTap: () => onItemSelected(1),
+              onTap:() {
+                Get.toNamed(RouteName.checkinScreen1);
+              },
               label: 'Home',
             ),
             _NavItem(

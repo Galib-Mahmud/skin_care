@@ -21,4 +21,18 @@ class RouteName{
   static const String question4 = '/question4';
   static const String question5 = '/question5';
   static const String subscription = '/subscription';
+  static const String dailycheckin1 = '/dailycheckin1';
+  static const String dailycheckin2 = '/dailycheckin2';
+  static const String skincareGuide = '/skincareGuide';
+  static const String dailyDaviation = '/dailyDaviation';
+  static const String recipe = '/recipe';
+  static const String jurnalprompts = '/jurnalprompts';
+  static const String skincareChatbot = '/skincareChatbot';
+  static const String dailyDaviationchatbot = '/dailyDaviationchatbot';
+  static const String airecipeGenerator = '/airecipeGenerator';
+
+  //Shop Screen
+  static const String shopScreen1 = '/shopScreen1';
+  static const String shopScreen2 = '/shopScreen2';
+
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:skincare/routes/route_name.dart';
 
@@ -8,263 +9,225 @@ class CheckinScreen2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF7F4EA), // Beige background matching the design
+      backgroundColor: const Color(0xFFE9E9E9), // mockup grey
       body: SafeArea(
-        child: Column(
-          children: [
-            // Header
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Resources',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    'Grow in faith and wellness',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black54,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            // Resource Cards Grid
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: GridView.count(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                  children: [
-                    _buildResourceCard(
-                      onTap: () {
-                        Get.toNamed(RouteName.profileScreen);
-                      },
-                      icon: Icons.article,
-                      title: 'Skin Care Articles',
-                      subtitle: 'Read and learn locally TSM',
-                    ),
-                    _buildResourceCard(
-
-                      icon: Icons.favorite,
-                      title: 'Daily Devotions',
-                      subtitle: 'Stay in faith movement!',
-                    ),
-                    _buildResourceCard(
-                      icon: Icons.article,
-                      title: 'Skin Care Articles',
-                      subtitle: 'Read and learn TSM',
-                    ),
-                    _buildResourceCard(
-                      icon: Icons.favorite,
-                      title: 'Daily Devotions',
-                      subtitle: 'Stay in faith movement!',
-                    ),
-                    _buildResourceCard(
-                      icon: Icons.add,
-                      title: 'AI Recipe Generator',
-                      subtitle: 'Healing means for glow',
-                    ),
-                    _buildResourceCard(
-                      icon: Icons.edit,
-                      title: 'Journal Prompts',
-                      subtitle: 'A guided reflection',
-                    ),
-                    _buildResourceCard(
-                      icon: Icons.book,
-                      title: '9Min Intro',
-                      subtitle: 'Presence and awareness',
-                    ),
-                    _buildResourceCard(
-                      icon: Icons.favorite,
-                      title: 'Daily Devotions',
-                      subtitle: 'Daily devotional',
-                      onTap: () {
-                        Get.toNamed(RouteName.profileScreen);
-                      },
-                    ),
-                    _buildResourceCard(
-                      icon: Icons.book,
-                      title: 'Finding Rest in His Presence',
-                      subtitle: 'Devotional on finding peace',
-                    ),
-                    _buildResourceCard(
-                      icon: Icons.favorite,
-                      title: 'Devotional',
-                      subtitle: 'Overcome anxiety',
-                    ),
-                    _buildResourceCard(
-                      icon: Icons.music_note,
-                      title: 'Worship',
-                      subtitle: 'Heal soul and wellness',
-                    ),
-                    _buildResourceCard(
-                      icon: Icons.favorite,
-                      title: 'Daily Devotional',
-                      subtitle: 'H. Journaled on Israel',
-                    ),
-                  ],
+        child: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(height: 8.h),
+              Text(
+                'Resources',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 22.sp,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.black,
                 ),
               ),
-            ),
-            // Recommended Readings
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              SizedBox(height: 4.h),
+              Text(
+                'Grow in faith and wellness',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 16.sp, color: Colors.black87),
+              ),
+              SizedBox(height: 16.h),
+
+              // Resource Cards Grid
+              GridView.count(
+                crossAxisCount: 2,
+                crossAxisSpacing: 12.w,
+                mainAxisSpacing: 12.h,
+                childAspectRatio: 1.2,
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
                 children: [
-                  Text(
-                    'Recommended Readings',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
+                  _ResourceCard(
+                    icon: Image.asset('assets/images/home/book.png', width: 24.w, height: 24.w),
+                    title: 'Skincare Guides',
+                    subtitle: 'Faith-based beauty tips',
+                    onTap: () => Get.toNamed(RouteName.profileScreen),
                   ),
-                  SizedBox(height: 12),
-                  _buildReadingCard(
-                    title: 'Managing Dry Skin in Winter',
-                    content: 'Learn how to care for your skin during harsh winter conditions.',
+                  _ResourceCard(
+                    icon: Image.asset('assets/images/home/love.png', width: 24.w, height: 24.w),
+                    title: 'Daily Devotions',
+                    subtitle: 'Spiritual nourishment',
                   ),
-                  SizedBox(height: 12),
-                  _buildReadingCard(
-                    title: 'Finding Rest in His Presence',
-                    content: 'Devotional on finding peace and faith through prayer.',
+                  _ResourceCard(
+                    icon: Image.asset('assets/images/home/man.png', width: 24.w, height: 24.w),
+                    title: 'AI Recipe Generator',
+                    subtitle: 'Healthy meals for glow',
                   ),
-                  SizedBox(height: 12),
-                  _buildReadingCard(
-                    title: 'Finding Rest in His Presence',
-                    content: 'Devotional on finding peace and faith through prayer.',
+                  _ResourceCard(
+                    icon: Image.asset('assets/images/home/add.png', width: 24.w, height: 24.w),
+                    title: 'Journal Prompts',
+                    subtitle: 'AI-guided reflection',
                   ),
                 ],
               ),
+
+              SizedBox(height: 16.h),
+
+              // Recommended Reading
+              Text(
+                'Recommended Reading',
+                style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w700),
+              ),
+              SizedBox(height: 12.h),
+              const _ReadingCard(
+                title: 'Managing Dry Skin in Winter',
+                content:
+                'Learn how to keep your skin healthy during harsh weather—honoring the temple God gave you.',
+              ),
+              SizedBox(height: 12.h),
+              const _ReadingCard(
+                title: 'Finding Rest in His Presence',
+                content:
+                'Devotional on finding peace and rest through faith during stressful times.',
+              ),
+              SizedBox(height: 80.h), // leave space above bottom bar
+            ],
+          ),
+        ),
+      ),
+
+
+    );
+  }
+}
+
+/// ==== Widgets ====
+
+class _ResourceCard extends StatelessWidget {
+  final Widget icon;
+  final String title;
+  final String subtitle;
+  final VoidCallback? onTap;
+
+  const _ResourceCard({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(16.r),
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: const Color(0xFFF3F3F3),
+          borderRadius: BorderRadius.circular(16.r),
+          boxShadow: [
+            BoxShadow(
+              spreadRadius: 2,
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 8,
+              offset: const Offset(0, 3),
             ),
-            // Bottom Navigation Bar
+          ],
+        ),
+        padding: EdgeInsets.all(12.w),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Icon inside soft circle
             Container(
-              height: 60,
-              color: Color(0xFFF7F4EA),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Icon(Icons.home, color: Colors.black),
-                  Icon(Icons.add, color: Colors.black),
-                  Icon(Icons.favorite, color: Colors.black),
-                  Icon(Icons.person, color: Colors.black),
+              width: 40.w,
+              height: 40.w,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 6,
+                    offset: const Offset(0, 2),
+                  ),
                 ],
               ),
+              alignment: Alignment.center,
+              child: icon,
+            ),
+            SizedBox(height: 10.h),
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w700,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(height: 4.h),
+            Text(
+              subtitle,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 11.5.sp,
+                color: Colors.black54,
+                height: 1.2,
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
             ),
           ],
         ),
       ),
     );
   }
+}
 
-  Widget _buildResourceCard({
+class _ReadingCard extends StatelessWidget {
+  final String title;
+  final String content;
 
-    required IconData icon,
-    required String title,
-    required String subtitle,
-    VoidCallback? onTap,
-  }) {
+  const _ReadingCard({required this.title, required this.content});
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(12.0),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
+        color: const Color(0xFFF3F3F3),
+        borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            blurRadius: 5,
-            offset: Offset(0, 2),
+            color: Colors.black.withOpacity(0.06),
+            blurRadius: 8,
+            offset: const Offset(0, 3),
           ),
         ],
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      padding: EdgeInsets.all(14.w),
+      child: Row(
         children: [
-          Icon(icon, size: 30, color: _getIconColor(icon)),
-          SizedBox(height: 8),
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-             fontFamily: 'Gayathri',
+          // leading pill
+          Container(
+            width: 6.w,
+            height: 42.h,
+            decoration: BoxDecoration(
+              color: Colors.black.withOpacity(0.75),
+              borderRadius: BorderRadius.circular(6.r),
             ),
           ),
-          SizedBox(height: 4),
-          Text(
-            subtitle,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 12,
-              color: Colors.black54,
+          SizedBox(width: 12.w),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, style: TextStyle(fontSize: 15.5.sp, fontWeight: FontWeight.w700)),
+                SizedBox(height: 6.h),
+                Text(content, style: TextStyle(fontSize: 13.sp, color: Colors.black54)),
+              ],
             ),
           ),
         ],
       ),
     );
-  }
-
-  Widget _buildReadingCard({
-    required String title,
-    required String content,
-  }) {
-    return Container(
-      padding: EdgeInsets.all(12.0),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            blurRadius: 5,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-              fontFamily: 'Gayathri',
-            ),
-          ),
-          SizedBox(height: 8),
-          Text(
-            content,
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.black54,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Color _getIconColor(IconData icon) {
-
-    if (icon == Icons.favorite) return Colors.red;
-    if (icon == Icons.add) return Colors.blue;
-    if (icon == Icons.edit) return Colors.blue;
-    return Colors.green;
   }
 }
+
+

@@ -28,11 +28,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Colors.grey[400],
                 borderRadius: BorderRadius.circular(20.r),
                 image: const DecorationImage(
-                  image: NetworkImage(
-                    'https://images.unsplash.com/photo-1416339306562-f3d12fefd36f?w=800&q=80',
+                  image:AssetImage(
+                    'assets/images/home/Frame.png',
                   ),
                   fit: BoxFit.cover,
-                  opacity: 0.4,
+                  opacity: 0.6,
                 ),
               ),
               child: Container(

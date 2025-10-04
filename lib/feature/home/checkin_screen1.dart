@@ -2,224 +2,380 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:skincare/routes/route_name.dart';
+import 'package:skincare/widget/home/custom_navbar.dart';
 
 class CheckinScreen1 extends StatefulWidget {
+  const CheckinScreen1({super.key});
+
   @override
-  _CheckinScreen1State createState() => _CheckinScreen1State();
+  State<CheckinScreen1> createState() => _CheckinScreen1State();
 }
 
 class _CheckinScreen1State extends State<CheckinScreen1> {
   double waterIntake = 78.6;
   String mood = "Good";
   String skinStatus = "Clear";
-  TextEditingController notesController = TextEditingController();
+  final TextEditingController notesController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF7F4EA),
+      backgroundColor: const Color(0xFFF0F0F0),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.all(16.r),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // Header
-              Center(
-                child: Text(
-                  'Daily Check-in',
-                  style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
-                ),
-
-
-              ),
-              SizedBox(height: 8.h),
-              Center(
-                child: Text(
-                  'How are you feeling today?',
-                  style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w500),
-                ),
-              ),
-
-              SizedBox(height: 12.h),
-
-              // Mood
-              Container(
-                height: 160.h,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-
-                  
+              Padding(
+                padding: EdgeInsets.only(bottom: 12.h),
+                child: Column(
                   children: [
-
-                    _buildMoodButton('Struggling', '😞'),
-                    _buildMoodButton('Okay', '😕'),
-                    _buildMoodButton('Good', '😊'),
-                    _buildMoodButton('Great', '😄'),
-                    _buildMoodButton('Blessed', '🙏'),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20.h),
-
-              // Skin Status
-              Text('Skin Status', style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold)),
-              SizedBox(height: 12.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _buildSkinButton('Clear'),
-                  _buildSkinButton('Dry'),
-                  _buildSkinButton('Oily'),
-                  _buildSkinButton('Breakout'),
-                ],
-              ),
-              SizedBox(height: 20.h),
-
-              // Water Intake
-              Text('Water Intake', style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold)),
-              SizedBox(height: 12.h),
-              Center(
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    SizedBox(
-                      width: 120.w,
-                      height: 120.w,
-                      child: CircularProgressIndicator(
-                        value: waterIntake / 100,
-                        strokeWidth: 10.w,
-                        valueColor: AlwaysStoppedAnimation(Color(0xFF4A90E2)),
-                        backgroundColor: Colors.grey[300],
+                    Text(
+                      'Daily Check-in',
+                      style: TextStyle(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w700,
+                        fontFamily: 'Gayathri',
+                        color: Colors.black,
                       ),
                     ),
-                    Text('${waterIntake.toStringAsFixed(1)}%',
-                        style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.bold)),
+                    SizedBox(height: 4.h),
+                    Text(
+                      'How are you feeling today?',
+                      style: TextStyle(
+                        fontSize: 20.sp,
+                        fontFamily: 'Gayathri',
+                        color: Colors.black87,
+                      ),
+                    ),
                   ],
                 ),
               ),
-              SizedBox(height: 12.h),
-              Center(
+
+              // Mood card
+              _SectionCard(
+                title: 'Your Mood',
+                child: Column(
+                  children: [
+                    SizedBox(height: 8.h),
+                    Wrap(
+                      alignment: WrapAlignment.spaceAround,
+                      runSpacing: 12.h,
+                      children: [
+                        _moodItem('Struggling', '😞', 'Struggling'),
+                        _moodItem('Okay', '😕', 'Okay'),
+                        _moodItem('Good', '😊', 'Good'),
+                        _moodItem('Great', '😄', 'Great'),
+                        _moodItem('Blessed', '🙏', 'Blessed'),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 14.h),
+
+              // Skin Status card
+              _SectionCard(
+                title: 'Skin Status',
+                child: Padding(
+                  padding: EdgeInsets.only(top: 4.h),
+                  child: GridView.count(
+                    crossAxisCount: 2,
+                    shrinkWrap: true,
+                    mainAxisSpacing: 12.h,
+                    crossAxisSpacing: 12.w,
+                    childAspectRatio: 3.2,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: [
+                      _skinChip('Clear'),
+                      _skinChip('Dry'),
+                      _skinChip('Oily'),
+                      _skinChip('Breakout'),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 14.h),
+
+              // Water Intake card
+              _SectionCard(
+                title: 'Water Intake',
+                child: Column(
+                  children: [
+                    SizedBox(height: 8.h),
+                    Center(
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        alignment: Alignment.center,
+                        children: [
+                          SizedBox(
+                            width: 140.w,
+                            height: 140.w,
+                            child: CircularProgressIndicator(
+                              value: (waterIntake.clamp(0, 100)) / 100,
+                              strokeWidth: 10.w,
+                              valueColor: const AlwaysStoppedAnimation(
+                                Color(0xFF333333),
+                              ),
+                              backgroundColor: Colors.black12,
+                            ),
+                          ),
+                          Text(
+                            '${waterIntake.toStringAsFixed(1)}%',
+                            style: TextStyle(
+                              fontSize: 22.sp,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          // small avatars (top-right)
+                          Positioned(
+                            right: -6.w,
+                            top: 14.h,
+                            child: Row(
+                              children: [
+                                CircleAvatar(
+                                  radius: 14.r,
+                                  backgroundImage: const AssetImage(
+                                    'assets/images/avatar1.png',
+                                  ),
+                                ),
+                                SizedBox(width: 4.w),
+                                CircleAvatar(
+                                  radius: 14.r,
+                                  backgroundImage: const AssetImage(
+                                    'assets/images/avatar2.png',
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 14.h),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          setState(() {
+                            waterIntake = (waterIntake + 8).clamp(0, 100);
+                          });
+                        },
+                        icon: const Icon(Icons.add),
+                        label: Text(
+                          'Add 8 oz +',
+                          style: TextStyle(fontSize: 16.sp),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.black,
+                          foregroundColor: Colors.white,
+                          padding: EdgeInsets.symmetric(vertical: 12.h),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(24.r),
+                          ),
+                          elevation: 0,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 14.h),
+
+              // Notes card
+              _SectionCard(
+                title: "Today's Notes",
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12.r),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.06),
+                        blurRadius: 8,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: TextField(
+                    controller: notesController,
+                    maxLines: 4,
+                    decoration: InputDecoration(
+                      hintText:
+                          'How is your skin feeling today? Any concerns or improvements?',
+                      hintStyle: TextStyle(
+                        color: Colors.black45,
+                        fontSize: 13.sp,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.r),
+                        borderSide: BorderSide.none,
+                      ),
+                      contentPadding: EdgeInsets.all(14.r),
+                      filled: true,
+                      fillColor: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 16.h),
+
+
+              // Save button
+              SizedBox(
+                width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      waterIntake += 8.0;
-                      if (waterIntake > 100) waterIntake = 100;
-                    });
-                  },
+                  onPressed: () => Get.toNamed(RouteName.checkinScreen2),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,
                     foregroundColor: Colors.white,
-                    padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 50.w),
+                    padding: EdgeInsets.symmetric(vertical: 14.h),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.r),
+                      borderRadius: BorderRadius.circular(26.r),
                     ),
+                    elevation: 0,
                   ),
-                  child: Text('Add 8 oz', style: TextStyle(fontSize: 16.sp)),
-                ),
-              ),
-              SizedBox(height: 20.h),
-
-              // Notes
-              Text('Today\'s Notes', style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold)),
-              SizedBox(height: 12.h),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                child: TextField(
-                  controller: notesController,
-                  maxLines: 4,
-                  decoration: InputDecoration(
-                    hintText: 'How is your skin feeling today? Any concerns or improvements?',
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.all(16.r),
+                  child: Text(
+                    'Save Check In',
+                    style: TextStyle(fontSize: 16.sp),
                   ),
                 ),
               ),
-              SizedBox(height: 20.h),
-
-              // Save Button
-              Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    Get.toNamed(RouteName.checkinScreen2);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                    foregroundColor: Colors.white,
-                    padding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 80.w),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.r),
-                    ),
-                  ),
-                  child: Text('Save Check In', style: TextStyle(fontSize: 16.sp)),
-                ),
-              ),
+              SizedBox(height: 8.h),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Color(0xFFF7F4EA),
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.add), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: ''),
+
+      // bottom bar (rounded container look)
+
+    );
+  }
+
+  // ——— Widgets ———
+
+  Widget _moodItem(String label, String emoji, String keyLabel) {
+    final isSelected = mood == keyLabel;
+    return GestureDetector(
+      onTap: () => setState(() => mood = keyLabel),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 55.w,
+            height: 55.w,
+            decoration: BoxDecoration(
+              color: isSelected ? const Color(0xFF333333) : Colors.white,
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.08),
+                  blurRadius: 8,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+            ),
+            alignment: Alignment.center,
+            child: Text(emoji, style: TextStyle(fontSize: 22.sp)),
+          ),
+          SizedBox(height: 6.h),
+          SizedBox(
+            width: 64.w,
+            child: Text(
+              label,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 11.sp,
+                color: isSelected ? Colors.black : Colors.black87,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+              ),
+            ),
+          ),
         ],
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.black54,
       ),
     );
   }
 
-  Widget _buildMoodButton(String moodLabel, String emoji) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          mood = moodLabel;
-        });
-      },
+  Widget _skinChip(String label) {
+    final selected = skinStatus == label;
+    return InkWell(
+      onTap: () => setState(() => skinStatus = label),
+      borderRadius: BorderRadius.circular(16.r),
       child: Container(
-        width: 60.w,
-        height: 60.w,
+        alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: mood == moodLabel ? Color(0xFF4A90E2) : Colors.grey[200],
-          shape: BoxShape.circle,
-        ),
-        child: Center(child: Text(emoji, style: TextStyle(fontSize: 20.sp))),
-      ),
-    );
-  }
-
-  Widget _buildSkinButton(String skinLabel) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          skinStatus = skinLabel;
-        });
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-        decoration: BoxDecoration(
-          color: skinStatus == skinLabel ? Color(0xFF4A90E2) : Colors.grey[200],
-          borderRadius: BorderRadius.circular(20.r),
+          color: selected ? Colors.black : Colors.white,
+          borderRadius: BorderRadius.circular(16.r),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.08),
+              blurRadius: 8,
+              offset: const Offset(0, 3),
+            ),
+          ],
+          border: Border.all(
+            color: selected ? Colors.black : const Color(0xFFE5E5E5),
+            width: 1,
+          ),
         ),
         child: Text(
-          skinLabel,
+          label,
           style: TextStyle(
-            color: skinStatus == skinLabel ? Colors.white : Colors.black,
-            fontSize: 14.sp,
+            color: selected ? Colors.white : Colors.black87,
+            fontWeight: FontWeight.w600,
+            fontSize: 13.sp,
           ),
         ),
       ),
     );
+  }
+}
+
+class _SectionCard extends StatelessWidget {
+  const _SectionCard({required this.title, required this.child});
+
+  final String title;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(14.r),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.9),
+        borderRadius: BorderRadius.circular(14.r),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.06),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w700),
+          ),
+          SizedBox(height: 8.h),
+          child,
+        ],
+      ),
+    );
+  }
+}
+
+class _NavIcon extends StatelessWidget {
+  const _NavIcon({required this.icon});
+
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Icon(icon, color: Colors.black87);
   }
 }
