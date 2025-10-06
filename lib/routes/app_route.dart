@@ -13,6 +13,17 @@ import 'package:skincare/feature/home/checkin_screen1.dart';
 import 'package:skincare/feature/home/jurnal_prompts_screen.dart';
 import 'package:skincare/feature/home/profile_screen.dart';
 import 'package:skincare/feature/home/recipe_screen.dart';
+import 'package:skincare/feature/profile/about_contact_screen.dart';
+import 'package:skincare/feature/profile/encouragement_screen.dart';
+import 'package:skincare/feature/profile/full_story.dart';
+import 'package:skincare/feature/profile/privacy_screen.dart';
+import 'package:skincare/feature/profile/profile_screen.dart';
+import 'package:skincare/feature/shop/cart_screen.dart';
+import 'package:skincare/feature/shop/community_screen.dart';
+import 'package:skincare/feature/shop/order_failed_screen.dart';
+import 'package:skincare/feature/shop/order_success_screen.dart';
+import 'package:skincare/feature/shop/place_order_screen.dart';
+import 'package:skincare/feature/shop/prayer_request_screen.dart';
 import 'package:skincare/feature/shop/shop_screen1.dart';
 import 'package:skincare/feature/shop/shop_screen2.dart';
 import 'package:skincare/feature/splash/daily_faith_screen.dart';
@@ -30,6 +41,10 @@ import '../feature/home/daily_daviation.dart';
 import '../feature/home/daily_daviation_chatbot_screen.dart';
 import '../feature/home/skincare_chatbot_screen.dart';
 import '../feature/home/skincare_guide.dart';
+import '../feature/profile/faith_wins_screen.dart';
+import '../feature/profile/notification_screen.dart';
+import '../feature/profile/shop_history_screen.dart';
+import '../feature/shop/checkout_screen.dart';
 import '../feature/splash/loading_splash_screen.dart';
 import '../feature/splash/willness_screen.dart';
 
@@ -196,6 +211,81 @@ class AppRoute {
     ),GetPage(
       name: RouteName.shopScreen2,
       page: () =>ShopScreen2(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 300),
+    ),GetPage(
+      name: RouteName.cart,
+      page: () =>CartScreen(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 300),
+    ),GetPage(
+      name: RouteName.placeOrder,
+      page: () =>PlaceOrderScreen(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 300),
+    ),GetPage(
+      name: RouteName.checkOut,
+      page: () =>CheckoutScreen(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 300),
+    ),GetPage(
+      name: RouteName.orderSuccess,
+      page: () =>OrderSuccessScreen(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 300),
+    ),GetPage(
+      name: RouteName.orderFaild,
+      page: () =>OrderFailedScreen(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 300),
+    ),GetPage(
+      name: RouteName.community,
+      page: () =>CommunityScreen(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 300),
+    ),GetPage(
+      name: RouteName.prayerRequest,
+      page: () =>PrayerRequestsScreen(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 300),
+    ),GetPage(
+      name: RouteName.faithWins,
+      page: () =>FaithWinsTestimoniesScreen(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 300),
+    ),GetPage(
+      name: RouteName.encouragement,
+      page: () =>EncouragementBoardScreen(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 300),
+    ),GetPage(
+      name: RouteName.notification,
+      page: () =>NotificationScreen(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 300),
+    ),GetPage(
+      name: RouteName.fullStory,
+      page: () =>FullStoryScreen(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 300),
+    ),GetPage(
+      name: RouteName.privacy,
+      page: () =>PrivacyScreen(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 300),
+    ),GetPage(
+      name: RouteName.contact,
+      page: () =>AboutScreen(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 300),
+    ),GetPage(
+      name: RouteName.shophistory,
+      page: () =>ShopHistoryScreen(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 300),
+    ),GetPage(
+      name: RouteName.profileScreen1,
+      page: () =>ProfileScreen1(),
       transition: Transition.rightToLeft,
       transitionDuration: Duration(milliseconds: 300),
     ),

@@ -12,9 +12,9 @@ class _ShopScreen2State extends State<ShopScreen2> {
   int qty = 1;
   bool fav = false;
 
-  // demo data
+  // Data to match the design text
   final String title = 'Light Dress Bless';
-  final String image = 'assets/images/shop/product1.png'; // replace
+  final String image = 'assets/images/shop/product1.png'; // <- your asset here
   final double price = 162.99;
   final double oldPrice = 209.99;
   final double rating = 5.0;
@@ -23,57 +23,67 @@ class _ShopScreen2State extends State<ShopScreen2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFD9D9D9),
+
+
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(56.h),
         child: SafeArea(
           bottom: false,
-          child: Padding(
-            padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 8.h),
-            child: Center(
-              child: Text('Shop',
-                  style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w700)),
+          child: Center(
+            child: Text(
+              'Shop',
+              style: TextStyle(
+                fontSize: 18.sp,
+                fontWeight: FontWeight.w700,
+                color: Colors.black87,
+              ),
             ),
           ),
         ),
       ),
-      body: Stack(
-        children: [
-          // hero image
-          Positioned.fill(
-            top: 0,
-            bottom: 220.h,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(12.r),
-              child: Image.asset(image, fit: BoxFit.cover),
-            ),
-          ),
 
-          // top overlay buttons
-          SafeArea(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        padding: EdgeInsets.only(bottom: 18.h),
+        child: Column(
+          children: [
+            // ======= IMAGE + FLOATING CIRCLE BUTTONS =======
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+              child: Stack(
                 children: [
-                  _CircleBtn(
-                    icon: Icons.arrow_back_ios_new,
-                    onTap: () => Navigator.maybePop(context),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12.r),
+                    child: AspectRatio(
+                      aspectRatio: 1, // square like the mock
+                      child: Image.asset(image, fit: BoxFit.cover),
+                    ),
                   ),
-                  _CircleBtn(
-                    icon: fav ? Icons.favorite : Icons.favorite_border,
-                    onTap: () => setState(() => fav = !fav),
+                  // left button
+                  Positioned(
+                    top: 12.h,
+                    left: 12.w,
+                    child: _CircleBtn(
+                      icon: Icons.arrow_back_ios_new_rounded,
+                      onTap: () => Navigator.maybePop(context),
+                    ),
+                  ),
+                  // right button (favorite)
+                  Positioned(
+                    top: 12.h,
+                    right: 12.w,
+                    child: _CircleBtn(
+                      icon: fav ? Icons.favorite : Icons.favorite_border,
+                      onTap: () => setState(() => fav = !fav),
+                    ),
                   ),
                 ],
               ),
             ),
-          ),
 
-          // floating card
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: EdgeInsets.all(12.w),
+            // ======= FLOATING CARD (looks like it sits right below image) =======
+            Padding(
+              padding: EdgeInsets.fromLTRB(12.w, 6.h, 12.w, 0),
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -86,19 +96,46 @@ class _ShopScreen2State extends State<ShopScreen2> {
                     ),
                   ],
                 ),
-                padding: EdgeInsets.fromLTRB(14.w, 12.h, 14.w, 14.h),
+                padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // title + qty
+                    // ---- title + tiny info dot + qty stepper ----
                     Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Expanded(
-                          child: Text(title,
-                              style: TextStyle(
-                                  fontSize: 16.sp, fontWeight: FontWeight.w700)),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  title,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.black87,
+                                  ),
+                                ),
+                              ),
+                              // tiny circular info icon (to match the small circle by title)
+                              Container(
+                                width: 22.w,
+                                height: 22.w,
+                                margin: EdgeInsets.only(left: 6.w),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(color: Colors.black26, width: 1),
+                                  color: Colors.white,
+                                ),
+                                alignment: Alignment.center,
+                                child: Icon(Icons.info_outline, size: 13.sp, color: Colors.black54),
+                              ),
+                            ],
+                          ),
                         ),
+                        SizedBox(width: 10.w),
                         _QtyStepper(
                           qty: qty,
                           onDecrease: () => setState(() {
@@ -108,91 +145,85 @@ class _ShopScreen2State extends State<ShopScreen2> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 6.h),
+                    SizedBox(height: 8.h),
 
-                    // rating
+                    // ---- rating row ----
                     Row(
                       children: [
                         Icon(Icons.star, size: 16.sp, color: const Color(0xFFFFC107)),
                         SizedBox(width: 6.w),
                         Text(
-                          '$rating ',
-                          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 12.sp),
+                          rating.toStringAsFixed(1),
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 12.sp,
+                            color: Colors.black87,
+                          ),
                         ),
+                        SizedBox(width: 6.w),
                         Text(
                           '(${_formatReviews(reviews)} reviews)',
-                          style: TextStyle(color: Colors.black54, fontSize: 12.sp),
+                          style: TextStyle(fontSize: 12.sp, color: Colors.black54),
                         ),
                       ],
                     ),
                     SizedBox(height: 10.h),
 
-                    // description
+                    // ---- description line ----
                     Align(
                       alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Its simple and elegant shape makes it perfect for those of you who like you who want minimalist clothes Read More . . .",
-                        style: TextStyle(fontSize: 12.5.sp, color: Colors.black87, height: 1.35),
+                      child: RichText(
+                        text: TextSpan(
+                          style: TextStyle(
+                            fontSize: 12.5.sp,
+                            color: Colors.black87,
+                            height: 1.35,
+                          ),
+                          children: const [
+                            TextSpan(
+                              text:
+                              "Its simple and elegant shape makes it perfect for those of you who like you who want minimalist clothes ",
+                            ),
+                            TextSpan(
+                              text: "Read More . . .",
+                              style: TextStyle(color: Colors.black54),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     SizedBox(height: 14.h),
 
-                    // add to cart button
+                    // ---- Add to cart pill (outlined) ----
                     SizedBox(
                       width: double.infinity,
-                      child: OutlinedButton(
-                        style: OutlinedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(vertical: 12.h),
-                          side: BorderSide(color: Colors.black87, width: 1.2),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(28.r),
-                          ),
-                          backgroundColor: Colors.white,
-                          foregroundColor: Colors.black87,
-                        ),
-                        onPressed: () {},
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.shopping_bag_outlined, size: 18.sp),
-                            SizedBox(width: 8.w),
-                            Text(
-                              'Add to Cart | \$${price.toStringAsFixed(2)}',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w700, fontSize: 13.5.sp),
-                            ),
-                            SizedBox(width: 8.w),
-                            Text(
-                              '\$${oldPrice.toStringAsFixed(2)}',
-                              style: TextStyle(
-                                fontSize: 12.sp,
-                                color: Colors.black45,
-                                decoration: TextDecoration.lineThrough,
-                              ),
-                            ),
-                          ],
-                        ),
+                      child: _AddToCartPill(
+                        price: price,
+                        oldPrice: oldPrice,
+                        onPressed: () {
+                          // TODO: add to cart handler
+                        },
                       ),
                     ),
                   ],
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
   String _formatReviews(int n) {
-    // 7,932 -> "7,932"
     final s = n.toString();
     final re = RegExp(r'\B(?=(\d{3})+(?!\d))');
     return s.replaceAllMapped(re, (m) => ',');
   }
 }
 
-/// small round icon button
+// ======= Widgets =======
+
 class _CircleBtn extends StatelessWidget {
   const _CircleBtn({required this.icon, this.onTap});
   final IconData icon;
@@ -224,7 +255,6 @@ class _CircleBtn extends StatelessWidget {
   }
 }
 
-/// qty stepper like the mock (circle - number + circle +)
 class _QtyStepper extends StatelessWidget {
   const _QtyStepper({
     required this.qty,
@@ -238,7 +268,7 @@ class _QtyStepper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget circleBtn(IconData icon, VoidCallback onTap) => InkWell(
+    Widget circle(IconData ic, VoidCallback onTap) => InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(999),
       child: Container(
@@ -256,21 +286,77 @@ class _QtyStepper extends StatelessWidget {
             ),
           ],
         ),
-        child: Icon(icon, size: 16.sp, color: Colors.black87),
+        alignment: Alignment.center,
+        child: Icon(ic, size: 16.sp, color: Colors.black87),
       ),
     );
 
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        circleBtn(Icons.remove, onDecrease),
+        circle(Icons.remove, onDecrease),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 10.w),
-          child: Text('$qty',
-              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14.sp)),
+          child: Text(
+            '$qty',
+            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14.sp),
+          ),
         ),
-        circleBtn(Icons.add, onIncrease),
+        circle(Icons.add, onIncrease),
       ],
+    );
+  }
+}
+
+class _AddToCartPill extends StatelessWidget {
+  const _AddToCartPill({
+    required this.price,
+    required this.oldPrice,
+    this.onPressed,
+  });
+
+  final double price;
+  final double oldPrice;
+  final VoidCallback? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return OutlinedButton(
+      style: OutlinedButton.styleFrom(
+        padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 14.w),
+        side: const BorderSide(color: Colors.black87, width: 1.3),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28.r)),
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black87,
+      ),
+      onPressed: onPressed,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.shopping_bag_outlined, size: 18.sp),
+              SizedBox(width: 8.w),
+              Text(
+                'Add to Cart | \$${price.toStringAsFixed(2)}',
+                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13.5.sp),
+              ),
+            ],
+          ),
+          Positioned(
+            right: 6.w,
+            child: Text(
+              '\$${oldPrice.toStringAsFixed(2)}',
+              style: TextStyle(
+                fontSize: 12.sp,
+                color: Colors.black45,
+                decoration: TextDecoration.lineThrough,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

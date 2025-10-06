@@ -30,9 +30,32 @@ class RouteName{
   static const String skincareChatbot = '/skincareChatbot';
   static const String dailyDaviationchatbot = '/dailyDaviationchatbot';
   static const String airecipeGenerator = '/airecipeGenerator';
+  static const String cart = '/cart';
+  static const String placeOrder = '/placeOrder';
 
   //Shop Screen
   static const String shopScreen1 = '/shopScreen1';
   static const String shopScreen2 = '/shopScreen2';
+
+  //Checkout Screen
+  static const String checkOut = '/checkOut';
+  static const String orderSuccess = '/orderSuccess';
+  static const String orderFaild = '/orderFaild';
+  static const String community = '/community';
+  static const String prayerRequest = '/prayerRequest';
+
+
+  //profile
+  static const String faithWins = '/faithWins';
+  static const String encouragement = '/encouragement';
+  static const String notification = '/notification';
+  static const String fullStory = '/fullStory';
+  static const String privacy = '/privacy';
+  static const String contact = '/contact';
+  static const String shophistory = '/shophistory';
+  static const String profileScreen1 = '/profileScreen1';
+
+
+
 
 }

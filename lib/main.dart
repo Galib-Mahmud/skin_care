@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           theme: AppTheme.lightTheme, // ✅ use theme here
-          initialRoute: RouteName.shopScreen2,
+          initialRoute: RouteName.profileScreen1,
           getPages: AppRoute.pages,
         );
       },
