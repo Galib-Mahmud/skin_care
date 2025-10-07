@@ -6,7 +6,7 @@ import 'package:skincare/feature/auth/screens/reset_password.dart';
 import 'package:skincare/feature/auth/screens/sign_in.dart';
 import 'package:skincare/feature/auth/screens/signup.dart';
 import 'package:skincare/feature/auth/screens/update_password.dart';
-import 'package:skincare/feature/home/HomeScreen.dart';
+import 'package:skincare/feature/home/main_screen.dart';
 import 'package:skincare/feature/home/ai_recipe_generator.dart';
 import 'package:skincare/feature/home/check_in_screen2.dart';
 import 'package:skincare/feature/home/checkin_screen1.dart';
@@ -110,7 +110,7 @@ class AppRoute {
       transitionDuration: Duration(milliseconds: 300),
     ),GetPage(
       name: RouteName.homeScreen,
-      page: () =>HomeScreen(),
+      page: () =>MainScreen(),
       transition: Transition.rightToLeft,
       transitionDuration: Duration(milliseconds: 300),
     ),GetPage(
@@ -286,6 +286,11 @@ class AppRoute {
     ),GetPage(
       name: RouteName.profileScreen1,
       page: () =>ProfileScreen1(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 300),
+    ),GetPage(
+      name: RouteName.mainScreen,
+      page: () =>MainScreen(),
       transition: Transition.rightToLeft,
       transitionDuration: Duration(milliseconds: 300),
     ),

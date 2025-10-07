@@ -54,6 +54,7 @@ class RouteName{
   static const String contact = '/contact';
   static const String shophistory = '/shophistory';
   static const String profileScreen1 = '/profileScreen1';
+  static const String mainScreen = '/mainScreen';
 
 
 

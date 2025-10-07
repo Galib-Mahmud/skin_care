@@ -46,9 +46,7 @@ class CustomBottomNavBar extends StatelessWidget {
             _NavItem(
               icon: Icons.layers,
               isSelected: selectedIndex == 1,
-              onTap:() {
-                Get.toNamed(RouteName.checkinScreen1);
-              },
+              onTap: () => onItemSelected(1),
               label: 'Home',
             ),
             _NavItem(
