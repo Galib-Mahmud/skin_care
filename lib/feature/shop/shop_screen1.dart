@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+
+import '../../routes/route_name.dart';
 
 class ShopScreen1 extends StatefulWidget {
   const ShopScreen1({super.key});
@@ -58,7 +61,7 @@ class _ShopScreen1State extends State<ShopScreen1> {
                   Expanded(
                     child: Center(
                       child: Text('Shop',
-                          style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w700)),
+                            style: TextStyle(fontSize: 20.sp, fontFamily: 'Playfair Display',fontWeight: FontWeight.w800  )),
                     ),
                   ),
                   IconButton(
@@ -149,28 +152,7 @@ class _ShopScreen1State extends State<ShopScreen1> {
         ),
       ),
 
-      // Rounded bottom nav (static)
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.fromLTRB(16.w, 0, 16.w, 16.h),
-        child: Container(
-          height: 64.h,
-          decoration: BoxDecoration(
-            color: Colors.black.withOpacity(0.85),
-            borderRadius: BorderRadius.circular(28.r),
-          ),
-          padding: EdgeInsets.symmetric(horizontal: 18.w),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _NavItem(icon: Icons.home_filled, label: 'Home', selected: true),
-              _NavItem(icon: Icons.category_outlined, label: ''),
-              _NavItem(icon: Icons.shopping_bag_outlined, label: ''),
-              _NavItem(icon: Icons.star_border_rounded, label: ''),
-              _NavItem(icon: Icons.person_outline, label: ''),
-            ],
-          ),
-        ),
-      ),
+
     );
   }
 }
@@ -209,6 +191,7 @@ class _ProductCard extends StatelessWidget {
   final _Product product;
   final VoidCallback onFavToggle;
 
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -228,39 +211,45 @@ class _ProductCard extends StatelessWidget {
         children: [
           // image + heart
           Expanded(
-            child: Stack(
-              children: [
-                Positioned.fill(
-                  child: Image.asset(product.image, fit: BoxFit.cover),
-                ),
-                Positioned(
-                  top: 8.h,
-                  right: 8.w,
-                  child: InkWell(
-                    onTap: onFavToggle,
-                    child: Container(
-                      width: 26.w,
-                      height: 26.w,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.92),
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.15),
-                            blurRadius: 6,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Icon(
-                        product.isFav ? Icons.favorite : Icons.favorite_border,
-                        size: 16.sp,
-                        color: product.isFav ? Colors.redAccent : Colors.black87,
+            child: InkWell(
+              onTap: () {
+                Get.toNamed(RouteName.shopScreen2);
+
+              },
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                    child: Image.asset(product.image, fit: BoxFit.cover),
+                  ),
+                  Positioned(
+                    top: 8.h,
+                    right: 8.w,
+                    child: InkWell(
+                      onTap: onFavToggle,
+                      child: Container(
+                        width: 26.w,
+                        height: 26.w,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.92),
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.15),
+                              blurRadius: 6,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: Icon(
+                          product.isFav ? Icons.favorite : Icons.favorite_border,
+                          size: 16.sp,
+                          color: product.isFav ? Colors.redAccent : Colors.black87,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
 

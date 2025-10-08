@@ -134,10 +134,11 @@ class _InputBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 14.w),
+      padding: EdgeInsets.only(bottom: 20.w,left: 14.w,right: 14.w),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(24.r),
         child: Container(
+          height: 51.h,
           decoration: BoxDecoration(
             color: Colors.white.withOpacity(0.86),
             borderRadius: BorderRadius.circular(24.r),

@@ -47,22 +47,25 @@ class CheckinScreen2 extends StatelessWidget {
                     icon: Image.asset('assets/images/home/book.png', width: 24.w, height: 24.w),
                     title: 'Skincare Guides',
                     subtitle: 'Faith-based beauty tips',
-                    onTap: () => Get.toNamed(RouteName.profileScreen),
+                    onTap: () => Get.toNamed(RouteName.skincareGuide),
                   ),
                   _ResourceCard(
                     icon: Image.asset('assets/images/home/love.png', width: 24.w, height: 24.w),
                     title: 'Daily Devotions',
                     subtitle: 'Spiritual nourishment',
+                    onTap: () => Get.toNamed(RouteName.dailyDaviation),
                   ),
                   _ResourceCard(
                     icon: Image.asset('assets/images/home/man.png', width: 24.w, height: 24.w),
                     title: 'AI Recipe Generator',
                     subtitle: 'Healthy meals for glow',
+                    onTap: () => Get.toNamed(RouteName.recipe),
                   ),
                   _ResourceCard(
                     icon: Image.asset('assets/images/home/add.png', width: 24.w, height: 24.w),
                     title: 'Journal Prompts',
                     subtitle: 'AI-guided reflection',
+                    onTap: () => Get.toNamed(RouteName.jurnalprompts),
                   ),
                 ],
               ),
@@ -74,7 +77,7 @@ class CheckinScreen2 extends StatelessWidget {
                 'Recommended Reading',
                 style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w700),
               ),
-              SizedBox(height: 12.h),
+              SizedBox(height: 18.h),
               const _ReadingCard(
                 title: 'Managing Dry Skin in Winter',
                 content:

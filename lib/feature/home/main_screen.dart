@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:skincare/feature/home/check_in_screen2.dart';
+import 'package:skincare/feature/home/resources.dart';
 import 'package:skincare/feature/home/checkin_screen1.dart';
 import 'package:skincare/feature/home/home_screen.dart';
 import 'package:skincare/feature/profile/profile_screen.dart';
@@ -22,7 +22,6 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _pages = const [
     HomeScreen(),
-    CheckinScreen1(),
     CheckinScreen2(),
     ShopScreen1(),
     ProfileScreen1(),

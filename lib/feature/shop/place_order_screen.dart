@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:skincare/routes/route_name.dart';
 
 class PlaceOrderScreen extends StatefulWidget {
   const PlaceOrderScreen({super.key});
@@ -10,15 +12,24 @@ class PlaceOrderScreen extends StatefulWidget {
 
 class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
   final items = <_CartItem>[
-    _CartItem('Citrus Fresh Facial Serum', 12.99, 'assets/images/shop/order.png', qty: 2, showTrash: false),
-    _CartItem('Citrus Fresh Facial Serum', 12.75, 'assets/images/shop/order.png', qty: 1, showTrash: true),
-    _CartItem('Citrus Fresh Facial Serum', 13.45, 'assets/images/shop/order.png', qty: 1, showTrash: true),
-    _CartItem('Citrus Fresh Facial Serum', 4.09,  'assets/images/shop/order.png', qty: 1, showTrash: true),
+    _CartItem(
+        'Citrus Fresh Facial Serum', 12.99, 'assets/images/shop/order.png',
+        qty: 2, showTrash: false),
+    _CartItem(
+        'Citrus Fresh Facial Serum', 12.75, 'assets/images/shop/order.png',
+        qty: 1, showTrash: true),
+    _CartItem(
+        'Citrus Fresh Facial Serum', 13.45, 'assets/images/shop/order.png',
+        qty: 1, showTrash: true),
+    _CartItem('Citrus Fresh Facial Serum', 4.09, 'assets/images/shop/order.png',
+        qty: 1, showTrash: true),
   ];
 
   final double deliveryCharge = 3.99;
 
-  double get subtotal => items.take(3).fold(0.0, (s, it) => s + it.price * it.qty);
+  double get subtotal =>
+      items.take(3).fold(0.0, (s, it) => s + it.price * it.qty);
+
   double get total => subtotal + deliveryCharge;
 
   @override
@@ -42,13 +53,16 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
                     onTap: () => Navigator.maybePop(context),
                     borderRadius: BorderRadius.circular(8),
                     child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 6.w),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 8.h, horizontal: 6.w),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.arrow_back_ios_new_rounded, size: 16.sp, color: Colors.black87),
+                          Icon(Icons.arrow_back_ios_new_rounded, size: 16.sp,
+                              color: Colors.black87),
                           SizedBox(width: 4.w),
-                          Text('Back', style: TextStyle(fontSize: 14.sp, color: Colors.black87)),
+                          Text('Back', style: TextStyle(
+                              fontSize: 14.sp, color: Colors.black87)),
                         ],
                       ),
                     ),
@@ -92,11 +106,14 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
                   padding: EdgeInsets.only(bottom: 8.h),
                   child: _CartCard(
                     item: item,
-                    onMinus: () => setState(() {
-                      if (item.qty > 1) item.qty--;
-                    }),
+                    onMinus: () =>
+                        setState(() {
+                          if (item.qty > 1) item.qty--;
+                        }),
                     onPlus: () => setState(() => item.qty++),
-                    onRemove: item.showTrash ? () => setState(() => items.removeAt(i)) : null,
+                    onRemove: item.showTrash ? () =>
+                        setState(() =>
+                            items.removeAt(i)) : null,
                   ),
                 );
               }),
@@ -126,12 +143,14 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
             ),
             child: Column(
               children: [
-                _SummaryRow(label: 'Subtotal', value: subtotal.toStringAsFixed(2)),
+                _SummaryRow(
+                    label: 'Subtotal', value: subtotal.toStringAsFixed(2)),
                 SizedBox(height: 8.h),
                 // divider between subtotal and delivery
                 Container(height: 1, color: const Color(0xFFE5EDF2)),
                 SizedBox(height: 8.h),
-                _SummaryRow(label: 'Delivery Charges', value: '+${deliveryCharge.toStringAsFixed(2)}'),
+                _SummaryRow(label: 'Delivery Charges',
+                    value: '+${deliveryCharge.toStringAsFixed(2)}'),
                 SizedBox(height: 14.h),
                 Row(
                   children: [
@@ -163,7 +182,7 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
           // Bottom bar: amount + Check Out button (centered width)
           SafeArea(
             top: false,
-            minimum: EdgeInsets.fromLTRB(16.w, 6.h, 16.w, 12.h),
+            minimum: EdgeInsets.only(bottom: 160.h, left: 14.w, right: 14.w),
             child: Row(
               children: [
                 Text(
@@ -188,9 +207,12 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
                       elevation: 0,
                     ),
                     onPressed: () {
-                      // TODO: proceed to payment
+                      Get.toNamed(
+                          RouteName.checkOut );
+
                     },
-                    child: Text('Check Out', style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600)),
+                    child: Text('Check Out', style: TextStyle(
+                        fontSize: 14.sp, fontWeight: FontWeight.w600)),
                   ),
                 ),
               ],
@@ -205,6 +227,7 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
 /// ===== Helpers =====
 class _SummaryRow extends StatelessWidget {
   const _SummaryRow({required this.label, required this.value});
+
   final String label;
   final String value;
 
@@ -221,7 +244,9 @@ class _SummaryRow extends StatelessWidget {
 }
 
 class _CartItem {
-  _CartItem(this.title, this.price, this.image, {this.qty = 1, this.showTrash = true});
+  _CartItem(this.title, this.price, this.image,
+      {this.qty = 1, this.showTrash = true});
+
   final String title;
   final double price;
   final String image;
@@ -262,7 +287,8 @@ class _CartCard extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(8.r),
-            child: Image.asset(item.image, width: 56.w, height: 56.w, fit: BoxFit.cover),
+            child: Image.asset(
+                item.image, width: 56.w, height: 56.w, fit: BoxFit.cover),
           ),
           SizedBox(width: 10.w),
           Expanded(
@@ -272,15 +298,20 @@ class _CartCard extends StatelessWidget {
                 Text(
                   item.title,
                   maxLines: 1, overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600, color: Colors.black87),
+                  style: TextStyle(fontSize: 14.sp,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black87),
                 ),
                 SizedBox(height: 4.h),
-                Text('\$${item.price.toStringAsFixed(2)}', style: TextStyle(fontSize: 13.sp, color: Colors.black87)),
+                Text('\$${item.price.toStringAsFixed(2)}',
+                    style: TextStyle(fontSize: 13.sp, color: Colors.black87)),
               ],
             ),
           ),
           if (onRemove != null) ...[
-            _IconRoundButton(icon: Icons.delete_outline, onTap: onRemove!, tooltip: 'Remove'),
+            _IconRoundButton(icon: Icons.delete_outline,
+                onTap: onRemove!,
+                tooltip: 'Remove'),
             SizedBox(width: 8.w),
           ],
           _QtyPill(qty: item.qty, onMinus: onMinus, onPlus: onPlus),
@@ -291,7 +322,9 @@ class _CartCard extends StatelessWidget {
 }
 
 class _IconRoundButton extends StatelessWidget {
-  const _IconRoundButton({required this.icon, required this.onTap, this.tooltip});
+  const _IconRoundButton(
+      {required this.icon, required this.onTap, this.tooltip});
+
   final IconData icon;
   final VoidCallback onTap;
   final String? tooltip;
@@ -299,7 +332,8 @@ class _IconRoundButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final child = Container(
-      width: 32.w, height: 32.w,
+      width: 32.w,
+      height: 32.w,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(8.r),
@@ -316,40 +350,48 @@ class _IconRoundButton extends StatelessWidget {
       child: Icon(icon, size: 18.sp, color: Colors.black54),
     );
     return tooltip == null
-        ? InkWell(onTap: onTap, borderRadius: BorderRadius.circular(8.r), child: child)
-        : Tooltip(message: tooltip!, child: InkWell(onTap: onTap, borderRadius: BorderRadius.circular(8.r), child: child));
+        ? InkWell(
+        onTap: onTap, borderRadius: BorderRadius.circular(8.r), child: child)
+        : Tooltip(message: tooltip!,
+        child: InkWell(onTap: onTap,
+            borderRadius: BorderRadius.circular(8.r),
+            child: child));
   }
 }
 
 class _QtyPill extends StatelessWidget {
-  const _QtyPill({required this.qty, required this.onMinus, required this.onPlus});
+  const _QtyPill(
+      {required this.qty, required this.onMinus, required this.onPlus});
+
   final int qty;
   final VoidCallback onMinus;
   final VoidCallback onPlus;
 
   @override
   Widget build(BuildContext context) {
-    Widget roundSmall(IconData ic, VoidCallback onTap) => InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(999),
-      child: Container(
-        width: 28.w, height: 28.w,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          shape: BoxShape.circle,
-          border: Border.all(color: Colors.black12),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.06),
-              blurRadius: 6,
-              offset: const Offset(0, 2),
+    Widget roundSmall(IconData ic, VoidCallback onTap) =>
+        InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(999),
+          child: Container(
+            width: 28.w,
+            height: 28.w,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.black12),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.06),
+                  blurRadius: 6,
+                  offset: const Offset(0, 2),
+                ),
+              ],
             ),
-          ],
-        ),
-        alignment: Alignment.center,
-        child: Icon(ic, size: 16.sp, color: Colors.black87),
-      ),
-    );
+            alignment: Alignment.center,
+            child: Icon(ic, size: 16.sp, color: Colors.black87),
+          ),
+        );
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 6.h),
@@ -370,7 +412,8 @@ class _QtyPill extends StatelessWidget {
         children: [
           roundSmall(Icons.remove, onMinus),
           SizedBox(width: 8.w),
-          Text('$qty', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13.sp)),
+          Text('$qty',
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13.sp)),
           SizedBox(width: 8.w),
           roundSmall(Icons.add, onPlus),
         ],

@@ -30,6 +30,7 @@ class RouteName{
   static const String skincareChatbot = '/skincareChatbot';
   static const String dailyDaviationchatbot = '/dailyDaviationchatbot';
   static const String airecipeGenerator = '/airecipeGenerator';
+  static const String jurnalChatBot = '/jurnalChatBot';
   static const String cart = '/cart';
   static const String placeOrder = '/placeOrder';
 

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+
+import '../../routes/route_name.dart';
 
 class ShopScreen2 extends StatefulWidget {
   const ShopScreen2({super.key});
@@ -33,8 +36,8 @@ class _ShopScreen2State extends State<ShopScreen2> {
             child: Text(
               'Shop',
               style: TextStyle(
-                fontSize: 18.sp,
-                fontWeight: FontWeight.w700,
+                fontSize: 24.sp,
+                fontWeight: FontWeight.w800,
                 color: Colors.black87,
               ),
             ),
@@ -86,7 +89,7 @@ class _ShopScreen2State extends State<ShopScreen2> {
               padding: EdgeInsets.fromLTRB(12.w, 6.h, 12.w, 0),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Color.fromRGBO(255, 255, 255, 0.4),
                   borderRadius: BorderRadius.circular(16.r),
                   boxShadow: [
                     BoxShadow(
@@ -201,7 +204,7 @@ class _ShopScreen2State extends State<ShopScreen2> {
                         price: price,
                         oldPrice: oldPrice,
                         onPressed: () {
-                          // TODO: add to cart handler
+                       Get.toNamed(RouteName.cart);
                         },
                       ),
                     ),
@@ -339,7 +342,7 @@ class _AddToCartPill extends StatelessWidget {
               Icon(Icons.shopping_bag_outlined, size: 18.sp),
               SizedBox(width: 8.w),
               Text(
-                'Add to Cart | \$${price.toStringAsFixed(2)}',
+                'Add to Cart |  \$${price.toStringAsFixed(2)}',
                 style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13.5.sp),
               ),
             ],

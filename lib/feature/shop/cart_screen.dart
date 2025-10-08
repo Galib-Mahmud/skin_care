@@ -1,6 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+
+import '../../routes/route_name.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -106,7 +109,7 @@ class _CartScreenState extends State<CartScreen> {
 
           // bottom total + button
           Padding(
-            padding: EdgeInsets.fromLTRB(18.w, 8.h, 18.w, 18.h),
+            padding: EdgeInsets.only(bottom: 140.h, left: 14.w, right: 14.w),
             child: Row(
               children: [
                 Text(
@@ -131,7 +134,7 @@ class _CartScreenState extends State<CartScreen> {
                       elevation: 0,
                     ),
                     onPressed: () {
-                      // TODO: continue action
+                      Get.toNamed(RouteName.placeOrder);
                     },
                     child: Text('Continue', style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600)),
                   ),

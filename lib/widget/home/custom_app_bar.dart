@@ -28,9 +28,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return SafeArea(
       bottom: false,
       child: Container(
+        height: 58.h,
         // transparent scaffold area
         color: Colors.transparent,
-        padding: EdgeInsets.fromLTRB(12.w, 8.h, 12.w, 8.h),
+        padding: EdgeInsets.only(top: 8.h,left: 14.w,right: 14.w),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(22.r),
           child: BackdropFilter(
@@ -57,7 +58,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
                       child: Icon(Icons.arrow_back_ios_new_rounded,
-                          size: 18.sp, color: Colors.black87),
+                          size: 24.sp, color: Colors.black87),
                     ),
                   ),
 

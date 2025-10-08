@@ -104,7 +104,7 @@ class _AccountCreateSuccessfullyState extends State<AccountCreateSuccessfully> {
                     text: 'Update Password',
                     onPressed: () {
 
-                      Get.toNamed(RouteName.homeScreen);
+                      Get.toNamed(RouteName.mainScreen);
 
 
                     },

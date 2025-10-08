@@ -3,14 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../widget/home/custom_app_bar.dart';
 
-class SkincareChatBot extends StatefulWidget {
-  const SkincareChatBot({super.key});
+class JurnalChatBot extends StatefulWidget {
+  const JurnalChatBot({super.key});
 
   @override
-  State<SkincareChatBot> createState() => _SkincareChatBotState();
+  State<JurnalChatBot> createState() => _JurnalChatBotState();
 }
 
-class _SkincareChatBotState extends State<SkincareChatBot> {
+class _JurnalChatBotState extends State<JurnalChatBot> {
   final TextEditingController _controller = TextEditingController();
   final List<_Msg> _messages = [
     _Msg.time('10:15'),
@@ -45,7 +45,7 @@ To get started, can you tell me what type of skin you have? You can choose from:
           // Background image
           Positioned.fill(
             child: Image.asset(
-              'assets/images/home/skincarechatbot.jpg',
+              'assets/images/home/jurnal.jpg',
               fit: BoxFit.cover,
               color: Colors.white.withOpacity(0.4),
               colorBlendMode: BlendMode.srcOver,

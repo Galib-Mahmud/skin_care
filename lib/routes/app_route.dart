@@ -8,7 +8,7 @@ import 'package:skincare/feature/auth/screens/signup.dart';
 import 'package:skincare/feature/auth/screens/update_password.dart';
 import 'package:skincare/feature/home/main_screen.dart';
 import 'package:skincare/feature/home/ai_recipe_generator.dart';
-import 'package:skincare/feature/home/check_in_screen2.dart';
+import 'package:skincare/feature/home/resources.dart';
 import 'package:skincare/feature/home/checkin_screen1.dart';
 import 'package:skincare/feature/home/jurnal_prompts_screen.dart';
 import 'package:skincare/feature/home/profile_screen.dart';
@@ -39,6 +39,7 @@ import 'package:skincare/routes/route_name.dart';
 
 import '../feature/home/daily_daviation.dart';
 import '../feature/home/daily_daviation_chatbot_screen.dart';
+import '../feature/home/jurnal_chatbot_screen.dart';
 import '../feature/home/skincare_chatbot_screen.dart';
 import '../feature/home/skincare_guide.dart';
 import '../feature/profile/faith_wins_screen.dart';
@@ -291,6 +292,11 @@ class AppRoute {
     ),GetPage(
       name: RouteName.mainScreen,
       page: () =>MainScreen(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 300),
+    ),GetPage(
+      name: RouteName.jurnalChatBot,
+      page: () =>JurnalChatBot(),
       transition: Transition.rightToLeft,
       transitionDuration: Duration(milliseconds: 300),
     ),

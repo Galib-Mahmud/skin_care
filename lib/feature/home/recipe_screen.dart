@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+
+import '../../routes/route_name.dart';
 
 class RecipeScreen extends StatelessWidget {
   const RecipeScreen({super.key, this.onConfirm});
@@ -80,20 +83,25 @@ class RecipeScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          // white ring outline
-                          Container(
-                            width: 70.w,
-                            height: 70.w,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(color: Colors.white, width: 3),
+                      child: InkWell(
+                        onTap: () {
+                          Get.toNamed(RouteName.airecipeGenerator);
+                        },
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            // white ring outline
+                            Container(
+                              width: 70.w,
+                              height: 70.w,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(color: Colors.white, width: 3),
+                              ),
                             ),
-                          ),
-                          Icon(Icons.check, color: Colors.white, size: 28.sp),
-                        ],
+                            Icon(Icons.check, color: Colors.white, size: 28.sp),
+                          ],
+                        ),
                       ),
                     ),
                   ),
