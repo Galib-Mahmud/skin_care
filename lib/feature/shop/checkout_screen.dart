@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:skincare/routes/route_name.dart';
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});
@@ -56,17 +58,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     color: Colors.black87,
                   ),
                 ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                    width: 28.w,
-                    height: 28.w,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.4),
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                ),
+
               ],
             ),
           ),
@@ -82,6 +74,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 12.w),
             child: Column(
+
               children: [
                 _SelectionCard(
                   label: 'Deliver to',
@@ -117,6 +110,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 SizedBox(height: 8.h),
                 _SummaryRow(label: 'Delivery Charges', value: '+${delivery.toStringAsFixed(2)}'),
                 SizedBox(height: 14.h),
+                Container(height: 1, color: const Color(0xFFE5EDF2)), // divider
+                SizedBox(height: 8.h),
                 Row(
                   children: [
                     Text(
@@ -141,13 +136,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               ],
             ),
           ),
+          SizedBox(height: 240.h,),
 
-          const Spacer(),
 
           // ---- Bottom amount + button ----
           SafeArea(
             top: false,
-            minimum: EdgeInsets.fromLTRB(16.w, 6.h, 16.w, 12.h),
+            minimum: EdgeInsets.only(left: 30.w, right: 30.w),
             child: Row(
               children: [
                 Text(
@@ -161,7 +156,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 const Spacer(),
                 SizedBox(
                   height: 46.h,
-                  width: 220.w, // wider like the mock
+                  width: 230.w, // wider like the mock
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black87,
@@ -172,7 +167,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       elevation: 0,
                     ),
                     onPressed: () {
-                      // TODO: proceed to payment
+
+                      Get.toNamed(RouteName.orderSuccess);
+
                     },
                     child: Text(
                       'Proceed to Payment',
@@ -209,13 +206,13 @@ class _SelectionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Color.fromRGBO(255,255, 255, 0.4),
         borderRadius: BorderRadius.circular(12.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.10),
+            color: Colors.black.withOpacity(0.15),
             blurRadius: 10,
-            offset: const Offset(0, 3),
+            offset: const Offset(0, 1),
           ),
         ],
       ),

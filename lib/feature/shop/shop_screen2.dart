@@ -329,12 +329,13 @@ class _AddToCartPill extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 14.w),
         side: const BorderSide(color: Colors.black87, width: 1.3),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28.r)),
-        backgroundColor: Colors.white,
+        backgroundColor: Color.fromRGBO(255, 255, 255, 0.4),
         foregroundColor: Colors.black87,
       ),
       onPressed: onPressed,
       child: Stack(
         alignment: Alignment.center,
+
         children: [
           Row(
             mainAxisSize: MainAxisSize.min,
@@ -343,7 +344,7 @@ class _AddToCartPill extends StatelessWidget {
               SizedBox(width: 8.w),
               Text(
                 'Add to Cart |  \$${price.toStringAsFixed(2)}',
-                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13.5.sp),
+                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15.sp),
               ),
             ],
           ),

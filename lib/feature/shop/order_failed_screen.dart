@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:skincare/routes/route_name.dart';
 
 class OrderFailedScreen extends StatelessWidget {
   const OrderFailedScreen({
@@ -92,7 +94,7 @@ class OrderFailedScreen extends StatelessWidget {
             ),
           ),
 
-          const Spacer(),
+         SizedBox(height: 230.h),
 
           // bottom CTA
           SafeArea(
@@ -110,7 +112,9 @@ class OrderFailedScreen extends StatelessWidget {
                   ),
                   elevation: 0,
                 ),
-                onPressed: onReorder ?? () {},
+                onPressed: onReorder ?? () {
+                  Get.toNamed(RouteName.homeScreen);
+                },
                 child: Text(
                   'Re Order',
                   style: TextStyle(fontSize: 14.5.sp, fontWeight: FontWeight.w600),

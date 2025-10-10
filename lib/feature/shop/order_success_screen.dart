@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:skincare/routes/route_name.dart';
 
 class OrderSuccessScreen extends StatelessWidget {
   const OrderSuccessScreen({
@@ -53,7 +55,7 @@ class OrderSuccessScreen extends StatelessWidget {
             width: 56.w,
             height: 56.w,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Colors.black.withOpacity(0.4),
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
@@ -64,7 +66,7 @@ class OrderSuccessScreen extends StatelessWidget {
               ],
             ),
             alignment: Alignment.center,
-            child: Icon(Icons.check, size: 28.sp, color: Colors.black87),
+            child: Icon(Icons.check, size: 28.sp, color: Colors.white),
           ),
           SizedBox(height: 18.h),
 
@@ -126,7 +128,7 @@ class OrderSuccessScreen extends StatelessWidget {
             ),
           ),
 
-          const Spacer(),
+        SizedBox(height: 230.h),
 
           // bottom CTA
           SafeArea(
@@ -144,7 +146,9 @@ class OrderSuccessScreen extends StatelessWidget {
                   ),
                   elevation: 0,
                 ),
-                onPressed: onTrack ?? () {},
+                onPressed: onTrack ?? () {
+                  Get.toNamed(RouteName.orderFaild);
+                },
                 child: Text(
                   'Track my order',
                   style: TextStyle(fontSize: 14.5.sp, fontWeight: FontWeight.w600),

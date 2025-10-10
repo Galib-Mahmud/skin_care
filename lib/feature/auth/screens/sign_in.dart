@@ -119,7 +119,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       Get.toNamed(RouteName.homeScreen);
                     },
                   ),
-                  const SizedBox(height: 16),
+
                   CustomButton(
                     text: 'Sign Up',
                     onPressed: () {

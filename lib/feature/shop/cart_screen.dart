@@ -65,17 +65,7 @@ class _CartScreenState extends State<CartScreen> {
                     color: Colors.black87,
                   ),
                 ),
-                // right: faint circle (as in mock)
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                    width: 28.w, height: 28.w,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white.withOpacity(0.4),
-                    ),
-                  ),
-                ),
+
               ],
             ),
           ),
@@ -109,7 +99,7 @@ class _CartScreenState extends State<CartScreen> {
 
           // bottom total + button
           Padding(
-            padding: EdgeInsets.only(bottom: 140.h, left: 14.w, right: 14.w),
+            padding: EdgeInsets.only(bottom: 140.h, left: 30.w, right: 30.w),
             child: Row(
               children: [
                 Text(
@@ -123,7 +113,7 @@ class _CartScreenState extends State<CartScreen> {
                 const Spacer(),
                 SizedBox(
                   height: 44.h,
-                  width: 180.w,
+                  width: 230.w,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black87,
@@ -176,7 +166,7 @@ class _CartCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Color.fromRGBO(255, 255,255, 0.4),
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: const Color(0xFFE5EDF2)), // gentle stroke
         boxShadow: [
@@ -258,7 +248,7 @@ class _IconRoundButton extends StatelessWidget {
     final child = Container(
       width: 32.w, height: 32.w,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Color.fromRGBO(255, 255, 255, 0.4),
         borderRadius: BorderRadius.circular(8.r),
         border: Border.all(color: Colors.black12),
         boxShadow: [
@@ -293,7 +283,7 @@ class _QtyPill extends StatelessWidget {
       child: Container(
         width: 28.w, height: 28.w,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Color.fromRGBO(255, 255, 255, 0.4),
           shape: BoxShape.circle,
           border: Border.all(color: Colors.black12),
           boxShadow: [
@@ -312,7 +302,7 @@ class _QtyPill extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 6.h),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Color.fromRGBO(255, 255, 255, 0.4),
         borderRadius: BorderRadius.circular(10.r),
         border: Border.all(color: const Color(0xFFE5EDF2)),
         boxShadow: [

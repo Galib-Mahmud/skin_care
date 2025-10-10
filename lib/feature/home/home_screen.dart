@@ -309,7 +309,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           contentPadding: EdgeInsets.all(14.r),
                           filled: true,
-                          fillColor: Colors.white,
+                          fillColor: Color.fromRGBO(255, 255, 255, 0.4),
                         ),
                       ),
                     ),

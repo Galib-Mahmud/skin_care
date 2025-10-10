@@ -20,8 +20,9 @@ class CustomBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(20),
+      margin: const EdgeInsets.only(bottom: 15,left: 10,right: 10),
       child: Container(
+
         height: 70.h,
         decoration: BoxDecoration(
           color: const Color.fromRGBO(154, 154, 154, 1),
@@ -38,31 +39,31 @@ class CustomBottomNavBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             _NavItem(
-              icon: Icons.home,
+              icon: Image.asset('assets/images/home/homeicon.png'),
               isSelected: selectedIndex == 0,
               onTap: () => onItemSelected(0),
               label: 'Home',
             ),
             _NavItem(
-              icon: Icons.layers,
+              icon:Image.asset('assets/images/home/icon2.png'),
               isSelected: selectedIndex == 1,
               onTap: () => onItemSelected(1),
-              label: 'Home',
+              label: 'Resources',
             ),
             _NavItem(
-              icon: Icons.shopping_bag_outlined,
+              icon: Image.asset('assets/images/home/shopicon.png'),
               isSelected: selectedIndex == 2,
               onTap: () => onItemSelected(2),
-              label: 'Home',
+              label: 'Shop',
             ),
             _NavItem(
-              icon: Icons.settings,
+              icon: Image.asset('assets/images/home/people.png'),
               isSelected: selectedIndex == 3,
               onTap: () => onItemSelected(3),
-              label: 'Home',
+              label: 'Community',
             ),
             _NavItem(
-              icon: Icons.person_outline,
+              icon: Image.asset('assets/images/home/profile.png'),
               isSelected: selectedIndex == 4,
               onTap: () => onItemSelected(4),
               label: 'Home',
@@ -75,7 +76,7 @@ class CustomBottomNavBar extends StatelessWidget {
 }
 
 class _NavItem extends StatelessWidget {
-  final IconData icon;
+  final Widget icon;
   final bool isSelected;
   final VoidCallback onTap;
   final String? label;
@@ -94,7 +95,6 @@ class _NavItem extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
           color: isSelected ? const Color.fromRGBO(47, 46, 46, 1) : Colors.transparent,
@@ -103,17 +103,29 @@ class _NavItem extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              icon,
-              color:isSelected ? Colors.white:Colors.black,
-              size: 24,
-            ),
+            icon is IconData
+                ? Icon(
+                    icon as IconData,
+                    color: isSelected ? Colors.white : Colors.black,
+                    size: 26,
+                  )
+                : ColorFiltered(
+                    colorFilter: ColorFilter.mode(
+                      isSelected ? Colors.white : Colors.black,
+                      BlendMode.srcIn,
+                    ),
+                    child: SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: icon,
+                    ),
+                  ),
             if (isSelected && label != null) ...[
               SizedBox(width: 10),
               Text(
                 label!,
                 style:  TextStyle(
-                  color: Colors.white,
+                  color: isSelected ? Colors.white : Colors.black,
                   fontWeight: FontWeight.w700,
                   fontSize: 14,
                 ),

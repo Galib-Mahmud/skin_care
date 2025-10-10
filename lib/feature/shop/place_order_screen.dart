@@ -182,7 +182,7 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
           // Bottom bar: amount + Check Out button (centered width)
           SafeArea(
             top: false,
-            minimum: EdgeInsets.only(bottom: 160.h, left: 14.w, right: 14.w),
+            minimum: EdgeInsets.only(bottom: 160.h, left: 30.w, right: 30.w),
             child: Row(
               children: [
                 Text(
@@ -196,7 +196,7 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
                 const Spacer(),
                 SizedBox(
                   height: 46.h,
-                  width: 180.w,
+                  width: 230.w,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black87,
@@ -335,7 +335,7 @@ class _IconRoundButton extends StatelessWidget {
       width: 32.w,
       height: 32.w,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Color.fromRGBO(255, 255, 255, 0.4),
         borderRadius: BorderRadius.circular(8.r),
         border: Border.all(color: Colors.black12),
         boxShadow: [
@@ -377,7 +377,7 @@ class _QtyPill extends StatelessWidget {
             width: 28.w,
             height: 28.w,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Color.fromRGBO(255, 255, 255, 0.4),
               shape: BoxShape.circle,
               border: Border.all(color: Colors.black12),
               boxShadow: [
@@ -396,7 +396,7 @@ class _QtyPill extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 6.h),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Color.fromRGBO(255, 255, 255, 0.4),
         borderRadius: BorderRadius.circular(10.r),
         border: Border.all(color: const Color(0xFFE5EDF2)),
         boxShadow: [
