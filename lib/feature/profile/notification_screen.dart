@@ -28,9 +28,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
             child: Text(
               'Notification',
               style: TextStyle(
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w700,
-                color: Colors.black87,
+                fontSize: 20.sp,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
               ),
             ),
           ),
@@ -74,22 +74,15 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     ),
                   ),
                 ],
+
               ),
+
+
             ),
 
             SizedBox(height: 16.h),
 
-            // Notification Options
-            _NotificationTile(
-              title: 'Daily Check-In Reminder',
-              subtitle: 'Get reminded to log your daily skincare',
-              value: _dailyCheckIn,
-              onChanged: (value) {
-                setState(() {
-                  _dailyCheckIn = value;
-                });
-              },
-            ),
+
 
             SizedBox(height: 12.h),
 

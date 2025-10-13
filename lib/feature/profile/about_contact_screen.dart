@@ -7,24 +7,14 @@ class AboutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE8E8E8),
+
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(56.h),
         child: SafeArea(
           bottom: false,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Contact',
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black87,
-                ),
-              ),
-            ),
+
           ),
         ),
       ),
@@ -32,13 +22,13 @@ class AboutScreen extends StatelessWidget {
         padding: EdgeInsets.all(16.w),
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Color.fromRGBO(255, 255, 255, 0.4),
             borderRadius: BorderRadius.circular(12.r),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.04),
                 blurRadius: 6,
-                offset: const Offset(0, 2),
+                offset: const Offset(0, 3),
               ),
             ],
           ),
@@ -49,7 +39,7 @@ class AboutScreen extends StatelessWidget {
               Text(
                 'About',
                 style: TextStyle(
-                  fontSize: 18.sp,
+                  fontSize: 24.sp,
                   fontWeight: FontWeight.w700,
                   color: Colors.black87,
                 ),
@@ -59,7 +49,7 @@ class AboutScreen extends StatelessWidget {
               Text(
                 'Welcome to [Skin Care], a place where simplicity meets innovation. We are committed to building a platform that makes your digital journey smoother, safer, and more enjoyable. Whether you\'re managing your profile, staying updated with notifications, or exploring new features, everything is designed with you in mind.',
                 style: TextStyle(
-                  fontSize: 12.sp,
+                  fontSize: 14.sp,
                   color: Colors.black87,
                   height: 1.5,
                 ),
@@ -69,7 +59,7 @@ class AboutScreen extends StatelessWidget {
               Text(
                 'Our mission is to empower users with tools that are intuitive, secure, and reliable. Whether you\'re managing your profile, staying updated with notifications, or exploring new features, everything is designed with you in mind.',
                 style: TextStyle(
-                  fontSize: 12.sp,
+                  fontSize: 14.sp,
                   color: Colors.black87,
                   height: 1.5,
                 ),
@@ -79,7 +69,7 @@ class AboutScreen extends StatelessWidget {
               Text(
                 'At [Skin care], we embrace core values:',
                 style: TextStyle(
-                  fontSize: 12.sp,
+                  fontSize: 14.sp,
                   color: Colors.black87,
                   height: 1.5,
                 ),
@@ -90,12 +80,12 @@ class AboutScreen extends StatelessWidget {
               _BulletPoint('Transparency – being clear and open in every step'),
               _BulletPoint('Privacy & Security – protecting your data with the highest standards'),
               _BulletPoint('Continuous Innovation – always improving, always evolving'),
-              SizedBox(height: 12.h),
+              SizedBox(height: 14.h),
 
               Text(
                 'This application is more than just software—it\'s a reflection of our commitment to your satisfaction and our dedication to enhancing your everyday experience.',
                 style: TextStyle(
-                  fontSize: 12.sp,
+                  fontSize: 14.sp,
                   color: Colors.black87,
                   height: 1.5,
                 ),
@@ -105,7 +95,7 @@ class AboutScreen extends StatelessWidget {
               Text(
                 'Thank you for choosing [Your App/Platform Name]. We\'re excited to have you with us on this journey, and we look forward to bringing you even more features in the future.',
                 style: TextStyle(
-                  fontSize: 12.sp,
+                  fontSize: 14.sp,
                   color: Colors.black87,
                   height: 1.5,
                 ),
@@ -115,8 +105,8 @@ class AboutScreen extends StatelessWidget {
               Text(
                 'Version 1.0.0\nDeveloped by [Your Team]',
                 style: TextStyle(
-                  fontSize: 11.sp,
-                  color: Colors.black54,
+                  fontSize: 12.sp,
+                  color: Colors.black,
                   height: 1.5,
                 ),
               ),

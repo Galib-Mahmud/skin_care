@@ -66,7 +66,7 @@ class CustomBottomNavBar extends StatelessWidget {
               icon: Image.asset('assets/images/home/profile.png'),
               isSelected: selectedIndex == 4,
               onTap: () => onItemSelected(4),
-              label: 'Home',
+              label: 'Profile',
             ),
           ],
         ),

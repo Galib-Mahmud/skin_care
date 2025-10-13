@@ -7,38 +7,27 @@ class PrivacyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE8E8E8),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(56.h),
         child: SafeArea(
           bottom: false,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Privacy',
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black87,
-                ),
-              ),
-            ),
+
           ),
         ),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.w),
+        padding: EdgeInsets.all(20.w),
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(12.r),
+            color: Color.fromRGBO(255, 255, 255, 0.4),
+            borderRadius: BorderRadius.circular(16.r),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.04),
                 blurRadius: 6,
-                offset: const Offset(0, 2),
+                offset: const Offset(0, 3),
               ),
             ],
           ),
@@ -49,7 +38,7 @@ class PrivacyScreen extends StatelessWidget {
               Text(
                 'Privacy',
                 style: TextStyle(
-                  fontSize: 18.sp,
+                  fontSize: 24.sp,
                   fontWeight: FontWeight.w700,
                   color: Colors.black87,
                 ),

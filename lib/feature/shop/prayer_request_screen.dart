@@ -34,120 +34,124 @@ class _PrayerRequestsScreenState extends State<PrayerRequestsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFD9D9D9),
-
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(56.h),
-        child: SafeArea(
-          bottom: false,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12.w),
-            child: Center(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text('🙏', style: TextStyle(fontSize: 18.sp)),
-                  SizedBox(width: 6.w),
-                  Text(
-                    'Prayer Requests',
-                    style: TextStyle(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black87,
+      body: Padding(
+        padding: EdgeInsets.only(top: 100.h, left: 15.w, right: 12.w,bottom: 150.h),
+        child: Container(
+          height: MediaQuery.of(context).size.height - 120,  // Adjusting height for screen size
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: Color.fromRGBO(255, 255, 255, 0.4),
+            borderRadius: BorderRadius.circular(24.r),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.10),
+                blurRadius: 10,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: 10.w, left: 12.w, right: 12.w),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('🙏', style: TextStyle(fontSize: 18.sp)),
+                    SizedBox(width: 6.w),
+                    Text(
+                      'Prayer Requests',
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black87,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // Input field to share a new prayer request
+              Padding(
+                padding: EdgeInsets.all(12.w),
+                child: TextField(
+                  controller: _controller, // Binding the controller
+                  decoration: InputDecoration(
+                    hintText: 'Share a prayer request with the community...',
+                    hintStyle: TextStyle(color: Colors.black26, fontSize: 14.sp),
+                    filled: true,
+                    fillColor: Color.fromRGBO(255, 255, 255, 0.4),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16.r),
+                      borderSide: BorderSide.none,
+                    ),
+                    contentPadding: EdgeInsets.symmetric(
+                      vertical: 18.h, // Adjust this for the TextField height
+                      horizontal: 16.w,
                     ),
                   ),
-                ],
+                ),
               ),
-            ),
+              // Share Prayer Request Button
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 12.w),
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Share prayer request logic
+                    if (_controller.text.isNotEmpty) {
+                      setState(() {
+                        _requests.insert(
+                          0,
+                          _PrayerRequest('You', 'Just Now', _controller.text, 0),
+                        );
+                        _controller.clear();
+                      });
+                      FocusScope.of(context).unfocus(); // Dismiss keyboard
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(28.r),
+                    ),
+                    backgroundColor: Colors.black87,
+                    padding: EdgeInsets.symmetric(vertical: 14.h),
+                  ),
+                  child: Text(
+                    'Share Prayer Request',
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 12.h),
+              // Prayer Requests List
+              Flexible(
+                child: ListView.separated(
+                  padding: EdgeInsets.symmetric(horizontal: 12.w),
+                  itemCount: _requests.length,
+                  separatorBuilder: (_, __) => SizedBox(height: 12.h),
+                  itemBuilder: (context, i) => _PrayerRequestCard(
+                    request: _requests[i],
+                    onPrayingChanged: (isPraying) {
+                      setState(() {
+                        _requests[i].isPraying = isPraying;
+                        if (isPraying) {
+                          _requests[i].prayingCount++;
+                        } else {
+                          _requests[i].prayingCount--;
+                        }
+                      });
+                    },
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
-      ),
-
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          // Input field to share a new prayer request
-          Padding(
-            padding: EdgeInsets.all(12.w),
-            child: TextField(
-
-
-              decoration: InputDecoration(
-
-                hintText: 'Share a prayer request with the community...',
-                hintStyle: TextStyle(color: Colors.black26, fontSize: 14.sp),
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16.r),
-                  borderSide: BorderSide.none,
-                ),
-                contentPadding: EdgeInsets.symmetric(
-                  vertical: 12.h,
-                  horizontal: 16.w,
-                ),
-              ),
-            ),
-          ),
-
-          // Share Prayer Request Button
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12.w),
-            child: ElevatedButton(
-              onPressed: () {
-                // Share prayer request logic
-                if (_controller.text.isNotEmpty) {
-                  setState(() {
-                    _requests.insert(
-                      0,
-                      _PrayerRequest('You', 'Just Now', _controller.text, 0),
-                    );
-                    _controller.clear();
-                  });
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(28.r),
-                ),
-                backgroundColor: Colors.black87,
-                padding: EdgeInsets.symmetric(vertical: 14.h),
-              ),
-              child: Text(
-                'Share Prayer Request',
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
-
-          SizedBox(height: 12.h),
-
-          // Prayer Requests List
-          Expanded(
-            child: ListView.separated(
-              padding: EdgeInsets.symmetric(horizontal: 12.w),
-              itemCount: _requests.length,
-              separatorBuilder: (_, __) => SizedBox(height: 12.h),
-              itemBuilder: (context, i) => _PrayerRequestCard(
-                request: _requests[i],
-                onPrayingChanged: (isPraying) {
-                  setState(() {
-                    _requests[i].isPraying = isPraying;
-                    if (isPraying) {
-                      _requests[i].prayingCount++;
-                    } else {
-                      _requests[i].prayingCount--;
-                    }
-                  });
-                },
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -162,12 +166,12 @@ class _PrayerRequest {
   bool isPraying;
 
   _PrayerRequest(
-    this.name,
-    this.timestamp,
-    this.message,
-    this.prayingCount, {
-    this.isPraying = false,
-  });
+      this.name,
+      this.timestamp,
+      this.message,
+      this.prayingCount, {
+        this.isPraying = false,
+      });
 }
 
 /// --- Prayer Request Card ---
@@ -184,13 +188,13 @@ class _PrayerRequestCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Color.fromRGBO(255, 255, 255, 0.4),
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.06),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
+            color: Colors.black.withOpacity(0.10),
+            blurRadius: 10,
+            offset: const Offset(0, 1),
           ),
         ],
       ),
@@ -217,7 +221,6 @@ class _PrayerRequestCard extends StatelessWidget {
             ],
           ),
           SizedBox(height: 10.h),
-
           // Prayer request message
           Text(
             request.message,
@@ -227,9 +230,7 @@ class _PrayerRequestCard extends StatelessWidget {
               height: 1.4,
             ),
           ),
-
           SizedBox(height: 12.h),
-
           // Praying button
           OutlinedButton.icon(
             onPressed: () {
