@@ -251,28 +251,81 @@ class _HomeScreenState extends State<HomeScreen> {
                         SizedBox(height: 14.h),
                         SizedBox(
                           width: double.infinity,
-                          child: ElevatedButton.icon(
-                            onPressed: () {
-                              setState(() {
-                                waterIntake = (waterIntake + 8).clamp(0, 100);
-                              });
-                            },
-                            icon: const Icon(Icons.add),
-                            label: Text(
-                              'Add 8 oz +',
-                              style: TextStyle(fontSize: 17.sp),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(24.r),
                             ),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.black,
-                              foregroundColor: Colors.white,
-                              padding: EdgeInsets.symmetric(vertical: 12.h),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(24.r),
-                              ),
-                              elevation: 0,
+                            child: Row(
+                              children: [
+                                // Subtract button (left side)
+                                Expanded(
+                                  child: InkWell(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(24.r),
+                                      bottomLeft: Radius.circular(24.r),
+                                    ),
+                                    onTap: () {
+                                      setState(() {
+                                        waterIntake = (waterIntake - 8).clamp(0, 100);
+                                      });
+                                    },
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(vertical: 12.h),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Icon(Icons.remove, color: Colors.white),
+                                          SizedBox(width: 5.w),
+                                          Text(
+                                            '8 oz',
+                                            style: TextStyle(color: Colors.white, fontSize: 17.sp),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+
+                                Container(
+                                  width: 1.w,
+                                  height: 28.h,
+                                  color: Colors.white24, // divider between + and -
+                                ),
+
+                                // Add button (right side)
+                                Expanded(
+                                  child: InkWell(
+                                    borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(24.r),
+                                      bottomRight: Radius.circular(24.r),
+                                    ),
+                                    onTap: () {
+                                      setState(() {
+                                        waterIntake = (waterIntake + 8).clamp(0, 100);
+                                      });
+                                    },
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(vertical: 12.h),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Icon(Icons.add, color: Colors.white),
+                                          SizedBox(width: 5.w),
+                                          Text(
+                                            '8 oz',
+                                            style: TextStyle(color: Colors.white, fontSize: 17.sp),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ),
+                        )
+
                       ],
                     ),
                   ),
