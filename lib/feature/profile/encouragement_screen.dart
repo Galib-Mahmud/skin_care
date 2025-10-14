@@ -34,7 +34,7 @@ class _EncouragementBoardScreenState extends State<EncouragementBoardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE8E8E8),
+
 
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(56.h),
@@ -69,7 +69,7 @@ class _EncouragementBoardScreenState extends State<EncouragementBoardScreen> {
                   fontSize: 13.sp,
                 ),
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: Color.fromRGBO(255, 255, 255, 0.4),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.r),
                   borderSide: BorderSide.none,
@@ -175,7 +175,7 @@ class _EncouragementCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Color.fromRGBO(255, 255, 255, 0.4),
         borderRadius: BorderRadius.circular(12.r),
         boxShadow: [
           BoxShadow(

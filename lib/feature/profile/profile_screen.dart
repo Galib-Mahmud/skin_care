@@ -59,7 +59,10 @@ class ProfileScreen1 extends StatelessWidget {
                       ),
                       Spacer(), // To align the edit icon to the right
                       InkWell(
-                        onTap: () {}, // Handle edit action here
+                        onTap: () {
+
+                          Get.toNamed(RouteName.editProfile);
+                        }, // Handle edit action here
                         child: ImageIcon(
                           AssetImage("assets/images/shop/edit.png"),
                           size: 30,  // Size of the edit icon
@@ -117,7 +120,10 @@ class ProfileScreen1 extends StatelessWidget {
 
                       // Edit Goals Button
                       ElevatedButton(
-                        onPressed: () {}, // Handle the edit goals action
+                        onPressed: () {
+
+                          Get.toNamed(RouteName.watergoal);
+                        }, // Handle the edit goals action
                         child: Text('Edit Goals', style: TextStyle(fontSize: 16.sp,fontWeight: FontWeight.bold,color: Colors.white)),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color.fromRGBO(47, 46, 46, 1),
