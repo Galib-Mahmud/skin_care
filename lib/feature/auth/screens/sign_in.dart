@@ -39,96 +39,94 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
 
-    return SafeArea(
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(minHeight: screenHeight),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 16),
-                  CustomBackButton(), // Back button at top-left
-                  const SizedBox(height: 16),
-                  Center(
-                    child: Image.asset(
-                      'assets/images/splash/signin.png',
-                      width: 200.w,
-                      height: 200.h,
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(minHeight: screenHeight),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 50),
+                CustomBackButton(), // Back button at top-left
+                const SizedBox(height: 16),
+                Center(
+                  child: Image.asset(
+                    'assets/images/splash/signin.png',
+                    width: 200.w,
+                    height: 200.h,
 
-                      fit: BoxFit.contain,
-                    ),
+                    fit: BoxFit.contain,
                   ),
+                ),
 
-                  Center(
-                    child: Column(
-                      children: [
-                        Text(
-                          "Welcome Back!",
-                          style: TextStyle(
-                            fontFamily: "Inter",
-                            fontSize: 24.sp,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
+                Center(
+                  child: Column(
+                    children: [
+                      Text(
+                        "Welcome Back!",
+                        style: TextStyle(
+                          fontFamily: "Inter",
+                          fontSize: 24.sp,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
                         ),
-                        SizedBox(height: 8.h),
-                        Text(
-                          "Log in to discover your perfect match",
-                          style: TextStyle(
-
-                            fontFamily: "Inter",
-                            fontSize: 16.sp,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 22),
-                  CustomTextField(
-                    icon: Icons.email,
-                    labelText: 'Enter Email Address',
-                    controller: _emailController,
-                    keyboardType: TextInputType.emailAddress,
-                  ),
-                  const SizedBox(height: 16),
-                  CustomTextField(
-                    icon: Icons.lock,
-                    labelText: 'Enter Password',
-                    controller: _passwordController,
-                    obscureText: true,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: () {
-                          Get.toNamed(RouteName.resetPass);
-                        },
-                        child: const Text('Forgot Password?'),
                       ),
+                      SizedBox(height: 8.h),
+                      Text(
+                        "Log in to discover your perfect match",
+                        style: TextStyle(
+
+                          fontFamily: "Inter",
+                          fontSize: 16.sp,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 22),
+                CustomTextField(
+                  icon: Icons.email,
+                  labelText: 'Enter Email Address',
+                  controller: _emailController,
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                const SizedBox(height: 16),
+                CustomTextField(
+                  icon: Icons.lock,
+                  labelText: 'Enter Password',
+                  controller: _passwordController,
+                  obscureText: true,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {
+                        Get.toNamed(RouteName.resetPass);
+                      },
+                      child: const Text('Forgot Password?'),
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  CustomButton(
-                    text: 'Sign In',
-                    onPressed: () {
-                      Get.toNamed(RouteName.homeScreen);
-                    },
-                  ),
+                ),
+                const SizedBox(height: 16),
+                CustomButton(
+                  text: 'Sign In',
+                  onPressed: () {
+                    Get.toNamed(RouteName.homeScreen);
+                  },
+                ),
 
-                  CustomButton(
-                    text: 'Sign Up',
-                    onPressed: () {
-                      Get.toNamed(RouteName.signup);
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                ],
-              ),
+                CustomButton(
+                  text: 'Sign Up',
+                  onPressed: () {
+                    Get.toNamed(RouteName.signup);
+                  },
+                ),
+                const SizedBox(height: 16),
+              ],
             ),
           ),
         ),

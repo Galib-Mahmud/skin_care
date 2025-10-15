@@ -2,13 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-
 import '../../routes/route_name.dart';
 import '../../widget/auth/custom_button.dart';
 
-
-class Question4 extends StatelessWidget {
+class Question4 extends StatefulWidget {
   const Question4({super.key});
+
+  @override
+  _Question4State createState() => _Question4State();
+}
+
+class _Question4State extends State<Question4> {
+  // Variable to store the selected option
+  String selectedOption = "3 time"; // Default selected option
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +37,6 @@ class Question4 extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20.h),
-
             Text(
               "What are the top issues you’d like to improve?",
               style: TextStyle(
@@ -41,20 +46,16 @@ class Question4 extends StatelessWidget {
               ),
             ),
             SizedBox(height: 40.h),
-            buildOptionButton("1 time"),
+            _buildOptionButton("1 time"),
             SizedBox(height: 15.h),
-            buildOptionButton("2 time"),
+            _buildOptionButton("2 time"),
             SizedBox(height: 15.h),
-            buildOptionButton("3 time", isSelected: true),
+            _buildOptionButton("3 time"),
             SizedBox(height: 15.h),
-            buildOptionButton("4 time"),
-
-
-
+            _buildOptionButton("4 time"),
             SizedBox(height: 60.h),
             CustomButton(text: 'Continue', onPressed: () {
               Get.toNamed(RouteName.question5);
-
             }),
           ],
         ),
@@ -62,26 +63,35 @@ class Question4 extends StatelessWidget {
     );
   }
 
-  Widget buildOptionButton(String label, {bool isSelected = false}) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 10.h),
-      height: 60.h,
-      width: 353.w,
-      decoration: BoxDecoration(boxShadow: [
-        BoxShadow(
-          color: Colors.black.withOpacity(0.1), // Light shadow color
-          blurRadius: 5, // Spread of the shadow
-          offset: Offset(0, 4), // Position of the shadow (downwards)
-        ),
-      ],
-        color: isSelected ? Color.fromRGBO(0, 0, 0, 0.4) : Color.fromRGBO(255, 255, 255, 0.4),
-        borderRadius: BorderRadius.circular(10.r),
+  Widget _buildOptionButton(String label) {
+    // Check if the current label is the selected one
+    bool isSelected = selectedOption == label;
 
-      ),
-      child: Center(
-        child: Text(
-          label,
-          style: TextStyle(color: Colors.black, fontSize: 16.sp,fontFamily: 'Poppins'),
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedOption = label; // Update selected option
+        });
+      },
+      child: Container(
+        margin: EdgeInsets.only(bottom: 10.h),
+        height: 60.h,
+        width: 353.w,
+        decoration: BoxDecoration(boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1), // Light shadow color
+            blurRadius: 5, // Spread of the shadow
+            offset: Offset(0, 4), // Position of the shadow (downwards)
+          ),
+        ],
+          color: isSelected ? Color.fromRGBO(0, 0, 0, 0.4) : Color.fromRGBO(255, 255, 255, 0.4),
+          borderRadius: BorderRadius.circular(10.r),
+        ),
+        child: Center(
+          child: Text(
+            label,
+            style: TextStyle(color: Colors.black, fontSize: 16.sp, fontFamily: 'Poppins'),
+          ),
         ),
       ),
     );

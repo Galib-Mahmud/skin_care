@@ -6,14 +6,20 @@ import 'package:skincare/feature/splash/question2.dart';
 import '../../routes/route_name.dart';
 import '../../widget/auth/custom_button.dart';
 
-
-class Question1 extends StatelessWidget {
+class Question1 extends StatefulWidget {
   const Question1({super.key});
+
+  @override
+  _Question1State createState() => _Question1State();
+}
+
+class _Question1State extends State<Question1> {
+  // Variable to store the selected option
+  String selectedOption = "Dry"; // Default selected option
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(217, 217, 217, 1), // background color
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 30.h),
         child: Column(
@@ -31,7 +37,6 @@ class Question1 extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20.h),
-
             Text(
               "What are the top issues you’d like to improve?",
               style: TextStyle(
@@ -43,7 +48,7 @@ class Question1 extends StatelessWidget {
             SizedBox(height: 40.h),
             buildOptionButton("Oily"),
             SizedBox(height: 15.h),
-            buildOptionButton("Dry", isSelected: true),
+            buildOptionButton("Dry"),
             SizedBox(height: 15.h),
             buildOptionButton("Combination"),
             SizedBox(height: 15.h),
@@ -51,7 +56,6 @@ class Question1 extends StatelessWidget {
             SizedBox(height: 60.h),
             CustomButton(text: 'Continue', onPressed: () {
               Get.toNamed(RouteName.question2);
-
             }),
           ],
         ),
@@ -59,26 +63,35 @@ class Question1 extends StatelessWidget {
     );
   }
 
-  Widget buildOptionButton(String label, {bool isSelected = false}) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 10.h),
-      height: 60.h,
-      width: 353.w,
-      decoration: BoxDecoration(boxShadow: [
-        BoxShadow(
-          color: Colors.black.withOpacity(0.1), // Light shadow color
-          blurRadius: 5, // Spread of the shadow
-          offset: Offset(0, 4), // Position of the shadow (downwards)
-        ),
-      ],
-        color: isSelected ? Color.fromRGBO(0, 0, 0, 0.4) : Color.fromRGBO(255, 255, 255, 0.4),
-        borderRadius: BorderRadius.circular(10.r),
+  Widget buildOptionButton(String label) {
+    // Check if the current label is the selected one
+    bool isSelected = selectedOption == label;
 
-      ),
-      child: Center(
-        child: Text(
-          label,
-          style: TextStyle(color: Colors.black, fontSize: 16.sp,fontFamily: 'Poppins'),
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedOption = label; // Update selected option
+        });
+      },
+      child: Container(
+        margin: EdgeInsets.only(bottom: 10.h),
+        height: 60.h,
+        width: 353.w,
+        decoration: BoxDecoration(boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1), // Light shadow color
+            blurRadius: 5, // Spread of the shadow
+            offset: Offset(0, 4), // Position of the shadow (downwards)
+          ),
+        ],
+          color: isSelected ? Color.fromRGBO(0, 0, 0, 0.4) : Color.fromRGBO(255, 255, 255, 0.4),
+          borderRadius: BorderRadius.circular(10.r),
+        ),
+        child: Center(
+          child: Text(
+            label,
+            style: TextStyle(color: Colors.black, fontSize: 16.sp, fontFamily: 'Poppins'),
+          ),
         ),
       ),
     );

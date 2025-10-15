@@ -40,80 +40,78 @@ class _AccountCreateSuccessfullyState extends State<AccountCreateSuccessfully> {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
 
-    return SafeArea(
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: screenHeight,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 16),
-                  CustomBackButton(), // Back button at top-left
-                  const SizedBox(height: 16),
-                  Center(
-                    child: Image.asset(
-                      'assets/images/splash/signin.png',
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: screenHeight,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                 SizedBox(height: 50.h),
+                CustomBackButton(), // Back button at top-left
+                SizedBox(height: 16.h),
+                Center(
+                  child: Image.asset(
+                    'assets/images/splash/signin.png',
 
-                      fit: BoxFit.contain,
-                    ),
+                    fit: BoxFit.contain,
                   ),
-                  Center(
-                    child: Column(
-                      children: [
-                        Text(
-                          "Password Reset",
-                          style: TextStyle(
-                            fontFamily: "Inter",
-                            fontSize: 24.sp,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
+                ),
+                Center(
+                  child: Column(
+                    children: [
+                      Text(
+                        "Password Reset",
+                        style: TextStyle(
+                          fontFamily: "Inter",
+                          fontSize: 24.sp,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
                         ),
-                        SizedBox(height: 8.h),
+                      ),
+                      SizedBox(height: 8.h),
 
-                      ],
-                    ),
+                    ],
                   ),
+                ),
 
-                  const SizedBox(height: 12),
-                  CustomTextField(
-                    icon: Icons.lock,
-                    labelText: 'Enter New Password',
-                    controller: _emailController,
-                    keyboardType: TextInputType.emailAddress,
-                  ),
-                  CustomTextField(
-                    icon: Icons.lock,
-                    labelText: 'Re-Enter New Password',
-                    controller: _emailController,
-                    keyboardType: TextInputType.emailAddress,
-                  ),
-                  const SizedBox(height: 16),
+                const SizedBox(height: 12),
+                CustomTextField(
+                  icon: Icons.lock,
+                  labelText: 'Enter New Password',
+                  controller: _emailController,
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                CustomTextField(
+                  icon: Icons.lock,
+                  labelText: 'Re-Enter New Password',
+                  controller: _emailController,
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                const SizedBox(height: 16),
 
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
 
-                  ),
-                  const SizedBox(height: 16),
-                  CustomButton(
-                    text: 'Update Password',
-                    onPressed: () {
+                ),
+                const SizedBox(height: 16),
+                CustomButton(
+                  text: 'Update Password',
+                  onPressed: () {
 
-                      Get.toNamed(RouteName.mainScreen);
+                    Get.toNamed(RouteName.mainScreen);
 
 
-                    },
-                  ),
-                  const SizedBox(height: 16),
+                  },
+                ),
+                const SizedBox(height: 16),
 
-                  const SizedBox(height: 16),
-                ],
-              ),
+                const SizedBox(height: 16),
+              ],
             ),
           ),
         ),

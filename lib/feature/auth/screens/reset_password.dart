@@ -40,79 +40,77 @@ class _ResetPasswordState extends State<ResetPassword> {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
 
-    return SafeArea(
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: screenHeight,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 16),
-                  CustomBackButton(), // Back button at top-left
-                  const SizedBox(height: 16),
-                  Center(
-                    child: Image.asset(
-                      'assets/images/splash/signin.png',
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: screenHeight,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 50),
+                CustomBackButton(), // Back button at top-left
+                const SizedBox(height: 16),
+                Center(
+                  child: Image.asset(
+                    'assets/images/splash/signin.png',
 
-                      fit: BoxFit.contain,
-                    ),
+                    fit: BoxFit.contain,
                   ),
-                  Center(
-                    child: Column(
-                      children: [
-                        Text(
-                          "Forgot password",
-                          style: TextStyle(
-                            fontFamily: "Inter",
-                            fontSize: 24.sp,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
+                ),
+                Center(
+                  child: Column(
+                    children: [
+                      Text(
+                        "Forgot password",
+                        style: TextStyle(
+                          fontFamily: "Inter",
+                          fontSize: 24.sp,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
                         ),
-                        SizedBox(height: 8.h),
-                        Text(
-                          "Please enter your email to reset the password",
-                          style: TextStyle(
+                      ),
+                      SizedBox(height: 8.h),
+                      Text(
+                        "Please enter your email to reset the password",
+                        style: TextStyle(
 
-                            fontFamily: "Inter",
-                            fontSize: 16.sp,
-                          ),
+                          fontFamily: "Inter",
+                          fontSize: 16.sp,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
+                ),
 
-                  const SizedBox(height: 32),
-                  CustomTextField(
-                    icon: Icons.email,
-                    labelText: 'Enter Email Address',
-                    controller: _emailController,
-                    keyboardType: TextInputType.emailAddress,
-                  ),
-                  const SizedBox(height: 16),
+                const SizedBox(height: 32),
+                CustomTextField(
+                  icon: Icons.email,
+                  labelText: 'Enter Email Address',
+                  controller: _emailController,
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                const SizedBox(height: 16),
 
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
 
-                  ),
-                  const SizedBox(height: 16),
-                  CustomButton(
-                    text: 'Reset Password',
-                    onPressed: () {
-                      Get.toNamed(RouteName.otpScreen);
+                ),
+                const SizedBox(height: 16),
+                CustomButton(
+                  text: 'Reset Password',
+                  onPressed: () {
+                    Get.toNamed(RouteName.otpScreen);
 
-                    },
-                  ),
-                  const SizedBox(height: 16),
+                  },
+                ),
+                const SizedBox(height: 16),
 
-                  const SizedBox(height: 16),
-                ],
-              ),
+                const SizedBox(height: 16),
+              ],
             ),
           ),
         ),

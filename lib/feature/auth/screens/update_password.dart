@@ -40,75 +40,73 @@ class _UpdatePasswordState extends State<UpdatePassword> {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
 
-    return SafeArea(
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: screenHeight,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 16),
-                  CustomBackButton(), // Back button at top-left
-                  const SizedBox(height: 16),
-                  Center(
-                    child: Image.asset(
-                      'assets/images/splash/signin.png',
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: screenHeight,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height:50),
+                CustomBackButton(), // Back button at top-left
+                const SizedBox(height: 16),
+                Center(
+                  child: Image.asset(
+                    'assets/images/splash/signin.png',
 
-                      fit: BoxFit.contain,
-                    ),
+                    fit: BoxFit.contain,
                   ),
-                  Center(
-                    child: Column(
-                      children: [
-                        Text(
-                          "Account Created Successfully",
-                          style: TextStyle(
-                            fontFamily: "Inter",
-                            fontSize: 24.sp,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
+                ),
+                Center(
+                  child: Column(
+                    children: [
+                      Text(
+                        "Account Created Successfully",
+                        style: TextStyle(
+                          fontFamily: "Inter",
+                          fontSize: 24.sp,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
                         ),
-                        SizedBox(height: 8.h),
-                        Text(
-                          "Your account has been created. You can now log in and start exploring your account.",
-                          style: TextStyle(
-                            fontFamily: "Inter",
-                            fontSize: 16.sp,
-                            color: Colors.black,
+                      ),
+                      SizedBox(height: 8.h),
+                      Text(
+                        "Your account has been created. You can now log in and start exploring your account.",
+                        style: TextStyle(
+                          fontFamily: "Inter",
+                          fontSize: 16.sp,
+                          color: Colors.black,
 
-                          ),
                         ),
-                        SizedBox(height: 8.h),
+                      ),
+                      SizedBox(height: 8.h),
 
-                      ],
-                    ),
+                    ],
                   ),
+                ),
 
 
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
 
-                  ),
-                  const SizedBox(height: 16),
-                  CustomButton(
-                    text: 'Sign In',
-                    onPressed: () {
-                      Get.toNamed(RouteName.accountCreateSuccessfully);
+                ),
+                const SizedBox(height: 16),
+                CustomButton(
+                  text: 'Sign In',
+                  onPressed: () {
+                    Get.toNamed(RouteName.accountCreateSuccessfully);
 
 
-                    },
-                  ),
-                  const SizedBox(height: 16),
+                  },
+                ),
+                const SizedBox(height: 16),
 
-                  const SizedBox(height: 16),
-                ],
-              ),
+                const SizedBox(height: 16),
+              ],
             ),
           ),
         ),

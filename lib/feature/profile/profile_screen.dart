@@ -178,10 +178,14 @@ class ProfileScreen1 extends StatelessWidget {
                         Get.toNamed(RouteName.resetPass);
                       },),
                       _SettingItem(title: 'Logout',icon: Icons.logout),
+
+
                     ],
                   ),
                 ),
               ),
+
+              SizedBox(height: 30.h),
             ],
           ),
         ),

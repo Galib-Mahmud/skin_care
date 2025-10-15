@@ -47,7 +47,7 @@ To get started, can you tell me what type of skin you have? You can choose from:
             child: Image.asset(
               'assets/images/home/jurnal.jpg',
               fit: BoxFit.cover,
-              color: Colors.white.withOpacity(0.4),
+              color: Colors.white.withOpacity(0.5),
               colorBlendMode: BlendMode.srcOver,
             ),
           ),
