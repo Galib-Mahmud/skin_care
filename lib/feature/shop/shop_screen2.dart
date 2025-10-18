@@ -52,7 +52,7 @@ class _ShopScreen2State extends State<ShopScreen2> {
           children: [
             // ======= IMAGE + FLOATING CIRCLE BUTTONS =======
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
               child: Stack(
                 children: [
                   ClipRRect(
@@ -122,19 +122,7 @@ class _ShopScreen2State extends State<ShopScreen2> {
                                   ),
                                 ),
                               ),
-                              // tiny circular info icon (to match the small circle by title)
-                              Container(
-                                width: 22.w,
-                                height: 22.w,
-                                margin: EdgeInsets.only(left: 6.w),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(color: Colors.black26, width: 1),
-                                  color: Colors.white,
-                                ),
-                                alignment: Alignment.center,
-                                child: Icon(Icons.info_outline, size: 13.sp, color: Colors.black54),
-                              ),
+
                             ],
                           ),
                         ),
@@ -185,7 +173,7 @@ class _ShopScreen2State extends State<ShopScreen2> {
                           children: const [
                             TextSpan(
                               text:
-                              "Its simple and elegant shape makes it perfect for those of you who like you who want minimalist clothes ",
+                              "Its simple and elegant shape makes it perfect for those of you who like you who want minimalist \n clothes ",
                             ),
                             TextSpan(
                               text: "Read More . . .",
@@ -204,7 +192,7 @@ class _ShopScreen2State extends State<ShopScreen2> {
                         price: price,
                         oldPrice: oldPrice,
                         onPressed: () {
-                       Get.toNamed(RouteName.cart);
+                       Get.toNamed(RouteName.placeOrder);
                         },
                       ),
                     ),
@@ -275,19 +263,13 @@ class _QtyStepper extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(999),
       child: Container(
-        width: 28.w,
-        height: 28.w,
+        width: 30.w,
+        height: 30.w,
         decoration: BoxDecoration(
-          color: Colors.white,
+
           shape: BoxShape.circle,
           border: Border.all(color: Colors.black12),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.08),
-              blurRadius: 6,
-              offset: const Offset(0, 2),
-            ),
-          ],
+
         ),
         alignment: Alignment.center,
         child: Icon(ic, size: 16.sp, color: Colors.black87),

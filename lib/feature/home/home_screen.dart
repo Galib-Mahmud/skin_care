@@ -10,17 +10,16 @@ class HomeScreen extends StatefulWidget {
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
-
-
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
-
   double waterIntake = 78.6;
   String mood = "Good";
   String skinStatus = "Clear";
   final TextEditingController notesController = TextEditingController();
+  String noteText = 'How is your skin feeling today? Any concerns or improvements?'; // Initial note text
+  bool isEditing = false; // To track edit mode
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,12 +30,11 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               // Header with welcome message and Bible verse
               Container(
-
                 decoration: BoxDecoration(
                   color: Colors.grey[400],
                   borderRadius: BorderRadius.circular(20.r),
                   image: const DecorationImage(
-                    image:AssetImage(
+                    image: AssetImage(
                       'assets/images/home/Frame.png',
                     ),
                     fit: BoxFit.cover,
@@ -76,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       SizedBox(height: 8.h),
                       Text(
-                        '"Glowing skin is always in take care of it, and it will take care of you"',
+                        '"Glowing skin is always in, take care of it, and it will take care of you"',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 13.sp,
@@ -119,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             SizedBox(height: 6.h),
                             Text(
-                              '"Glowing skin is always in take care of it, and it will take care of you"',
+                              '"Glowing skin is always in, take care of it, and it will take care of you"',
                               style: TextStyle(
                                 color: Colors.black87,
                                 fontSize: 14.sp,
@@ -137,42 +135,14 @@ class _HomeScreenState extends State<HomeScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // Header
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 12.h),
-                    child: Column(
-                      children: [
-                        Text(
-                          'Daily Check-in',
-                          style: TextStyle(
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w700,
-                            fontFamily: 'Gayathri',
-                            color: Colors.black,
-                          ),
-                        ),
-                        SizedBox(height: 4.h),
-                        Text(
-                          'How are you feeling today?',
-                          style: TextStyle(
-                            fontSize: 20.sp,
-                            fontFamily: 'Gayathri',
-                            color: Colors.black87,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
                   // Mood card
                   _SectionCard(
-                    title: 'Your Mood',
+                    title: 'What’s your Mood Today',
                     child: Column(
                       children: [
                         SizedBox(height: 8.h),
                         Wrap(
                           alignment: WrapAlignment.spaceAround,
-
                           runSpacing: 12.h,
                           children: [
                             _moodItem('Struggling', '😞', 'Struggling'),
@@ -244,7 +214,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),
-
                             ],
                           ),
                         ),
@@ -279,7 +248,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           SizedBox(width: 5.w),
                                           Text(
                                             '8 oz',
-                                            style: TextStyle(color: Colors.white, fontSize: 17.sp),
+                                            style: TextStyle(color: Colors.white, fontSize: 16.sp),
                                           ),
                                         ],
                                       ),
@@ -314,7 +283,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           SizedBox(width: 5.w),
                                           Text(
                                             '8 oz',
-                                            style: TextStyle(color: Colors.white, fontSize: 17.sp),
+                                            style: TextStyle(color: Colors.white, fontSize: 16.sp),
                                           ),
                                         ],
                                       ),
@@ -324,85 +293,99 @@ class _HomeScreenState extends State<HomeScreen> {
                               ],
                             ),
                           ),
-                        )
-
+                        ),
                       ],
                     ),
                   ),
-                  SizedBox(height: 14.h),
+                  SizedBox(height: 16.h),
 
-                  // Notes card
-                  _SectionCard(
-                    title: "Today's Notes",
+                  // Notes card (Editable)
+                  Card(
+                    color: Colors.transparent, // Transparent background to allow child container to handle color
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Color.fromRGBO(255, 255, 255, 0.4),
-                        borderRadius: BorderRadius.circular(12.r),
+                        color: Color.fromRGBO(217, 217, 217, 1),
+                        borderRadius: BorderRadius.circular(16.r),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.06),
-                            blurRadius: 8,
-                            offset: const Offset(0, 3),
+                            color: Colors.black.withOpacity(0.2),
+                            blurRadius: 10,
+                            offset: const Offset(0, 2),
                           ),
                         ],
                       ),
-                      child: TextField(
-                        controller: notesController,
-                        maxLines: 4,
-                        decoration: InputDecoration(
-                          hintText:
-                          'How is your skin feeling today? Any concerns or improvements?',
-                          hintStyle: TextStyle(
-                            color: Colors.black45,
-                            fontSize: 14.sp,
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12.r),
-                            borderSide: BorderSide.none,
-                          ),
-                          contentPadding: EdgeInsets.all(14.r),
-                          filled: true,
-                          fillColor: Color.fromRGBO(255, 255, 255, 0.4),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 12.r, horizontal: 16.r),
+                        child: Column(
+                          children: [
+                            // Title section
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Today's Notes",
+                                  style: TextStyle(
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: Icon(isEditing ? Icons.check : Icons.edit, size: 23.7.sp),
+                                  onPressed: () {
+                                    setState(() {
+                                      if (isEditing) {
+                                        // Save the note text when checkmark is clicked
+                                        noteText = notesController.text;
+                                      }
+                                      isEditing = !isEditing; // Toggle edit mode
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+                            // Display or edit the note text
+                            isEditing
+                                ? TextField(
+                              controller: notesController..text = noteText,
+                              maxLines: 4,
+                              decoration: InputDecoration(
+                                hintText:
+                                'How is your skin feeling today? Any concerns or improvements?',
+                                hintStyle: TextStyle(
+                                  color: Color.fromRGBO(0, 0, 0, 0.4),
+                                  fontSize: 14.sp,
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12.r),
+                                  borderSide: BorderSide.none,
+                                ),
+                                contentPadding:
+                                EdgeInsets.symmetric(vertical: 12.r, horizontal: 16.r),
+                                filled: true,
+                                fillColor: Color.fromRGBO(255, 255, 255, 0.25),
+                              ),
+                            )
+                                : Text(
+                              noteText,
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                color: Color.fromRGBO(0, 0, 0, 0.6),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
                   ),
                   SizedBox(height: 20.h),
 
-
-                  // Save button
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () => Get.toNamed(RouteName.checkinScreen2),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.black,
-                        foregroundColor: Colors.white,
-                        padding: EdgeInsets.symmetric(vertical: 14.h),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(26.r),
-                        ),
-                        elevation: 0,
-                      ),
-                      child: Text(
-                        'Save Check In',
-                        style: TextStyle(fontSize: 16.sp),
-                      ),
-                    ),
-                  ),
+                  // Save button (if needed)
                   SizedBox(height: 8.h),
                 ],
               ),
-
-
-
-
-
-
             ],
           ),
         ),
-
       ),
     );
   }
@@ -420,15 +403,9 @@ class _HomeScreenState extends State<HomeScreen> {
             width: 55.w,
             height: 55.w,
             decoration: BoxDecoration(
-              color: isSelected ? Color.fromRGBO(219, 234, 254,1) : Color.fromRGBO(255, 255, 255, 0.4),
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.09),
-                  blurRadius: 8,
-                  offset: const Offset(0, 1),
-                ),
-              ],
+              color: isSelected ? Color.fromRGBO(219, 234, 254,1) : Color.fromRGBO(217, 217, 217, 1),
+              shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.circular(14.r),
             ),
             alignment: Alignment.center,
             child: Text(emoji, style: TextStyle(fontSize: 22.sp)),
@@ -513,7 +490,7 @@ class _SectionCard extends StatelessWidget {
         children: [
           Text(
             title,
-            style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 16.sp, color: Colors.black, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 8.h),
           child,
@@ -533,4 +510,3 @@ class _NavIcon extends StatelessWidget {
     return Icon(icon, color: Colors.black87);
   }
 }
-

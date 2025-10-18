@@ -28,7 +28,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return SafeArea(
       bottom: false,
       child: Container(
-        height: 58.h,
+        height: 60.h,
         // transparent scaffold area
         color: Colors.transparent,
         padding: EdgeInsets.only(top: 8.h,left: 14.w,right: 14.w),

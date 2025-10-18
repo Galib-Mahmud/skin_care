@@ -136,13 +136,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               ],
             ),
           ),
-          SizedBox(height: 240.h,),
+        Spacer(),
 
 
           // ---- Bottom amount + button ----
           SafeArea(
             top: false,
-            minimum: EdgeInsets.only(left: 30.w, right: 30.w),
+            minimum: EdgeInsets.only(left: 30.w, right: 15.w, bottom: 30.h),
             child: Row(
               children: [
                 Text(
@@ -241,7 +241,7 @@ class _SelectionCard extends StatelessWidget {
                     width: 34.w,
                     height: 34.w,
                     decoration: BoxDecoration(
-                      color: const Color(0xFFF1F1F1),
+
                       borderRadius: BorderRadius.circular(8.r),
                     ),
                     alignment: Alignment.center,

@@ -70,8 +70,8 @@ class OrderFailedScreen extends StatelessWidget {
               title,
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 22.sp,
-                height: 1.2,
+                fontSize: 32.sp,
+
                 fontWeight: FontWeight.w700,
                 color: Colors.black87,
               ),
@@ -86,7 +86,7 @@ class OrderFailedScreen extends StatelessWidget {
               subtitle,
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 12.5.sp,
+                fontSize: 15.sp,
                 height: 1.35,
                 color: Colors.black54,
                 fontWeight: FontWeight.w500,
@@ -94,12 +94,12 @@ class OrderFailedScreen extends StatelessWidget {
             ),
           ),
 
-         SizedBox(height: 230.h),
+         Spacer(),
 
           // bottom CTA
           SafeArea(
             top: false,
-            minimum: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 14.h),
+            minimum: EdgeInsets.only(left: 16.w, right: 16, bottom: 30.h),
             child: SizedBox(
               width: double.infinity,
               height: 48.h,

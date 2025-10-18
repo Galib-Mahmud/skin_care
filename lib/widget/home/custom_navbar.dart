@@ -1,11 +1,5 @@
-// Custom Bottom Navigation Bar Widget
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:skincare/routes/route_name.dart';
-
-import '../../feature/home/checkin_screen1.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   final int selectedIndex;
@@ -20,13 +14,12 @@ class CustomBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 15,left: 10,right: 10),
+      margin: EdgeInsets.only(bottom: 15.h, left: 10.w, right: 10.w), // Scaled margin
       child: Container(
-
-        height: 70.h,
+        height: 70.h, // Scaled height
         decoration: BoxDecoration(
           color: const Color.fromRGBO(154, 154, 154, 1),
-          borderRadius: BorderRadius.circular(35),
+          borderRadius: BorderRadius.circular(35.r), // Scaled border radius
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.2),
@@ -45,7 +38,7 @@ class CustomBottomNavBar extends StatelessWidget {
               label: 'Home',
             ),
             _NavItem(
-              icon:Image.asset('assets/images/home/icon2.png'),
+              icon: Image.asset('assets/images/home/icon2.png'),
               isSelected: selectedIndex == 1,
               onTap: () => onItemSelected(1),
               label: 'Resources',
@@ -95,39 +88,40 @@ class _NavItem extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h), // Scaled padding
         decoration: BoxDecoration(
           color: isSelected ? const Color.fromRGBO(47, 46, 46, 1) : Colors.transparent,
-          borderRadius: BorderRadius.circular(25),
+          borderRadius: BorderRadius.circular(25.r), // Scaled border radius
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
+            // Check if the icon is a normal icon or an image and adjust size accordingly
             icon is IconData
                 ? Icon(
-                    icon as IconData,
-                    color: isSelected ? Colors.white : Colors.black,
-                    size: 26,
-                  )
+              icon as IconData,
+              color: isSelected ? Colors.white : Colors.black,
+              size: 26.sp, // Scaled icon size
+            )
                 : ColorFiltered(
-                    colorFilter: ColorFilter.mode(
-                      isSelected ? Colors.white : Colors.black,
-                      BlendMode.srcIn,
-                    ),
-                    child: SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: icon,
-                    ),
-                  ),
+              colorFilter: ColorFilter.mode(
+                isSelected ? Colors.white : Colors.black,
+                BlendMode.srcIn,
+              ),
+              child: SizedBox(
+                width: 24.w, // Scaled width
+                height: 24.h, // Scaled height
+                child: icon,
+              ),
+            ),
             if (isSelected && label != null) ...[
-              SizedBox(width: 10),
+              SizedBox(width: 10.w), // Scaled width
               Text(
                 label!,
-                style:  TextStyle(
+                style: TextStyle(
                   color: isSelected ? Colors.white : Colors.black,
                   fontWeight: FontWeight.w700,
-                  fontSize: 14,
+                  fontSize: 14.sp, // Scaled text size
                 ),
               ),
             ],

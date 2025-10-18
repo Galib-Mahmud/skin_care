@@ -77,7 +77,7 @@ class OrderSuccessScreen extends StatelessWidget {
               'Yay! Your order\nhas been placed.',
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 22.sp,
+                fontSize: 32.sp,
                 height: 1.2,
                 fontWeight: FontWeight.w700,
                 color: Colors.black87,
@@ -93,7 +93,7 @@ class OrderSuccessScreen extends StatelessWidget {
               'Your order would be delivered in the\n30 mins atmost',
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 12.5.sp,
+                fontSize: 15.sp,
                 height: 1.35,
                 color: Colors.black54,
                 fontWeight: FontWeight.w500,
@@ -128,12 +128,12 @@ class OrderSuccessScreen extends StatelessWidget {
             ),
           ),
 
-        SizedBox(height: 230.h),
+        Spacer(),
 
           // bottom CTA
           SafeArea(
             top: false,
-            minimum: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 14.h),
+            minimum: EdgeInsets.only(left: 16.w,right: 16.w,bottom: 30.h),
             child: SizedBox(
               width: double.infinity,
               height: 48.h,

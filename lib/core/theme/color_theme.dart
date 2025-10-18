@@ -8,7 +8,7 @@ class AppTheme {
 
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: const Color.fromRGBO(255, 255, 255, 0.4), // ✅ your bg color
+      fillColor: const Color.fromRGBO(217, 217, 217, 1), // ✅ your bg color
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
         borderSide: BorderSide.none,

@@ -14,7 +14,7 @@ class ShopScreen1 extends StatefulWidget {
 class _ShopScreen1State extends State<ShopScreen1> {
   final TextEditingController _search = TextEditingController();
 
-  final List<String> filters = ['All', 'Cleansers', 'Serums', 'Exfoliants', 'Moisturizers', 'SPF'];
+  final List<String> filters = ['All', 'Cleansers', 'Serums', 'Exfoliants'];
   int selectedFilter = 0;
 
   final List<_Product> products = List.generate(
@@ -24,7 +24,7 @@ class _ShopScreen1State extends State<ShopScreen1> {
       subtitle: 'Skin',
       price: 194.99,
       rating: 5.0,
-      image: 'assets/images/shop/product1.png', // replace with your asset
+      image: 'assets/images/shop/product1.png',
       isFav: i.isEven,
     ),
   );
@@ -32,27 +32,14 @@ class _ShopScreen1State extends State<ShopScreen1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFD9D9D9),
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(64.h),
-        child: SafeArea(
-          bottom: false,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-            child: Container(
-              height: 44.h,
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.85),
-                borderRadius: BorderRadius.circular(22.r),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.12),
-                    blurRadius: 8,
-                    offset: const Offset(0, 3),
-                  ),
-                ],
-              ),
-              child: Row(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Header Row
+              Row(
                 children: [
                   IconButton(
                     onPressed: () => Navigator.maybePop(context),
@@ -60,8 +47,14 @@ class _ShopScreen1State extends State<ShopScreen1> {
                   ),
                   Expanded(
                     child: Center(
-                      child: Text('Shop',
-                            style: TextStyle(fontSize: 20.sp, fontFamily: 'Playfair Display',fontWeight: FontWeight.w800  )),
+                      child: Text(
+                        'Shop',
+                        style: TextStyle(
+                          fontSize: 20.sp,
+                          fontFamily: 'Playfair Display',
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
                     ),
                   ),
                   IconButton(
@@ -70,23 +63,13 @@ class _ShopScreen1State extends State<ShopScreen1> {
                   ),
                 ],
               ),
-            ),
-          ),
-        ),
-      ),
-
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
               SizedBox(height: 10.h),
 
-              // Search bar
+              // ✅ Search bar with proper black elevation
               _SearchPill(controller: _search),
 
-              SizedBox(height: 12.h),
+
+              SizedBox(height: 30.h),
 
               // Filters
               SizedBox(
@@ -94,7 +77,7 @@ class _ShopScreen1State extends State<ShopScreen1> {
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   itemCount: filters.length,
-                  separatorBuilder: (_, __) => SizedBox(width: 8.w),
+                  separatorBuilder: (_, __) => SizedBox(width: 30.w),
                   itemBuilder: (_, i) {
                     final selected = i == selectedFilter;
                     return GestureDetector(
@@ -107,8 +90,8 @@ class _ShopScreen1State extends State<ShopScreen1> {
                           borderRadius: BorderRadius.circular(20.r),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.10),
-                              blurRadius: 6,
+                              color: Colors.black.withOpacity(0.5),
+                              blurRadius: 9,
                               offset: const Offset(0, 2),
                             )
                           ],
@@ -116,7 +99,7 @@ class _ShopScreen1State extends State<ShopScreen1> {
                         child: Text(
                           filters[i],
                           style: TextStyle(
-                            fontSize: 12.sp,
+                            fontSize: 13.sp,
                             color: selected ? Colors.white : Colors.black87,
                             fontWeight: FontWeight.w600,
                           ),
@@ -126,77 +109,111 @@ class _ShopScreen1State extends State<ShopScreen1> {
                   },
                 ),
               ),
+              SizedBox(height: 20.h),
 
-              SizedBox(height: 12.h),
+              // Product Section
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 8.h),
+                  Text(
+                    'AI Recommendation Products',
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        'See More',
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
 
-              // Grid
-              GridView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 12.h,
-                  crossAxisSpacing: 12.w,
-                  childAspectRatio: 0.72,
-                ),
-                itemCount: products.length,
-                itemBuilder: (_, i) => _ProductCard(
-                  product: products[i],
-                  onFavToggle: () => setState(() => products[i].isFav = !products[i].isFav),
-                ),
+                  // Product Grid
+                  GridView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 12.h,
+                      crossAxisSpacing: 12.w,
+                      childAspectRatio: 0.72,
+                    ),
+                    itemCount: products.length,
+                    itemBuilder: (_, i) => _ProductCard(
+                      product: products[i],
+                      onFavToggle: () => setState(() => products[i].isFav = !products[i].isFav),
+                    ),
+                  ),
+                  SizedBox(height: 90.h),
+                ],
               ),
-
-              SizedBox(height: 90.h),
             ],
           ),
         ),
       ),
-
-
     );
   }
 }
 
-/// Widgets
-
+/// ✅ Search Pill with realistic elevation shadow and rounded style
 class _SearchPill extends StatelessWidget {
   const _SearchPill({required this.controller});
   final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: controller,
-      style: TextStyle(fontSize: 14.sp),
-      cursorColor: Colors.black87,
-      decoration: InputDecoration(
-        isCollapsed: true,
-        contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-        hintText: 'Search Beauty Product',
-        hintStyle: TextStyle(color: Colors.black38, fontSize: 14.sp),
-        prefixIcon: Icon(Icons.search, color: Colors.black45, size: 20.sp),
-        filled: true,
-        fillColor: Colors.white.withOpacity(0.9),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(22.r),
-          borderSide: BorderSide.none,
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 8.h), // Padding around the search bar
+      child: Material(
+        elevation: 8, // Elevation for shadow effect
+        shadowColor: Colors.black.withOpacity(0.9), // Slight shadow for a subtle elevation
+        borderRadius: BorderRadius.circular(30.r), // Rounded edges
+        color: Color.fromRGBO(255, 255, 255, 0.4),
+        child: TextField(
+          controller: controller,
+          style: TextStyle(fontSize: 14.sp, color: Colors.black), // Styling the text
+          cursorColor: Colors.black87,
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h), // Padding inside the TextField
+            hintText: 'Search Beauty Product',
+            hintStyle: TextStyle(color: Colors.black45, fontSize: 14.sp), // Lighter color for hint
+            prefixIcon: Icon(Icons.search, color: Colors.black54, size: 22.sp), // Search icon
+            filled: true,
+            fillColor: Colors.white.withOpacity(0.7), // Background color with subtle opacity
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30.r), // Rounded border
+              borderSide: BorderSide.none, // Remove the default border
+            ),
+          ),
         ),
       ),
     );
   }
 }
 
+
+/// Product Card
 class _ProductCard extends StatelessWidget {
   const _ProductCard({required this.product, required this.onFavToggle});
   final _Product product;
   final VoidCallback onFavToggle;
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Color.fromRGBO(255, 255, 255, 0.4),
         borderRadius: BorderRadius.circular(14.r),
         boxShadow: [
           BoxShadow(
@@ -214,7 +231,6 @@ class _ProductCard extends StatelessWidget {
             child: InkWell(
               onTap: () {
                 Get.toNamed(RouteName.shopScreen2);
-
               },
               child: Stack(
                 children: [
@@ -259,60 +275,37 @@ class _ProductCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(product.title,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14.sp)),
+                Text(
+                  product.title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.sp),
+                ),
                 SizedBox(height: 2.h),
-                Text(product.subtitle,
-                    style: TextStyle(color: Colors.black54, fontSize: 12.sp)),
-
+                Text(
+                  product.subtitle,
+                  style: TextStyle(color: Colors.black54, fontSize: 14.sp),
+                ),
                 SizedBox(height: 8.h),
                 Row(
                   children: [
-                    Text('\$${product.price.toStringAsFixed(2)}',
-                        style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14.sp)),
+                    Text(
+                      '\$${product.price.toStringAsFixed(2)}',
+                      style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14.sp),
+                    ),
                     const Spacer(),
                     Icon(Icons.star, size: 16.sp, color: const Color(0xFFFFC107)),
                     SizedBox(width: 4.w),
-                    Text(product.rating.toStringAsFixed(1),
-                        style: TextStyle(fontSize: 12.sp, color: Colors.black87)),
+                    Text(
+                      product.rating.toStringAsFixed(1),
+                      style: TextStyle(fontSize: 12.sp, color: Colors.black87),
+                    ),
                   ],
                 ),
               ],
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _NavItem extends StatelessWidget {
-  const _NavItem({required this.icon, required this.label, this.selected = false});
-  final IconData icon;
-  final String label;
-  final bool selected;
-
-  @override
-  Widget build(BuildContext context) {
-    final color = selected ? Colors.white : Colors.white70;
-    return InkWell(
-      borderRadius: BorderRadius.circular(18.r),
-      onTap: () {},
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 6.w),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, size: 22.sp, color: color),
-            if (label.isNotEmpty)
-              Padding(
-                padding: EdgeInsets.only(top: 2.h),
-                child: Text(label, style: TextStyle(fontSize: 11.sp, color: color)),
-              ),
-          ],
-        ),
       ),
     );
   }

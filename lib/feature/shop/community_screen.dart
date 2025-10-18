@@ -48,7 +48,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
             child: Text(
               'Community',
               style: TextStyle(
-                fontSize: 18.sp,
+                fontSize: 20.sp,
                 fontWeight: FontWeight.w700,
                 color: Colors.black87,
               ),
@@ -134,13 +134,14 @@ class _CommunityCard extends StatelessWidget {
             // left icon container (subtle, like mock)
             Container(
               width: 46.w,
-              height: 46.w,
+              height: 48.h,
+
               decoration: BoxDecoration(
-                color: const Color(0xFFF3F3F3),
+
                 borderRadius: BorderRadius.circular(10.r),
               ),
               alignment: Alignment.center,
-              child: SizedBox(width: 24.w, height: 24.w, child: item.icon),
+              child: SizedBox(width: 39.w, height: 40.w, child: item.icon),
             ),
             SizedBox(width: 12.w),
 

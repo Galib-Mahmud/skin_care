@@ -26,11 +26,11 @@ class CheckinScreen2 extends StatelessWidget {
                   color: Colors.black,
                 ),
               ),
-              SizedBox(height: 4.h),
+
               Text(
                 'Grow in faith and wellness',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 16.sp, color: Colors.black87),
+                style: TextStyle(fontSize: 22.sp, color: Colors.black,fontWeight: FontWeight.w700),
               ),
               SizedBox(height: 16.h),
 
@@ -135,14 +135,15 @@ class _ResourceCard extends StatelessWidget {
         ),
         padding: EdgeInsets.all(12.w),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Icon inside soft circle
             Container(
               width: 40.w,
               height: 40.w,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Color.fromRGBO(255, 255, 255, 0.4),
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
@@ -210,9 +211,9 @@ class _ReadingCard extends StatelessWidget {
           // leading pill
           Container(
             width: 6.w,
-            height: 42.h,
+            height: 50.h,
             decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.75),
+              color: Colors.grey.withOpacity(0.75),
               borderRadius: BorderRadius.circular(6.r),
             ),
           ),
@@ -223,7 +224,7 @@ class _ReadingCard extends StatelessWidget {
               children: [
                 Text(title, style: TextStyle(fontSize: 15.5.sp, fontWeight: FontWeight.w700)),
                 SizedBox(height: 6.h),
-                Text(content, style: TextStyle(fontSize: 13.sp, color: Colors.black54)),
+                Text(content, style: TextStyle(fontSize: 12.sp, color: Colors.black54)),
               ],
             ),
           ),
