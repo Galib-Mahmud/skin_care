@@ -10,14 +10,14 @@ import '../../../widget/auth/custom_text_field.dart';
 /// Reusable custom back button
 
 
-class UpdatePassword extends StatefulWidget {
-  const UpdatePassword({super.key});
+class AccountCreateSuccessfully extends StatefulWidget {
+  const AccountCreateSuccessfully({super.key});
 
   @override
-  _UpdatePasswordState createState() => _UpdatePasswordState();
+  _AccountCreateSuccessfullyState createState() => _AccountCreateSuccessfullyState();
 }
 
-class _UpdatePasswordState extends State<UpdatePassword> {
+class _AccountCreateSuccessfullyState extends State<AccountCreateSuccessfully> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -74,13 +74,16 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                         ),
                       ),
                       SizedBox(height: 8.h),
-                      Text(
-                        "Your account has been created. You can now log in and start exploring your account.",
-                        style: TextStyle(
-                          fontFamily: "Inter",
-                          fontSize: 16.sp,
-                          color: Colors.black,
+                      Center(
+                        child: Text(
+                          textAlign: TextAlign.center,
+                          "  Your account has been created. You can now log in and start exploring your account.",
+                          style: TextStyle(
+                            fontFamily: "Inter",
+                            fontSize: 16.sp,
+                            color: Color(0x9901031D),
 
+                          ),
                         ),
                       ),
                       SizedBox(height: 8.h),
@@ -98,7 +101,7 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                 CustomButton(
                   text: 'Sign In',
                   onPressed: () {
-                    Get.toNamed(RouteName.accountCreateSuccessfully);
+                    Get.toNamed(RouteName.mainScreen);
 
 
                   },

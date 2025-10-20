@@ -18,7 +18,7 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
       child: Card(
         elevation: 3.0, // Added elevation
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -30,7 +30,7 @@ class CustomTextField extends StatelessWidget {
             labelText: labelText,
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)) ,
             prefixIcon: icon != null ? Icon(icon) : null, // Added icon
-            contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+            contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
           ),
         ),
       ),

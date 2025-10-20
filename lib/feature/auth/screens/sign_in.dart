@@ -107,7 +107,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       onPressed: () {
                         Get.toNamed(RouteName.resetPass);
                       },
-                      child: const Text('Forgot Password?'),
+                      child: const Text('Forgot Password?',style: TextStyle(color: Color(0xFF555555)),),
                     ),
                   ),
                 ),

@@ -20,7 +20,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     final total = subtotal + delivery;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFD9D9D9),
+
 
       // Header area
       appBar: PreferredSize(
@@ -53,7 +53,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 Text(
                   'Checkout',
                   style: TextStyle(
-                    fontSize: 18.sp,
+                    fontSize: 20.sp,
                     fontWeight: FontWeight.w700,
                     color: Colors.black87,
                   ),
@@ -72,12 +72,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
           // ---- Selection Cards ----
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12.w),
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
             child: Column(
 
               children: [
                 _SelectionCard(
-                  label: 'Deliver to',
+                  label: '             Deliver to',
                   leading: Icons.location_on_outlined,
                   value: 'Home - 123 Main St, Apt 4B',
                   onTap: () {
@@ -86,7 +86,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 ),
                 SizedBox(height: 10.h),
                 _SelectionCard(
-                  label: 'Payment from',
+                  label: '            Payment from',
                   leading: Icons.credit_card,
                   value: 'Mastercard - Daniel Jones',
                   onTap: () {
@@ -101,7 +101,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
           // ---- Summary ----
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12.w),
+            padding: EdgeInsets.symmetric(horizontal: 18.w),
             child: Column(
               children: [
                 _SummaryRow(label: 'Subtotal', value: subtotal.toStringAsFixed(2)),
@@ -142,7 +142,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           // ---- Bottom amount + button ----
           SafeArea(
             top: false,
-            minimum: EdgeInsets.only(left: 30.w, right: 15.w, bottom: 30.h),
+            minimum: EdgeInsets.only(left: 30.w, right: 15.w, bottom: 130.h),
             child: Row(
               children: [
                 Text(
@@ -210,9 +210,9 @@ class _SelectionCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.15),
+            color: Colors.black.withOpacity(0.05),
             blurRadius: 10,
-            offset: const Offset(0, 1),
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -224,7 +224,8 @@ class _SelectionCard extends StatelessWidget {
           Text(
             label,
             style: TextStyle(
-              fontSize: 11.5.sp,
+
+              fontSize: 12.5.sp,
               color: Colors.black54,
               fontWeight: FontWeight.w500,
             ),
@@ -245,7 +246,7 @@ class _SelectionCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8.r),
                     ),
                     alignment: Alignment.center,
-                    child: Icon(leading, size: 18.sp, color: Colors.black87),
+                    child: Icon(leading, size: 25.sp, color: Colors.black87),
                   ),
                   SizedBox(width: 10.w),
                   Expanded(
@@ -253,7 +254,7 @@ class _SelectionCard extends StatelessWidget {
                       value,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: 14.sp, color: Colors.black87, fontWeight: FontWeight.w600),
+                      style: TextStyle(fontSize: 16.sp, color: Colors.black87, fontWeight: FontWeight.w600),
                     ),
                   ),
                   Icon(Icons.chevron_right_rounded, size: 22.sp, color: Colors.black38),

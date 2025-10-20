@@ -121,7 +121,8 @@ class _ShopScreen1State extends State<ShopScreen1> {
                     style: TextStyle(
                       fontSize: 16.sp,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                      color: Colors.black87,
+                      fontFamily: "Playfair Display"
                     ),
                   ),
                   Align(
@@ -134,6 +135,7 @@ class _ShopScreen1State extends State<ShopScreen1> {
                           fontSize: 14.sp,
                           color: Colors.black,
                           fontWeight: FontWeight.w600,
+                          fontFamily: "Playfair Display"
                         ),
                       ),
                     ),
@@ -155,7 +157,33 @@ class _ShopScreen1State extends State<ShopScreen1> {
                       onFavToggle: () => setState(() => products[i].isFav = !products[i].isFav),
                     ),
                   ),
-                  SizedBox(height: 90.h),
+                  SizedBox(height: 40.h),
+                  Text(
+                    'Products',
+                    style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                        fontFamily: "Playfair Display"
+                    ),
+
+                  ),          SizedBox(height: 20.h),
+                  GridView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 12.h,
+                      crossAxisSpacing: 12.w,
+                      childAspectRatio: 0.72,
+                    ),
+                    itemCount: products.length,
+                    itemBuilder: (_, i) => _ProductCard(
+                      product: products[i],
+                      onFavToggle: () => setState(() => products[i].isFav = !products[i].isFav),
+                    ),
+                  ),
+
                 ],
               ),
             ],

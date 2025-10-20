@@ -38,7 +38,7 @@ class OrderFailedScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(999),
                 child: Padding(
                   padding: EdgeInsets.all(6.w),
-                  child: Icon(Icons.close, size: 20.sp, color: Colors.black87),
+                  child: Icon(Icons.close, size: 24.sp, color: Colors.black87),
                 ),
               ),
             ),
@@ -48,7 +48,7 @@ class OrderFailedScreen extends StatelessWidget {
 
       body: Column(
         children: [
-          SizedBox(height: 28.h),
+          SizedBox(height: 100.h),
 
           // red circle with white X
           Container(
@@ -99,7 +99,7 @@ class OrderFailedScreen extends StatelessWidget {
           // bottom CTA
           SafeArea(
             top: false,
-            minimum: EdgeInsets.only(left: 16.w, right: 16, bottom: 30.h),
+            minimum: EdgeInsets.only(left: 16.w, right: 16, bottom: 140.h),
             child: SizedBox(
               width: double.infinity,
               height: 48.h,

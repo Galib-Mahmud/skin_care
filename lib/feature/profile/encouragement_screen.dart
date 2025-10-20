@@ -36,109 +36,111 @@ class _EncouragementBoardScreenState extends State<EncouragementBoardScreen> {
     return Scaffold(
 
 
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(56.h),
-        child: SafeArea(
-          bottom: false,
-          child: Center(
-            child: Text(
-              'Encouragement Board',
-              style: TextStyle(
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w600,
-                color: Colors.black87,
+      body: Padding(
+        padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 50.0, bottom: 230.0),
+        child: Card(
+          elevation: 5,
+          color: Color.fromRGBO(217, 217, 217, 1),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(height: 16.h),
+
+              Center(
+                child: Text(
+                  'Encouragement Board',
+                  style: TextStyle(
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black87,
+                  ),
+                ),
               ),
-            ),
+              // Input field to share encouragement
+              Padding(
+                padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 8.h),
+                child: TextField(
+                  controller: _controller,
+                  maxLines: 3,
+                  decoration: InputDecoration(
+                    hintText: 'Share words of encouragement...',
+                    hintStyle: TextStyle(
+                      color: Colors.black26,
+                      fontSize: 13.sp,
+                    ),
+                    filled: true,
+                    fillColor: Color.fromRGBO(255, 255, 255, 0.4),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                      borderSide: BorderSide.none,
+                    ),
+                    contentPadding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 16.w),
+                  ),
+                ),
+              ),
+
+              // Share Encouragement Button
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (_controller.text.isNotEmpty) {
+                      setState(() {
+                        _encouragements.insert(0, _Encouragement(
+                          'You',
+                          'Just Now',
+                          _controller.text,
+                          0,
+                        ));
+                        _controller.clear();
+                      });
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25.r),
+                    ),
+                    backgroundColor: Colors.black87,
+                    padding: EdgeInsets.symmetric(vertical: 14.h),
+                    elevation: 0,
+                  ),
+                  child: Text(
+                    'Share Encouragement',
+                    style: TextStyle(
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+
+              SizedBox(height: 16.h),
+
+              // Encouragements List
+              Expanded(
+                child: ListView.separated(
+                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+                  itemCount: _encouragements.length,
+                  separatorBuilder: (_, __) => SizedBox(height: 12.h),
+                  itemBuilder: (context, i) => _EncouragementCard(
+                    encouragement: _encouragements[i],
+                    onLikeChanged: (isLiked) {
+                      setState(() {
+                        _encouragements[i].isLiked = isLiked;
+                        if (isLiked) {
+                          _encouragements[i].likeCount++;
+                        } else {
+                          _encouragements[i].likeCount--;
+                        }
+                      });
+                    },
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
-      ),
-
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          // Input field to share encouragement
-          Padding(
-            padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 8.h),
-            child: TextField(
-              controller: _controller,
-              maxLines: 3,
-              decoration: InputDecoration(
-                hintText: 'Share words of encouragement...',
-                hintStyle: TextStyle(
-                  color: Colors.black26,
-                  fontSize: 13.sp,
-                ),
-                filled: true,
-                fillColor: Color.fromRGBO(255, 255, 255, 0.4),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                  borderSide: BorderSide.none,
-                ),
-                contentPadding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 16.w),
-              ),
-            ),
-          ),
-
-          // Share Encouragement Button
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
-            child: ElevatedButton(
-              onPressed: () {
-                if (_controller.text.isNotEmpty) {
-                  setState(() {
-                    _encouragements.insert(0, _Encouragement(
-                      'You',
-                      'Just Now',
-                      _controller.text,
-                      0,
-                    ));
-                    _controller.clear();
-                  });
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25.r),
-                ),
-                backgroundColor: Colors.black87,
-                padding: EdgeInsets.symmetric(vertical: 14.h),
-                elevation: 0,
-              ),
-              child: Text(
-                'Share Encouragement',
-                style: TextStyle(
-                  fontSize: 13.sp,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
-
-          SizedBox(height: 16.h),
-
-          // Encouragements List
-          Expanded(
-            child: ListView.separated(
-              padding: EdgeInsets.symmetric(horizontal: 16.w),
-              itemCount: _encouragements.length,
-              separatorBuilder: (_, __) => SizedBox(height: 12.h),
-              itemBuilder: (context, i) => _EncouragementCard(
-                encouragement: _encouragements[i],
-                onLikeChanged: (isLiked) {
-                  setState(() {
-                    _encouragements[i].isLiked = isLiked;
-                    if (isLiked) {
-                      _encouragements[i].likeCount++;
-                    } else {
-                      _encouragements[i].likeCount--;
-                    }
-                  });
-                },
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }

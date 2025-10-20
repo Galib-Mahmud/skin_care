@@ -29,13 +29,11 @@ class _WaterGoalsScreenState extends State<WaterGoalsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-
       body: SafeArea(
         child: Stack(
           children: [
             SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(12, 8, 12, 24),
+              padding: const EdgeInsets.only(top: 70, left: 16, right: 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -55,23 +53,27 @@ class _WaterGoalsScreenState extends State<WaterGoalsScreen> {
                                 data: SliderTheme.of(context).copyWith(
                                   trackHeight: 5,
                                   activeTrackColor: Colors.black87,
-                                  inactiveTrackColor:  Color(0x22000000),
+                                  inactiveTrackColor: const Color(0x22000000),
                                   thumbColor: Colors.black,
                                   overlayShape: SliderComponentShape.noOverlay,
-                                  thumbShape: const RoundSliderThumbShape(
-                                    enabledThumbRadius: 12,
-                                  ),
+                                  thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 14),
+
+                                  // HIDE THE DOTS (tick marks)
+                                  tickMarkShape: SliderTickMarkShape.noTickMark,
+                                  activeTickMarkColor: Colors.transparent,
+                                  inactiveTickMarkColor: Colors.transparent,
                                 ),
                                 child: Slider(
                                   value: _water,
                                   min: 0,
                                   max: 32,
-                                  divisions: 32,
+                                  divisions: 32, // keep discrete steps without showing dots
                                   onChanged: (v) => setState(() => _water = v),
                                 ),
                               ),
                             ),
-                          SizedBox(width: 10.w),
+
+                            SizedBox(width: 10.w),
                             Text(
                               '${_water.toInt()} oz/32 oz',
                               style: const TextStyle(fontSize: 14, color: Colors.black87),
@@ -161,11 +163,11 @@ class _WaterGoalsScreenState extends State<WaterGoalsScreen> {
 
             // top-right close
             Positioned(
-              top: 2,
-              right: 2,
+              top: 20,
+              right: 3,
               child: IconButton(
                 splashRadius: 18,
-                icon: const Icon(Icons.close, size: 20),
+                icon: const Icon(Icons.close, size: 30),
                 onPressed: () {},
               ),
             ),

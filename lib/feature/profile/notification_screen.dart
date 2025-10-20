@@ -46,7 +46,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Colors.white.withOpacity(0.4),
                 borderRadius: BorderRadius.circular(12.r),
                 boxShadow: [
                   BoxShadow(
@@ -57,22 +57,82 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 ],
               ),
               padding: EdgeInsets.all(16.w),
-              child: Row(
+              child: Column(
                 children: [
-                  Icon(
-                    Icons.notifications_outlined,
-                    size: 22.sp,
-                    color: Colors.black87,
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.notifications_outlined,
+                        size: 22.sp,
+                        color: Colors.black87,
+                      ),
+                      SizedBox(width: 12.w),
+                      Text(
+                        'Notification Settings',
+                        style: TextStyle(
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(width: 12.w),
-                  Text(
-                    'Notification Settings',
-                    style: TextStyle(
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black87,
-                    ),
+
+
+
+                  SizedBox(height: 12.h),
+
+                  _NotificationTile(
+                    title: 'Water Intake Reminders',
+                    subtitle: 'Stay hydrated throughout the day',
+                    value: _waterIntake,
+                    onChanged: (value) {
+                      setState(() {
+                        _waterIntake = value;
+                      });
+                    },
                   ),
+
+                  SizedBox(height: 12.h),
+
+                  _NotificationTile(
+                    title: 'Daily Devotional',
+                    subtitle: 'Get reminded to log your daily skincare',
+                    value: _dailyDevotional,
+                    onChanged: (value) {
+                      setState(() {
+                        _dailyDevotional = value;
+                      });
+                    },
+                  ),
+
+                  SizedBox(height: 12.h),
+
+                  _NotificationTile(
+                    title: 'Product Recommendations',
+                    subtitle: 'Personalized skincare suggestions',
+                    value: _productRecommendations,
+                    onChanged: (value) {
+                      setState(() {
+                        _productRecommendations = value;
+                      });
+                    },
+                  ),
+
+                  SizedBox(height: 12.h),
+
+                  _NotificationTile(
+                    title: 'Community Updates',
+                    subtitle: 'New prayer requests and encouragements',
+                    value: _communityUpdates,
+                    onChanged: (value) {
+                      setState(() {
+                        _communityUpdates = value;
+                      });
+                    },
+                  ),
+
+
                 ],
 
               ),
@@ -84,57 +144,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
 
 
-            SizedBox(height: 12.h),
 
-            _NotificationTile(
-              title: 'Water Intake Reminders',
-              subtitle: 'Stay hydrated throughout the day',
-              value: _waterIntake,
-              onChanged: (value) {
-                setState(() {
-                  _waterIntake = value;
-                });
-              },
-            ),
 
-            SizedBox(height: 12.h),
 
-            _NotificationTile(
-              title: 'Daily Devotional',
-              subtitle: 'Get reminded to log your daily skincare',
-              value: _dailyDevotional,
-              onChanged: (value) {
-                setState(() {
-                  _dailyDevotional = value;
-                });
-              },
-            ),
 
-            SizedBox(height: 12.h),
 
-            _NotificationTile(
-              title: 'Product Recommendations',
-              subtitle: 'Personalized skincare suggestions',
-              value: _productRecommendations,
-              onChanged: (value) {
-                setState(() {
-                  _productRecommendations = value;
-                });
-              },
-            ),
 
-            SizedBox(height: 12.h),
-
-            _NotificationTile(
-              title: 'Community Updates',
-              subtitle: 'New prayer requests and encouragements',
-              value: _communityUpdates,
-              onChanged: (value) {
-                setState(() {
-                  _communityUpdates = value;
-                });
-              },
-            ),
           ],
         ),
       ),
@@ -160,7 +175,7 @@ class _NotificationTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Colors.white.withOpacity(0.4),
         borderRadius: BorderRadius.circular(12.r),
         boxShadow: [
           BoxShadow(
@@ -180,7 +195,7 @@ class _NotificationTile extends StatelessWidget {
                 Text(
                   title,
                   style: TextStyle(
-                    fontSize: 14.sp,
+                    fontSize: 18.sp,
                     fontWeight: FontWeight.w600,
                     color: Colors.black87,
                   ),
@@ -189,7 +204,7 @@ class _NotificationTile extends StatelessWidget {
                 Text(
                   subtitle,
                   style: TextStyle(
-                    fontSize: 11.sp,
+                    fontSize: 14.sp,
                     color: Colors.black54,
                     height: 1.3,
                   ),

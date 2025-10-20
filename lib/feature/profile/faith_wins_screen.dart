@@ -70,14 +70,15 @@ class _FaithWinsTestimoniesScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE8E8E8),
-      body: SafeArea(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            // Header Section (Input Card)
-            Container(
-              color: Colors.white,
+
+      body: ListView(
+        padding: EdgeInsets.only(top: 50.h),
+        children: [
+          // Header Section (Input Card)
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Container(
+              color: Color.fromRGBO(255, 255, 255, 0.4),
               padding: EdgeInsets.all(16.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -199,31 +200,31 @@ class _FaithWinsTestimoniesScreenState
                 ],
               ),
             ),
+          ),
 
-            SizedBox(height: 16.h),
+          SizedBox(height: 16.h),
 
-            // Testimonies List
-            ...List.generate(
-              _testimonies.length,
-                  (i) => Padding(
-                padding: EdgeInsets.only(
-                  left: 16.w,
-                  right: 16.w,
-                  bottom: 16.h,
-                ),
-                child: _TestimonyCard(
-                  testimony: _testimonies[i],
-                  onLikeChanged: (isLiked) {
-                    setState(() {
-                      _testimonies[i].isLiked = isLiked;
-                      _testimonies[i].likeCount += isLiked ? 1 : -1;
-                    });
-                  },
-                ),
+          // Testimonies List
+          ...List.generate(
+            _testimonies.length,
+                (i) => Padding(
+              padding: EdgeInsets.only(
+                left: 16.w,
+                right: 16.w,
+                bottom: 16.h,
+              ),
+              child: _TestimonyCard(
+                testimony: _testimonies[i],
+                onLikeChanged: (isLiked) {
+                  setState(() {
+                    _testimonies[i].isLiked = isLiked;
+                    _testimonies[i].likeCount += isLiked ? 1 : -1;
+                  });
+                },
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -262,7 +263,7 @@ class _TestimonyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Color.fromRGBO(255, 255, 255, 0.4),
         borderRadius: BorderRadius.circular(12.r),
         boxShadow: [
           BoxShadow(

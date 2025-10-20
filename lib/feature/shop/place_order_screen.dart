@@ -186,7 +186,7 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
             // Bottom bar: amount + Check Out button (centered width)
             SafeArea(
               top: false,
-              minimum: EdgeInsets.only(bottom: 30.h, left: 25.w, right: 15.w),
+              minimum: EdgeInsets.only(bottom: 130.h, left: 25.w, right: 15.w),
               child: Row(
                 children: [
                   Text(
@@ -283,9 +283,9 @@ class _CartCard extends StatelessWidget {
         border: Border.all(color: const Color(0xFFE5EDF2)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.10),
+            color: Colors.black.withOpacity(0.05),
             blurRadius: 10,
-            offset: const Offset(0, 3),
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -295,7 +295,7 @@ class _CartCard extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(8.r),
             child: Image.asset(
-                item.image, width: 100.w, height: 82.w, fit: BoxFit.cover),
+                item.image, width: 90.w, height: 82.w, fit: BoxFit.cover),
           ),
           SizedBox(width: 10.w),
           Expanded(

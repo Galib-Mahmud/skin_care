@@ -25,7 +25,7 @@ class ScreenCareGuide extends StatelessWidget {
               Text(
                 "Hello! How can I assist you\ntoday?",
                 style: TextStyle(
-                  fontSize: 22.sp,
+                  fontSize: 24.sp,
                   fontWeight: FontWeight.w700,
                   color: Colors.black87,
                   height: 1.25,
@@ -39,6 +39,7 @@ class ScreenCareGuide extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 16.sp,
                   color: Colors.black,
+                  fontFamily: "Playfair Display"
                 ),
               ),
 

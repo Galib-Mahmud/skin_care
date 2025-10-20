@@ -9,7 +9,7 @@ class CheckinScreen2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE9E9E9), // mockup grey
+
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
@@ -122,12 +122,12 @@ class _ResourceCard extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: const Color(0xFFF3F3F3),
+          color:  Color.fromRGBO(255, 255, 255, 0.4),
           borderRadius: BorderRadius.circular(16.r),
           boxShadow: [
             BoxShadow(
               spreadRadius: 2,
-              color: Colors.black.withOpacity(0.2),
+              color: Colors.black.withOpacity(0.05),
               blurRadius: 8,
               offset: const Offset(0, 3),
             ),
@@ -156,23 +156,23 @@ class _ResourceCard extends StatelessWidget {
               alignment: Alignment.center,
               child: icon,
             ),
-            SizedBox(height: 10.h),
+            SizedBox(height: 20.h),
             Text(
               title,
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w700,
+                fontSize: 16.sp,
+                fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),
             ),
-            SizedBox(height: 4.h),
+            SizedBox(height: 8.h),
             Text(
               subtitle,
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 11.5.sp,
-                color: Colors.black54,
+                fontSize: 14.sp,
+                color: Colors.black,
                 height: 1.2,
               ),
               maxLines: 2,
@@ -195,13 +195,13 @@ class _ReadingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFFF3F3F3),
+        color: Color.fromRGBO(255, 255, 255, 0.4),
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.06),
+            color: Colors.black.withOpacity(0.05),
             blurRadius: 8,
-            offset: const Offset(0, 3),
+            offset:  Offset(0, 2),
           ),
         ],
       ),
@@ -222,9 +222,9 @@ class _ReadingCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: TextStyle(fontSize: 15.5.sp, fontWeight: FontWeight.w700)),
+                Text(title, style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold)),
                 SizedBox(height: 6.h),
-                Text(content, style: TextStyle(fontSize: 12.sp, color: Colors.black54)),
+                Text(content, style: TextStyle(fontSize: 14.sp, color: Colors.black87)),
               ],
             ),
           ),

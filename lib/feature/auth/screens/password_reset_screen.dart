@@ -10,14 +10,14 @@ import '../../../widget/auth/custom_text_field.dart';
 /// Reusable custom back button
 
 
-class AccountCreateSuccessfully extends StatefulWidget {
-  const AccountCreateSuccessfully({super.key});
+class PasswordResetScreen extends StatefulWidget {
+  const PasswordResetScreen({super.key});
 
   @override
-  _AccountCreateSuccessfullyState createState() => _AccountCreateSuccessfullyState();
+  _PasswordResetScreenState createState() => _PasswordResetScreenState();
 }
 
-class _AccountCreateSuccessfullyState extends State<AccountCreateSuccessfully> {
+class _PasswordResetScreenState extends State<PasswordResetScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -103,7 +103,7 @@ class _AccountCreateSuccessfullyState extends State<AccountCreateSuccessfully> {
                   text: 'Update Password',
                   onPressed: () {
 
-                    Get.toNamed(RouteName.mainScreen);
+                    Get.toNamed(RouteName.updatePass);
 
 
                   },

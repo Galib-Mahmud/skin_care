@@ -30,7 +30,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                 Navigator.pop(context);
               },
             ),
-            SizedBox(height: 20.h),
+            SizedBox(height: 15.h),
             Text(
               "Start your 3-day FREE trial to continue.",
               style: TextStyle(
@@ -105,7 +105,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 20.h),
+            SizedBox(height: 10.h),
 
             CustomButton(
               text: 'Start 3-day free trial',

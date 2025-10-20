@@ -1,11 +1,11 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
-import 'package:skincare/feature/auth/screens/account_create_successfully.dart';
+import 'package:skincare/feature/auth/screens/password_reset_screen.dart';
 import 'package:skincare/feature/auth/screens/otp_screen.dart';
-import 'package:skincare/feature/auth/screens/reset_password.dart';
+import 'package:skincare/feature/auth/screens/forget_password_screen.dart';
 import 'package:skincare/feature/auth/screens/sign_in.dart';
 import 'package:skincare/feature/auth/screens/signup.dart';
-import 'package:skincare/feature/auth/screens/update_password.dart';
+import 'package:skincare/feature/auth/screens/account_created_successfully.dart';
 import 'package:skincare/feature/home/main_screen.dart';
 import 'package:skincare/feature/home/ai_recipe_generator.dart';
 import 'package:skincare/feature/home/resources.dart';
@@ -88,12 +88,12 @@ class AppRoute {
       transitionDuration: Duration(milliseconds: 300),
     ), GetPage(
       name: RouteName.updatePass,
-      page: () =>UpdatePassword(),
+      page: () =>AccountCreateSuccessfully(),
       transition: Transition.rightToLeft,
       transitionDuration: Duration(milliseconds: 300),
     ), GetPage(
       name: RouteName.accountCreateSuccessfully,
-      page: () =>AccountCreateSuccessfully(),
+      page: () =>PasswordResetScreen(),
       transition: Transition.rightToLeft,
       transitionDuration: Duration(milliseconds: 300),
     ),GetPage(
