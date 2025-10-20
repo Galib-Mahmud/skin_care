@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -13,21 +12,65 @@ class ShopHistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Shop History'),
-        backgroundColor: Colors.white,
-        elevation: 0,
-        centerTitle: true,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {},
+
+      body: SafeArea(
+        child: Column(
+          children: [
+            // Custom Header
+            Container(
+
+              padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
+              child: Row(
+                children: [
+                  // Back Button
+                  InkWell(
+                    onTap: () => Navigator.maybePop(context),
+                    borderRadius: BorderRadius.circular(8),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 6.w),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.arrow_back_ios_new_rounded,
+                              size: 16.sp, color: Colors.black87),
+                          SizedBox(width: 4.w),
+                          Text('Back',
+                              style: TextStyle(
+                                  fontSize: 14.sp, color: Colors.black87)),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Spacer(),
+                  // Title
+                  Text(
+                    'Shop History',
+                    style: TextStyle(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Spacer(),
+                  SizedBox(width: 80.w), // Balance the back button width
+                ],
+              ),
+            ),
+            // Orders List
+            Expanded(
+              child: ListView.builder(
+                padding: EdgeInsets.all(16.w),
+                itemCount: orders.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: EdgeInsets.only(bottom: 16.h),
+                    child: OrderCard(order: orders[index]),
+                  );
+                },
+              ),
+            ),
+          ],
         ),
-      ),
-      body: ListView.builder(
-        itemCount: orders.length,
-        itemBuilder: (context, index) {
-          return OrderCard(order: orders[index]);
-        },
       ),
     );
   }
@@ -39,7 +82,33 @@ class Order {
   final double totalPrice;
   final int itemCount;
 
-  Order({required this.orderId, required this.status, required this.totalPrice, required this.itemCount});
+  Order({
+    required this.orderId,
+    required this.status,
+    required this.totalPrice,
+    required this.itemCount,
+  });
+
+  // Helper methods to get UI-specific values
+  String get deliveryStatus {
+    if (status == 'Packed') return 'Packed';
+    if (status == 'Shipped') return 'Delivered';
+    if (status == 'In Process') return 'Delivered';
+    if (status == 'Delivered') return 'Delivered';
+    return status;
+  }
+
+  String get statusButton {
+    if (status == 'Packed') return 'Complete';
+    if (status == 'Shipped') return 'Shipped';
+    if (status == 'In Process') return 'In Process';
+    if (status == 'Delivered') return 'Complete';
+    return status;
+  }
+
+  bool get showCheckmark {
+    return status == 'Delivered' || status == 'Shipped' || status == 'In Process';
+  }
 }
 
 class OrderCard extends StatelessWidget {
@@ -49,76 +118,131 @@ class OrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-      child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        elevation: 3,
-        child: Padding(
-          padding: EdgeInsets.all(15.0),
-          child: Row(
-            children: [
-              Image.asset('assets/images/shop/shopHistory.png', width: 60, height: 60), // Replace with your image asset
-              SizedBox(width: 15.w),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(order.orderId, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
-                  Text('Standard Delivery', style: TextStyle(fontSize: 14.sp)),
-                  SizedBox(height: 8.h),
-                  Text('\$${order.totalPrice}', style: TextStyle(fontSize: 14.sp, color: Colors.grey)),
-                ],
+    return Container(
+      decoration: BoxDecoration(
+        color: Color(0xFFE8E8E8),
+        borderRadius: BorderRadius.circular(16.r),
+      ),
+      padding: EdgeInsets.all(16.w),
+      child: Row(
+        children: [
+          // Product Image
+          Container(
+            width: 92.w,
+            height: 92.h,
+            decoration: BoxDecoration(
+              color: Color(0xFFF5E6E0),
+              borderRadius: BorderRadius.circular(12.r),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12.r),
+              child: Image.asset(
+                'assets/images/shop/shopHistory.png',
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    color: Color(0xFFF5E6E0),
+                    child: Icon(Icons.shopping_bag, color: Colors.grey, size: 32.sp),
+                  );
+                },
               ),
-              Spacer(),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text('${order.itemCount} items', style: TextStyle(fontSize: 14.sp)),
-                  SizedBox(height: 10.h),
-                  _getStatusButton(order.status),
-                ],
+            ),
+          ),
+          SizedBox(width: 12.w),
+
+          // Order Details
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Order ${order.orderId}',
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
+                  ),
+                ),
+                SizedBox(height: 4.h),
+                Text(
+                  'Standard Delivery',
+                  style: TextStyle(
+                    fontSize: 13.sp,
+                    color: Colors.black87,
+                  ),
+                ),
+                SizedBox(height: 4.h),
+                Text(
+                  '\${order.totalPrice}',
+                  style: TextStyle(
+                    fontSize: 13.sp,
+                    color: Colors.black87,
+                  ),
+                ),
+                SizedBox(height: 6.h),
+                Row(
+                  children: [
+                    Text(
+                      order.deliveryStatus,
+                      style: TextStyle(
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                      ),
+                    ),
+                    if (order.showCheckmark) ...[
+                      SizedBox(width: 6.w),
+                      Container(
+                        width: 20.w,
+                        height: 20.h,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          Icons.check,
+                          color: Colors.white,
+                          size: 14.sp,
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              ],
+            ),
+          ),
+
+          // Right Side - Item Count and Status Button
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                '${order.itemCount} items',
+                style: TextStyle(
+                  fontSize: 13.sp,
+                  color: Colors.black87,
+                ),
+              ),
+              SizedBox(height: 32.h),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(20.r),
+                ),
+                child: Text(
+                  order.statusButton,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 13.sp,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ),
             ],
           ),
-        ),
+        ],
       ),
-    );
-  }
-
-  Widget _getStatusButton(String status) {
-    Color buttonColor;
-    String buttonText;
-
-    switch (status) {
-      case 'Packed':
-        buttonColor = Colors.orange;
-        buttonText = 'Complete';
-        break;
-      case 'Shipped':
-        buttonColor = Colors.blue;
-        buttonText = 'Shipped';
-        break;
-      case 'In Process':
-        buttonColor = Colors.grey;
-        buttonText = 'In Process';
-        break;
-      case 'Delivered':
-        buttonColor = Colors.green;
-        buttonText = 'Delivered';
-        break;
-      default:
-        buttonColor = Colors.black;
-        buttonText = 'Unknown';
-    }
-
-    return ElevatedButton(
-      onPressed: () {},
-      style: ElevatedButton.styleFrom(
-        backgroundColor: buttonColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 8.h),
-      ),
-      child: Text(buttonText, style: TextStyle(fontSize: 14.sp, color: Colors.white)),
     );
   }
 }
