@@ -1,37 +1,65 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTextField extends StatelessWidget {
   final String labelText;
   final bool obscureText;
   final TextEditingController controller;
   final TextInputType? keyboardType;
-  final IconData? icon; // Added optional icon parameter
+  final IconData? icon;
 
   const CustomTextField({
+    Key? key,
     required this.labelText,
     this.obscureText = false,
     required this.controller,
     this.keyboardType,
-    this.icon, // Added icon as an optional parameter
-  });
+    this.icon,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
-      child: Card(
-        elevation: 3.0, // Added elevation
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        child: TextField(
-          controller: controller,
-          obscureText: obscureText,
-          keyboardType: keyboardType,
-          decoration: InputDecoration(
-            labelText: labelText,
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)) ,
-            prefixIcon: icon != null ? Icon(icon) : null, // Added icon
-            contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
-          ),
+    return Material(
+      elevation: 4,
+      borderRadius: BorderRadius.circular(10.r),
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Color(0xFFE8E8E8),
+          // color: Color(0xFFFFFFFF).withOpacity(0.4),
+          borderRadius: BorderRadius.circular(10.r),
+        ),
+        padding: EdgeInsets.all(5.w),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(width: 10.w),
+            if (icon != null) ...[
+              Icon(
+                icon,
+                color: Color(0xFF555555),
+                size: 24.sp,
+              ),
+              SizedBox(width: 5.w),
+            ],
+            Expanded(
+              child: TextField(
+                controller: controller, // Added controller
+                obscureText: obscureText, // Added obscureText
+                keyboardType: keyboardType, // Added keyboardType
+                style: TextStyle(fontSize: 16.sp),
+                decoration: InputDecoration(
+
+                  fillColor: Color(0xFFE8E8E8),
+                  // fillColor: Color(0xFFFFFFFF).withOpacity(0.4),
+                  hintText: labelText,
+                  hintStyle: TextStyle(color: Colors.grey),
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

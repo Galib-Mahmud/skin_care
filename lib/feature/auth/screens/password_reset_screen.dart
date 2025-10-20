@@ -47,7 +47,7 @@ class _PasswordResetScreenState extends State<PasswordResetScreen> {
             minHeight: screenHeight,
           ),
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(left: 20, right: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -86,6 +86,7 @@ class _PasswordResetScreenState extends State<PasswordResetScreen> {
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                 ),
+                const SizedBox(height: 16),
                 CustomTextField(
                   icon: Icons.lock,
                   labelText: 'Re-Enter New Password',
