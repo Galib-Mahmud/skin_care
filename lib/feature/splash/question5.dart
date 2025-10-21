@@ -21,13 +21,14 @@ class _Question5State extends State<Question5> {
     return Scaffold(
       backgroundColor: Color.fromRGBO(217, 217, 217, 1), // background color
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 30.h),
+        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
               padding: EdgeInsets.only(left: 24.w),
               child: Text(
+                textAlign: TextAlign.center,
                 "What’s your top skin goal?",
                 style: TextStyle(
                     fontSize: 32.sp,
@@ -36,7 +37,7 @@ class _Question5State extends State<Question5> {
                 ),
               ),
             ),
-            SizedBox(height: 20.h),
+            SizedBox(height: 10.h),
             Text(
               "What are the top issues you’d like to improve?",
               style: TextStyle(
@@ -47,13 +48,13 @@ class _Question5State extends State<Question5> {
             ),
             SizedBox(height: 40.h),
             _buildOptionButton("Clear & acne-free skin"),
-            SizedBox(height: 15.h),
+            SizedBox(height: 10.h),
             _buildOptionButton("Glowing & hydrated skin"),
-            SizedBox(height: 15.h),
+            SizedBox(height: 10.h),
             _buildOptionButton("Anti-aging & wrinkle care"),
-            SizedBox(height: 15.h),
+            SizedBox(height: 10.h),
             _buildOptionButton("Even skin tone"),
-            SizedBox(height: 15.h),
+            SizedBox(height: 10.h),
             _buildOptionButton("Daily maintenance"),
             SizedBox(height: 60.h),
             CustomButton(text: 'Continue', onPressed: () {

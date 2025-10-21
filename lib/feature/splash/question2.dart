@@ -20,13 +20,14 @@ class _Question2State extends State<Question2> {
     return Scaffold(
       backgroundColor: Color.fromRGBO(217, 217, 217, 1), // background color
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 30.h),
+        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
               padding: EdgeInsets.only(left: 24.w),
               child: Text(
+                textAlign: TextAlign.center,
                 "What’s your daily hydration goal?",
                 style: TextStyle(
                   fontSize: 32.sp,
@@ -46,13 +47,13 @@ class _Question2State extends State<Question2> {
             ),
             SizedBox(height: 40.h),
             _buildOptionButton("8 oz"),
-            SizedBox(height: 15.h),
+            SizedBox(height: 10.h),
             _buildOptionButton("16 oz"),
-            SizedBox(height: 15.h),
+            SizedBox(height: 10.h),
             _buildOptionButton("32 oz"),
-            SizedBox(height: 15.h),
+            SizedBox(height: 10.h),
             _buildOptionButton("64 oz"),
-            SizedBox(height: 15.h),
+            SizedBox(height: 10.h),
             _buildOptionButton("80 oz"),
             SizedBox(height: 60.h),
             CustomButton(text: 'Continue', onPressed: () {
@@ -77,7 +78,7 @@ class _Question2State extends State<Question2> {
       child: Container(
         margin: EdgeInsets.only(bottom: 10.h),
         height: 60.h,
-        width: 353.w,
+        width: 360.w,
         decoration: BoxDecoration(boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1), // Light shadow color
@@ -91,7 +92,7 @@ class _Question2State extends State<Question2> {
         child: Center(
           child: Text(
             label,
-            style: TextStyle(color: Colors.black, fontSize: 18.sp),
+            style: TextStyle(color: isSelected?Colors.white:Colors.black, fontSize: 18.sp),
           ),
         ),
       ),

@@ -51,7 +51,7 @@ class _WaterGoalsScreenState extends State<WaterGoalsScreen> {
                             Expanded(
                               child: SliderTheme(
                                 data: SliderTheme.of(context).copyWith(
-                                  trackHeight: 5,
+                                  trackHeight: 8,
                                   activeTrackColor: Colors.black87,
                                   inactiveTrackColor: const Color(0x22000000),
                                   thumbColor: Colors.black,
@@ -76,7 +76,7 @@ class _WaterGoalsScreenState extends State<WaterGoalsScreen> {
                             SizedBox(width: 10.w),
                             Text(
                               '${_water.toInt()} oz/32 oz',
-                              style: const TextStyle(fontSize: 14, color: Colors.black87),
+                              style: const TextStyle(fontSize: 16, color: Colors.black),
                             ),
                           ],
                         ),

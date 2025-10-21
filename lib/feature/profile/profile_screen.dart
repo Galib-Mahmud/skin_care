@@ -9,7 +9,8 @@ class ProfileScreen1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
+      backgroundColor: Color(0xFFD9D9D9),
+       body: Padding(
         padding: const EdgeInsets.only(top: 60, left: 20, right: 20),
         child: SingleChildScrollView(
           // Remove Container with double.infinity height
@@ -21,11 +22,11 @@ class ProfileScreen1 extends StatelessWidget {
                 height: 100.h,
                 width: double.infinity,
                 child: Card(
-                  elevation: 2,
+                  elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  color: Color.fromRGBO(255, 255, 255, 0.4),
+                  color: Colors.white.withOpacity(0.4),
                   child: Row(
                     children: [
                       CircleAvatar(
@@ -51,7 +52,7 @@ class ProfileScreen1 extends StatelessWidget {
                             Text(
                               'Member since June 2023',
                               style: TextStyle(
-                                color: Colors.black54,
+                                color: Colors.black,
                                 fontSize: 13.6.sp,
                               ),
                             ),
@@ -59,14 +60,17 @@ class ProfileScreen1 extends StatelessWidget {
                         ),
                       ),
                       Spacer(), // To align the edit icon to the right
-                      InkWell(
-                        onTap: () {
-                          Get.toNamed(RouteName.editProfile);
-                        }, // Handle edit action here
-                        child: ImageIcon(
-                          AssetImage("assets/images/shop/edit.png"),
-                          size: 30, // Size of the edit icon
-                          color: Colors.black, // Color of the icon
+                      Padding(
+                        padding: const EdgeInsets.only(right: 12.0),
+                        child: InkWell(
+                          onTap: () {
+                            Get.toNamed(RouteName.editProfile);
+                          }, // Handle edit action here
+                          child: ImageIcon(
+                            AssetImage("assets/images/shop/edit.png"),
+                            size: 30, // Size of the edit icon
+                            color: Colors.black, // Color of the icon
+                          ),
                         ),
                       ),
                     ],
@@ -77,7 +81,7 @@ class ProfileScreen1 extends StatelessWidget {
 
               // Goals Section
               Card(
-                elevation: 2, // Optional: Add elevation for shadow effect
+                elevation: 0, // Optional: Add elevation for shadow effect
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.r), // Rounded corners
                 ),
@@ -102,17 +106,17 @@ class ProfileScreen1 extends StatelessWidget {
                         goalTitle: 'Daily Water Goal',
                         goalValue: '64 oz',
                       ),
-                      SizedBox(height: 5.h),
-                      Container(height: 1, color: const Color(0xFFE5EDF2)), // divider
-                      SizedBox(height: 5.h),
+                      SizedBox(height: 10.h),
+                      Container(height: 1, color: Colors.grey.withOpacity(0.25)), // divider
+                      SizedBox(height: 10.h),
                       _GoalRow(goalTitle: 'Skin Focus', goalValue: 'Hydration'),
-                      SizedBox(height: 5.h),
-                      Container(height: 1, color: const Color(0xFFE5EDF2)), // divider
-                      SizedBox(height: 5.h),
+                      SizedBox(height: 10.h),
+                      Container(height: 1, color: Colors.grey.withOpacity(0.25)), // divider
+                      SizedBox(height: 10.h),
                       _GoalRow(goalTitle: 'Daily Prayer', goalValue: '3 times'),
-                      SizedBox(height: 5.h),
-                      Container(height: 1, color: const Color(0xFFE5EDF2)), // divider
-                      SizedBox(height: 5.h),
+                      SizedBox(height: 10.h),
+                      Container(height: 1, color: Colors.grey.withOpacity(0.25)), // divider
+                      SizedBox(height: 10.h),
                       SizedBox(height: 40.h),
 
 
@@ -169,7 +173,7 @@ class ProfileScreen1 extends StatelessWidget {
 
               // Settings Section
               Card(
-                elevation: 2, // Optional: Add elevation for shadow effect
+                elevation: 0, // Optional: Add elevation for shadow effect
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.r), // Rounded corners
                 ),
@@ -187,47 +191,52 @@ class ProfileScreen1 extends StatelessWidget {
 
                       // Setting Items
                       _SettingItem(
-                        icon: Icons.notifications,
+                        icon: Image.asset("assets/images/splash/notification.png"),
                         title: 'Notifications',
                         onTap: () {
                           Get.toNamed(RouteName.notification);
                         },
                       ),
-                      Container(height: 1, color: const Color(0xFFE5EDF2)), // divider
+                      SizedBox(height: 10.h),
+                      Container(height: 1, color: Colors.grey.withOpacity(0.25)), // divider
                       _SettingItem(
-                        title: 'Privacy',
-                        icon: Icons.lock,
+                        title: 'About',
+                        icon: Image.asset("assets/images/splash/about.png"),
                         onTap: () {
                           Get.toNamed(RouteName.privacy);
                         },
                       ),
-                      Container(height: 1, color: const Color(0xFFE5EDF2)), // divider
+                      SizedBox(height: 10.h),
+                      Container(height: 1, color: Colors.grey.withOpacity(0.25)), // divider
                       _SettingItem(
-                        title: 'About',
-                        icon: Icons.info,
+                        title: 'Shop History',
+                        icon: Image.asset("assets/images/splash/history.png"),
                         onTap: () {
                           Get.toNamed(RouteName.contact);
                         },
                       ),
-                      Container(height: 1, color: const Color(0xFFE5EDF2)), // divider
+                      SizedBox(height: 10.h),
+                      Container(height: 1, color: Colors.grey.withOpacity(0.25)), // divider
                       _SettingItem(
-                        title: 'Shop History',
-                        icon: Icons.history,
+                        title: 'Privacy',
+                          icon: Image.asset("assets/images/splash/privacy.png"),
                         onTap: () {
                           Get.toNamed(RouteName.shophistory);
                         },
                       ),
-                      Container(height: 1, color: const Color(0xFFE5EDF2)), // divider
+                      SizedBox(height: 10.h),
+                      Container(height: 1, color: Colors.grey.withOpacity(0.25)), // divider
                       _SettingItem(
                         title: 'Change Password',
-                        icon: Icons.lock,
+                        icon: Image.asset("assets/images/splash/change password.png"),
                         onTap: () {
                           Get.toNamed(RouteName.resetPass);
                         },
                       ),
-                      Container(height: 1, color: const Color(0xFFE5EDF2)), // divider
-                      _SettingItem(title: 'Logout', icon: Icons.logout),
-                      Container(height: 1, color: const Color(0xFFE5EDF2)), // divider
+                      SizedBox(height: 10.h),
+                      Container(height: 1, color: Colors.grey.withOpacity(0.25)), // divider
+                      _SettingItem(title: 'Logout', icon: Image.asset("assets/images/splash/change password.png")),
+                      Container(height: 1, color: Colors.grey.withOpacity(0.25)), // divider
                     ],
                   ),
                 ),
@@ -307,7 +316,8 @@ class _StatusBox extends StatelessWidget {
 
 class _SettingItem extends StatelessWidget {
   final String title;
-  final IconData icon; // Specify the type of icon (IconData for Material Icons)
+
+  final dynamic icon; // Optional custom icon widget
   final void Function()? onTap; // Optional onTap callback function
 
   const _SettingItem({
@@ -320,14 +330,17 @@ class _SettingItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
-      leading: Icon(icon, size: 24, color: Colors.black),
-      // Icon on the left
+      leading: icon ?? Icon(icon, size: 24, color: Colors.black),
+      // Icon on the left - use custom widget if provided, otherwise use IconData
       title: Text(
         title,
         style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
       ),
       // Title in the center
-      trailing: Icon(Icons.arrow_forward_ios, size: 18, color: Colors.black),
+      trailing: Padding(
+        padding: const EdgeInsets.only(right: 20),
+        child: Icon(Icons.arrow_forward_ios, size: 18, color: Colors.black),
+      ),
       // Right arrow icon
       onTap: onTap, // Trigger the onTap callback if provided
     );

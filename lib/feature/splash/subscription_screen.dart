@@ -76,6 +76,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                       title: "Monthly\n1.99 €/mo",
 
                       isSelected: selectedPlan == "Monthly",
+
                     ),
                   ),
                 ),
@@ -129,7 +130,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
 
   // Timeline row widget
   Widget buildTimelineRow({
-    required IconData icon,
+    required dynamic icon,
     required String title,
     required String subtitle,
     bool isLast = false,
@@ -142,7 +143,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
             Icon(icon, size: 40.sp, color: Colors.black),
             if (!isLast)
               Container(
-                width: 2.w,
+                width: 7.w,
                 height: 60.h,
                 color: Colors.grey,
               ),
@@ -187,6 +188,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
 
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(
+          color: isSelected ? Colors.black : Colors.grey,
 
         ),
       ),

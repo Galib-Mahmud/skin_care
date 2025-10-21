@@ -21,13 +21,14 @@ class _Question1State extends State<Question1> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 30.h),
+        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
               padding: EdgeInsets.only(left: 24.w),
               child: Text(
+                textAlign: TextAlign.center,
                 "What best describes your skin Status?",
                 style: TextStyle(
                     fontSize: 32.sp,
@@ -36,7 +37,7 @@ class _Question1State extends State<Question1> {
                 ),
               ),
             ),
-            SizedBox(height: 20.h),
+            SizedBox(height: 15.h),
             Text(
               "What are the top issues you’d like to improve?",
               style: TextStyle(
@@ -47,11 +48,11 @@ class _Question1State extends State<Question1> {
             ),
             SizedBox(height: 40.h),
             buildOptionButton("Oily"),
-            SizedBox(height: 15.h),
+            SizedBox(height: 10.h),
             buildOptionButton("Dry"),
-            SizedBox(height: 15.h),
+            SizedBox(height: 10.h),
             buildOptionButton("Combination"),
-            SizedBox(height: 15.h),
+            SizedBox(height: 10.h),
             buildOptionButton("Sensitive"),
             SizedBox(height: 60.h),
             CustomButton(text: 'Continue', onPressed: () {
@@ -76,7 +77,7 @@ class _Question1State extends State<Question1> {
       child: Container(
         margin: EdgeInsets.only(bottom: 10.h),
         height: 60.h,
-        width: 353.w,
+        width: 360.w,
         decoration: BoxDecoration(boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1), // Light shadow color
@@ -90,7 +91,7 @@ class _Question1State extends State<Question1> {
         child: Center(
           child: Text(
             label,
-            style: TextStyle(color: Colors.black, fontSize: 16.sp, fontFamily: 'Poppins'),
+            style: TextStyle(color: isSelected?Colors.white:Colors.black, fontSize: 16.sp, fontFamily: 'Poppins'),
           ),
         ),
       ),

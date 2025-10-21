@@ -20,13 +20,14 @@ class _Question3State extends State<Question3> {
     return Scaffold(
       backgroundColor: Color.fromRGBO(217, 217, 217, 1), // background color
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 30.h),
+        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
               padding: EdgeInsets.only(left: 24.w),
               child: Text(
+                textAlign: TextAlign.center,
                 "How are you feeling today?",
                 style: TextStyle(
                     fontSize: 32.sp,
@@ -46,13 +47,13 @@ class _Question3State extends State<Question3> {
             ),
             SizedBox(height: 40.h),
             _buildOptionButton("Happy 😀"),
-            SizedBox(height: 15.h),
+            SizedBox(height: 10.h),
             _buildOptionButton("Stressed 😓"),
-            SizedBox(height: 15.h),
+            SizedBox(height: 10.h),
             _buildOptionButton("Tired 😴"),
-            SizedBox(height: 15.h),
+            SizedBox(height: 10.h),
             _buildOptionButton("Excited 🤩"),
-            SizedBox(height: 15.h),
+            SizedBox(height: 10.h),
             _buildOptionButton("Calm 🙂"),
             SizedBox(height: 60.h),
             CustomButton(text: 'Continue', onPressed: () {
