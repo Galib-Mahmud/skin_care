@@ -46,7 +46,7 @@ class _Question1State extends State<Question1> {
                   fontWeight: FontWeight.bold
               ),
             ),
-            SizedBox(height: 40.h),
+            SizedBox(height: 35.h),
             buildOptionButton("Oily"),
             SizedBox(height: 10.h),
             buildOptionButton("Dry"),
@@ -75,9 +75,9 @@ class _Question1State extends State<Question1> {
         });
       },
       child: Container(
-        margin: EdgeInsets.only(bottom: 10.h),
+        margin: EdgeInsets.only(bottom: 8.h),
         height: 60.h,
-        width: 360.w,
+        width: 353.w,
         decoration: BoxDecoration(boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1), // Light shadow color

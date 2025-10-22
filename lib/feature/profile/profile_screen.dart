@@ -95,7 +95,7 @@ class ProfileScreen1 extends StatelessWidget {
                       Text(
                         'Your Goals',
                         style: TextStyle(
-                          fontSize: 18.sp,
+                          fontSize: 22.sp,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -198,30 +198,39 @@ class ProfileScreen1 extends StatelessWidget {
                         },
                       ),
                       SizedBox(height: 10.h),
-                      Container(height: 1, color: Colors.grey.withOpacity(0.25)), // divider
+                      Padding(
+                        padding: EdgeInsets.only(right: 24.w),
+                        child: Container(height: 1, color: Colors.grey.withOpacity(0.25)),
+                      ), // divider
                       _SettingItem(
                         title: 'About',
                         icon: Image.asset("assets/images/splash/about.png"),
-                        onTap: () {
-                          Get.toNamed(RouteName.privacy);
-                        },
-                      ),
-                      SizedBox(height: 10.h),
-                      Container(height: 1, color: Colors.grey.withOpacity(0.25)), // divider
-                      _SettingItem(
-                        title: 'Shop History',
-                        icon: Image.asset("assets/images/splash/history.png"),
                         onTap: () {
                           Get.toNamed(RouteName.contact);
                         },
                       ),
                       SizedBox(height: 10.h),
-                      Container(height: 1, color: Colors.grey.withOpacity(0.25)), // divider
+                      Padding(
+                        padding: EdgeInsets.only(right: 24.w),
+                        child: Container(height: 1, color: Colors.grey.withOpacity(0.25)),
+                      ), // divider
+                      _SettingItem(
+                        title: 'Shop History',
+                        icon: Image.asset("assets/images/splash/history.png"),
+                        onTap: () {
+                          Get.toNamed(RouteName.shophistory);
+                        },
+                      ),
+                      SizedBox(height: 10.h),
+                      Padding(
+                        padding: EdgeInsets.only(right: 24.w),
+                        child: Container(height: 1, color: Colors.grey.withOpacity(0.25)),
+                      ), // divider
                       _SettingItem(
                         title: 'Privacy',
                           icon: Image.asset("assets/images/splash/privacy.png"),
                         onTap: () {
-                          Get.toNamed(RouteName.shophistory);
+                          Get.toNamed(RouteName.privacy);
                         },
                       ),
                       SizedBox(height: 10.h),
@@ -234,9 +243,15 @@ class ProfileScreen1 extends StatelessWidget {
                         },
                       ),
                       SizedBox(height: 10.h),
-                      Container(height: 1, color: Colors.grey.withOpacity(0.25)), // divider
+                      Padding(
+                        padding: EdgeInsets.only(right: 24.w),
+                        child: Container(height: 1, color: Colors.grey.withOpacity(0.25)),
+                      ), // divider
                       _SettingItem(title: 'Logout', icon: Image.asset("assets/images/splash/change password.png")),
-                      Container(height: 1, color: Colors.grey.withOpacity(0.25)), // divider
+                      Padding(
+                        padding: EdgeInsets.only(right: 24.w),
+                        child: Container(height: 1, color: Colors.grey.withOpacity(0.25)),
+                      ), // divider
                     ],
                   ),
                 ),

@@ -155,7 +155,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 ),
                 const Spacer(),
                 SizedBox(
-                  height: 46.h,
+                  height: 50.h,
                   width: 230.w, // wider like the mock
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -277,9 +277,9 @@ class _SummaryRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(label, style: TextStyle(fontSize: 13.5.sp, color: Colors.black87)),
+        Text(label, style: TextStyle(fontSize: 16.sp, color: Colors.black87)),
         const Spacer(),
-        Text(value, style: TextStyle(fontSize: 13.5.sp, color: Colors.black87)),
+        Text(value, style: TextStyle(fontSize: 16.sp, color: Colors.black87)),
       ],
     );
   }

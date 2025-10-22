@@ -54,6 +54,7 @@ class _OtpScreenState extends State<OtpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFD9D9D9),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(16.0.w), // Responsive padding
@@ -98,17 +99,17 @@ class _OtpScreenState extends State<OtpScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 8.w), // Scalable padding
                     child: Container(
                       width: 50.w, // Responsive width using ScreenUtil
-                      height: 60.h, // Responsive height using ScreenUtil
+                      height: 50.h, // Responsive height using ScreenUtil
                       decoration: BoxDecoration(
                         color: Colors.white,
                         border: Border.all(
-                          color: Colors.grey[400]!,
-                          width: 2,
+                          color: Colors.grey[100]!,
+                          width: 0.4,
                         ),
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey.withOpacity(0.2),
+                            color: Colors.grey.withOpacity(0.6),
                             spreadRadius: 2,
                             blurRadius: 5,
                             offset: Offset(0, 3),

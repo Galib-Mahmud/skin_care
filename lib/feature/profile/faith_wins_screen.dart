@@ -85,6 +85,7 @@ class _FaithWinsTestimoniesScreenState
                 children: [
                   // Title Row
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
                         Icons.favorite,
@@ -105,48 +106,25 @@ class _FaithWinsTestimoniesScreenState
 
                   SizedBox(height: 12.h),
 
-                  // Input box
-                  TextField(
-                    controller: _controller,
-                    decoration: InputDecoration(
-                      hintText: 'Share Faith Wins & Testimonies...',
-                      hintStyle: TextStyle(
-                        color: Colors.black45,
-                        fontSize: 13.sp,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.r),
-                        borderSide: BorderSide(
-                          color: Colors.black26,
-                          width: 1.5,
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.r),
-                        borderSide: BorderSide(
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Color(0xFFF8F8F8),
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                    child: TextField(
+
+                      controller: _controller,
+                      maxLines: 3,
+                      decoration: InputDecoration(
+                        fillColor: Colors.white.withOpacity(0.02),
+                        hintText: 'Share faith wins & testimonies...',
+                        hintStyle: TextStyle(
                           color: Colors.black54,
-                          width: 1.5,
+                          fontSize: 14.sp,
                         ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.r),
-                        borderSide: BorderSide(
-                          color: Colors.black54,
-                          width: 1.5,
-                        ),
-                      ),
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: 12.w,
-                        vertical: 12.h,
-                      ),
-                      prefixIcon: Icon(
-                        Icons.edit_outlined,
-                        color: Colors.black54,
-                        size: 20.sp,
+                        contentPadding: EdgeInsets.all(16.w),
                       ),
                     ),
-                    maxLines: null,
-                    minLines: 1,
                   ),
 
                   SizedBox(height: 10.h),
@@ -335,29 +313,7 @@ class _TestimonyCard extends StatelessWidget {
                   height: 180.h,
                 ),
               ),
-              // Dimensions overlay
-              Positioned(
-                bottom: 8.h,
-                left: 8.w,
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 8.w,
-                    vertical: 4.h,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(4.r),
-                  ),
-                  child: Text(
-                    '281 × 258',
-                    style: TextStyle(
-                      fontSize: 11.sp,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-              ),
+
             ],
           ),
 

@@ -12,33 +12,22 @@ class PlaceOrderScreen extends StatefulWidget {
 
 class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
   final items = <_CartItem>[
-    _CartItem(
-        'Citrus Fresh Facial Serum', 12.99, 'assets/images/shop/order.png',
-        qty: 2, showTrash: false),
-    _CartItem(
-        'Citrus Fresh Facial Serum', 12.75, 'assets/images/shop/order.png',
-        qty: 1, showTrash: false),
-    _CartItem(
-        'Citrus Fresh Facial Serum', 13.45, 'assets/images/shop/order.png',
-        qty: 1, showTrash: false),
-    _CartItem('Citrus Fresh Facial Serum', 4.09, 'assets/images/shop/order.png',
-        qty: 1, showTrash: false),
+    _CartItem('Citrus Fresh Facial Serum', 12.99, 'assets/images/shop/order.png', qty: 2),
+    _CartItem('Citrus Fresh Facial Serum', 12.75, 'assets/images/shop/order.png', qty: 1),
+    _CartItem('Citrus Fresh Facial Serum', 13.45, 'assets/images/shop/order.png', qty: 1),
+    _CartItem('Citrus Fresh Facial Serum', 4.09, 'assets/images/shop/order.png', qty: 1),
   ];
 
   final double deliveryCharge = 3.99;
 
-  double get subtotal =>
-      items.take(3).fold(0.0, (s, it) => s + it.price * it.qty);
-
+  double get subtotal => items.take(3).fold(0.0, (s, it) => s + it.price * it.qty);
   double get total => subtotal + deliveryCharge;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(217, 217, 217, 1),
+      backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
 
-
-      // App bar area (custom to match mock)
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(56.h),
         child: SafeArea(
@@ -54,16 +43,13 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
                     onTap: () => Navigator.maybePop(context),
                     borderRadius: BorderRadius.circular(8),
                     child: Padding(
-                      padding: EdgeInsets.symmetric(
-                          vertical: 8.h, horizontal: 6.w),
+                      padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 6.w),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.arrow_back_ios_new_rounded, size: 16.sp,
-                              color: Colors.black87),
+                          Icon(Icons.arrow_back_ios_new_rounded, size: 16.sp, color: Colors.black87),
                           SizedBox(width: 4.w),
-                          Text('Back', style: TextStyle(
-                              fontSize: 14.sp, color: Colors.black87)),
+                          Text('Back', style: TextStyle(fontSize: 14.sp, color: Colors.black87)),
                         ],
                       ),
                     ),
@@ -75,16 +61,6 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w700,
                     color: Colors.black87,
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                    width: 28.w, height: 28.w,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-
-                    ),
                   ),
                 ),
               ],
@@ -99,7 +75,7 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
           children: [
             SizedBox(height: 6.h),
 
-            // Top 3 items (as in mock)
+            /// --- Item List ---
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 12.w),
               child: Column(
@@ -109,22 +85,26 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
                     padding: EdgeInsets.only(bottom: 8.h),
                     child: _CartCard(
                       item: item,
-                      onMinus: () =>
-                          setState(() {
-                            if (item.qty > 1) item.qty--;
-                            if (item.qty == 1) item.showTrash = true; // Show trash when qty is 1
-                          }),
-                      onPlus: () => setState(() => item.qty++),
-                      onRemove: item.showTrash ? () =>
-                          setState(() =>
-                              items.removeAt(i)) : null, // Remove item if showTrash is true
+                      onMinus: () {
+                        setState(() {
+                          if (item.qty > 1) {
+                            item.qty--;
+                          } else {
+                            items.removeAt(i);
+                          }
+                        });
+                      },
+                      onPlus: () {
+                        setState(() {
+                          item.qty++;
+                        });
+                      },
                     ),
                   );
                 }),
               ),
             ),
 
-            // +1 more
             Padding(
               padding: EdgeInsets.only(top: 2.h, bottom: 10.h),
               child: Text(
@@ -137,7 +117,7 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
               ),
             ),
 
-            // Summary block
+            /// --- Summary ---
             Container(
               margin: EdgeInsets.symmetric(horizontal: 12.w),
               padding: EdgeInsets.fromLTRB(12.w, 8.h, 12.w, 8.h),
@@ -147,14 +127,14 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
               ),
               child: Column(
                 children: [
-                  _SummaryRow(
-                      label: 'Subtotal', value: subtotal.toStringAsFixed(2)),
+                  _SummaryRow(label: 'Subtotal', value: subtotal.toStringAsFixed(2)),
                   SizedBox(height: 8.h),
-                  // divider between subtotal and delivery
                   Container(height: 1, color: const Color(0xFFE5EDF2)),
                   SizedBox(height: 8.h),
-                  _SummaryRow(label: 'Delivery Charges',
-                      value: '+${deliveryCharge.toStringAsFixed(2)}'),
+                  _SummaryRow(
+                    label: 'Delivery Charges',
+                    value: '+${deliveryCharge.toStringAsFixed(2)}',
+                  ),
                   SizedBox(height: 14.h),
                   Row(
                     children: [
@@ -183,7 +163,7 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
 
             const Spacer(),
 
-            // Bottom bar: amount + Check Out button (centered width)
+            /// --- Bottom Checkout Bar ---
             SafeArea(
               top: false,
               minimum: EdgeInsets.only(bottom: 130.h, left: 25.w, right: 15.w),
@@ -199,7 +179,7 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
                   ),
                   const Spacer(),
                   SizedBox(
-                    height: 46.h,
+                    height: 50.h,
                     width: 230.w,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -211,12 +191,12 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
                         elevation: 0,
                       ),
                       onPressed: () {
-                        Get.toNamed(
-                            RouteName.checkOut );
-
+                        Get.toNamed(RouteName.checkOut);
                       },
-                      child: Text('Check Out', style: TextStyle(
-                          fontSize: 14.sp, fontWeight: FontWeight.w600)),
+                      child: Text(
+                        'Check Out',
+                        style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600),
+                      ),
                     ),
                   ),
                 ],
@@ -229,7 +209,7 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
   }
 }
 
-/// ===== Helpers =====
+/// --- Helpers ---
 class _SummaryRow extends StatelessWidget {
   const _SummaryRow({required this.label, required this.value});
 
@@ -240,45 +220,40 @@ class _SummaryRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(label, style: TextStyle(fontSize: 13.5.sp, color: Colors.black87)),
+        Text(label, style: TextStyle(fontSize: 16.sp, color: Colors.black87)),
         const Spacer(),
-        Text(value, style: TextStyle(fontSize: 13.5.sp, color: Colors.black87)),
+        Text(value, style: TextStyle(fontSize: 16.sp, color: Colors.black87)),
       ],
     );
   }
 }
 
+/// --- Cart Item Model ---
 class _CartItem {
-  _CartItem(this.title, this.price, this.image,
-      {this.qty = 1, this.showTrash = true});
-
+  _CartItem(this.title, this.price, this.image, {this.qty = 1});
   final String title;
   final double price;
   final String image;
   int qty;
-  bool showTrash;
 }
 
+/// --- Cart Card ---
 class _CartCard extends StatelessWidget {
   const _CartCard({
     required this.item,
     required this.onMinus,
     required this.onPlus,
-    this.onRemove,
   });
 
   final _CartItem item;
   final VoidCallback onMinus;
   final VoidCallback onPlus;
-  final VoidCallback? onRemove;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-
       decoration: BoxDecoration(
-        color: Color.fromRGBO(255, 255, 255, 0.4),
-
+        color: const Color.fromRGBO(255, 255, 255, 0.4),
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: const Color(0xFFE5EDF2)),
         boxShadow: [
@@ -294,8 +269,7 @@ class _CartCard extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(8.r),
-            child: Image.asset(
-                item.image, width: 90.w, height: 82.w, fit: BoxFit.cover),
+            child: Image.asset(item.image, width: 90.w, height: 82.w, fit: BoxFit.cover),
           ),
           SizedBox(width: 10.w),
           Expanded(
@@ -304,10 +278,9 @@ class _CartCard extends StatelessWidget {
               children: [
                 Text(
                   item.title,
-                  maxLines: 1, overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontSize: 14.sp,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black87),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600, color: Colors.black87),
                 ),
                 SizedBox(height: 4.h),
                 Text('\$${item.price.toStringAsFixed(2)}',
@@ -315,12 +288,6 @@ class _CartCard extends StatelessWidget {
               ],
             ),
           ),
-          if (onRemove != null) ...[
-            _IconRoundButton(icon: Icons.delete_outline,
-                onTap: onRemove!,
-                tooltip: 'Remove'),
-            SizedBox(width: 8.w),
-          ],
           _QtyPill(qty: item.qty, onMinus: onMinus, onPlus: onPlus),
         ],
       ),
@@ -328,47 +295,9 @@ class _CartCard extends StatelessWidget {
   }
 }
 
-class _IconRoundButton extends StatelessWidget {
-  const _IconRoundButton(
-      {required this.icon, required this.onTap, this.tooltip});
-
-  final IconData icon;
-  final VoidCallback onTap;
-  final String? tooltip;
-
-  @override
-  Widget build(BuildContext context) {
-    final child = Container(
-      width: 32.w,
-      height: 32.w,
-      decoration: BoxDecoration(
-        color: Color.fromRGBO(255, 255, 255, 0.4),
-        borderRadius: BorderRadius.circular(8.r),
-        border: Border.all(color: Colors.black12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.06),
-            blurRadius: 6,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      alignment: Alignment.center,
-      child: Icon(icon, size: 18.sp, color: Colors.black54),
-    );
-    return tooltip == null
-        ? InkWell(
-        onTap: onTap, borderRadius: BorderRadius.circular(8.r), child: child)
-        : Tooltip(message: tooltip!,
-        child: InkWell(onTap: onTap,
-            borderRadius: BorderRadius.circular(8.r),
-            child: child));
-  }
-}
-
+/// --- Qty Pill (minus becomes trash when qty == 1) ---
 class _QtyPill extends StatelessWidget {
-  const _QtyPill(
-      {required this.qty, required this.onMinus, required this.onPlus});
+  const _QtyPill({required this.qty, required this.onMinus, required this.onPlus});
 
   final int qty;
   final VoidCallback onMinus;
@@ -376,34 +305,33 @@ class _QtyPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget roundSmall(IconData ic, VoidCallback onTap) =>
-        InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(999),
-          child: Container(
-            width: 28.w,
-            height: 28.w,
-            decoration: BoxDecoration(
-              color: Color.fromRGBO(255, 255, 255, 0.4),
-              shape: BoxShape.circle,
-              border: Border.all(color: Colors.black12),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.06),
-                  blurRadius: 6,
-                  offset: const Offset(0, 2),
-                ),
-              ],
+    Widget roundSmall(IconData ic, VoidCallback onTap) => InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(999),
+      child: Container(
+        width: 28.w,
+        height: 28.w,
+        decoration: BoxDecoration(
+          color: const Color.fromRGBO(255, 255, 255, 0.4),
+          shape: BoxShape.circle,
+          border: Border.all(color: Colors.black12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.06),
+              blurRadius: 6,
+              offset: const Offset(0, 2),
             ),
-            alignment: Alignment.center,
-            child: Icon(ic, size: 16.sp, color: Colors.black87),
-          ),
-        );
+          ],
+        ),
+        alignment: Alignment.center,
+        child: Icon(ic, size: 16.sp, color: Colors.black87),
+      ),
+    );
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 6.h),
       decoration: BoxDecoration(
-        color: Color.fromRGBO(255, 255, 255, 0.4),
+        color: const Color.fromRGBO(255, 255, 255, 0.4),
         borderRadius: BorderRadius.circular(10.r),
         border: Border.all(color: const Color(0xFFE5EDF2)),
         boxShadow: [
@@ -417,10 +345,10 @@ class _QtyPill extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          roundSmall(Icons.remove, onMinus),
+          // 👇 dynamic: minus or trash
+          roundSmall(qty == 1 ? Icons.delete_outline : Icons.remove, onMinus),
           SizedBox(width: 8.w),
-          Text('$qty',
-              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13.sp)),
+          Text('$qty', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13.sp)),
           SizedBox(width: 8.w),
           roundSmall(Icons.add, onPlus),
         ],

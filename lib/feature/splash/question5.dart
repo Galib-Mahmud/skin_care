@@ -46,7 +46,7 @@ class _Question5State extends State<Question5> {
                   fontWeight: FontWeight.bold
               ),
             ),
-            SizedBox(height: 40.h),
+            SizedBox(height: 30.h),
             _buildOptionButton("Clear & acne-free skin"),
             SizedBox(height: 10.h),
             _buildOptionButton("Glowing & hydrated skin"),
@@ -93,7 +93,7 @@ class _Question5State extends State<Question5> {
         child: Center(
           child: Text(
             label,
-            style: TextStyle(color: Colors.black, fontSize: 16.sp, fontFamily: 'Poppins'),
+            style: TextStyle(color: isSelected? Colors.white: Colors.black, fontSize: 16.sp, fontFamily: 'Poppins'),
           ),
         ),
       ),

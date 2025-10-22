@@ -37,7 +37,7 @@ class _EncouragementBoardScreenState extends State<EncouragementBoardScreen> {
 
 
       body: Padding(
-        padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 50.0, bottom: 230.0),
+        padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 80.0, bottom: 10.0),
         child: Card(
           elevation: 5,
           color: Color.fromRGBO(217, 217, 217, 1),

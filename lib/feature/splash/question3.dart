@@ -45,7 +45,7 @@ class _Question3State extends State<Question3> {
                   fontWeight: FontWeight.bold
               ),
             ),
-            SizedBox(height: 40.h),
+            SizedBox(height: 35.h),
             _buildOptionButton("Happy 😀"),
             SizedBox(height: 10.h),
             _buildOptionButton("Stressed 😓"),
@@ -92,7 +92,7 @@ class _Question3State extends State<Question3> {
         child: Center(
           child: Text(
             label,
-            style: TextStyle(color: Colors.black, fontSize: 16.sp, fontFamily: 'Poppins'),
+            style: TextStyle(color: isSelected? Colors.white: Colors.black, fontSize: 16.sp, fontFamily: 'Poppins'),
           ),
         ),
       ),

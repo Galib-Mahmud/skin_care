@@ -70,11 +70,11 @@ class CheckinScreen2 extends StatelessWidget {
                 ],
               ),
 
-              SizedBox(height: 16.h),
+              SizedBox(height: 20.h),
 
               // Recommended Reading
               Text(
-                'Recommended Reading',
+                ' Recommended Reading',
                 style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w700),
               ),
               SizedBox(height: 18.h),
@@ -211,9 +211,9 @@ class _ReadingCard extends StatelessWidget {
           // leading pill
           Container(
             width: 6.w,
-            height: 50.h,
+            height: 70.h,
             decoration: BoxDecoration(
-              color: Colors.grey.withOpacity(0.75),
+              color: Colors.black.withOpacity(0.5),
               borderRadius: BorderRadius.circular(6.r),
             ),
           ),

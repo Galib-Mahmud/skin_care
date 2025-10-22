@@ -276,10 +276,12 @@ class _PrayerRequestsScreenState extends State<PrayerRequestsScreen> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text('🙏', style: TextStyle(fontSize: 20.sp)),
                   SizedBox(width: 8.w),
                   Text(
+
                     'Prayer Requests',
                     style: TextStyle(
                       fontSize: 20.sp,
@@ -300,7 +302,7 @@ class _PrayerRequestsScreenState extends State<PrayerRequestsScreen> {
                       margin: EdgeInsets.symmetric(horizontal: 16.w),
                       padding: EdgeInsets.all(16.w),
                       decoration: BoxDecoration(
-                        color: Color.fromRGBO(255, 255, 255, 0.4),
+                        color: Colors.white.withOpacity(0.4),
                         borderRadius: BorderRadius.circular(16.r),
                         boxShadow: [
                           BoxShadow(
@@ -319,15 +321,16 @@ class _PrayerRequestsScreenState extends State<PrayerRequestsScreen> {
                               borderRadius: BorderRadius.circular(12.r),
                             ),
                             child: TextField(
+
                               controller: _controller,
                               maxLines: 3,
                               decoration: InputDecoration(
+                                fillColor: Colors.white.withOpacity(0.02),
                                 hintText: 'Share a prayer request with the community...',
                                 hintStyle: TextStyle(
-                                  color: Colors.black38,
+                                  color: Colors.black54,
                                   fontSize: 14.sp,
                                 ),
-                                border: InputBorder.none,
                                 contentPadding: EdgeInsets.all(16.w),
                               ),
                             ),
@@ -493,7 +496,7 @@ class _PrayerRequestCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Color.fromRGBO(255, 255, 255, 0.4),
-        borderRadius: BorderRadius.circular(16.r),
+        borderRadius: BorderRadius.circular(10.r),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
@@ -583,9 +586,10 @@ class _PrayerRequestCard extends StatelessWidget {
 
                   padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 8.h),
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.black12),
-                    borderRadius: BorderRadius.circular(20.r),
+                    color: Colors.white.withOpacity(0.9),
+                    border: Border.all(color: Colors.black54),
+                    borderRadius: BorderRadius.circular(7.r),
+
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,

@@ -31,8 +31,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       filled: true,
       fillColor: Color.fromRGBO(255, 255,255, 0.4),
       enabledBorder: OutlineInputBorder(
+
         borderRadius: BorderRadius.circular(10.r),
-        borderSide: const BorderSide(color: Color(0xFFE3E3E3), width: 1.2),
+        borderSide: const BorderSide(color: Colors.grey, width: 0.9),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),

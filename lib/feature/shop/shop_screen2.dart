@@ -47,7 +47,7 @@ class _ShopScreen2State extends State<ShopScreen2> {
 
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        padding: EdgeInsets.only(bottom: 18.h),
+        padding: EdgeInsets.only(bottom: 18.h,left: 5.w,right: 5.w,),
         child: Column(
           children: [
             // ======= IMAGE + FLOATING CIRCLE BUTTONS =======
@@ -116,7 +116,7 @@ class _ShopScreen2State extends State<ShopScreen2> {
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
-                                    fontSize: 16.sp,
+                                    fontSize: 20.sp,
                                     fontWeight: FontWeight.w700,
                                     color: Colors.black87,
                                   ),
@@ -141,13 +141,13 @@ class _ShopScreen2State extends State<ShopScreen2> {
                     // ---- rating row ----
                     Row(
                       children: [
-                        Icon(Icons.star, size: 16.sp, color: const Color(0xFFFFC107)),
+                        Icon(Icons.star, size: 18.sp, color: const Color(0xFFFFC107)),
                         SizedBox(width: 6.w),
                         Text(
                           rating.toStringAsFixed(1),
                           style: TextStyle(
                             fontWeight: FontWeight.w700,
-                            fontSize: 12.sp,
+                            fontSize: 14.sp,
                             color: Colors.black87,
                           ),
                         ),
@@ -170,14 +170,14 @@ class _ShopScreen2State extends State<ShopScreen2> {
                             color: Colors.black87,
                             height: 1.35,
                           ),
-                          children: const [
+                          children: [
                             TextSpan(
                               text:
-                              "Its simple and elegant shape makes it perfect for those of you who like you who want minimalist \n clothes ",
+                              "Its simple and elegant shape makes it perfect for those of you who like you who want minimalist \n clothes ",style: TextStyle(fontSize: 16.sp),
                             ),
                             TextSpan(
-                              text: "Read More . . .",
-                              style: TextStyle(color: Colors.black54),
+                              text: "    Read More . . .",
+                              style: TextStyle(color: Colors.black54,fontSize: 15.sp),
                             ),
                           ],
                         ),
@@ -263,7 +263,7 @@ class _QtyStepper extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(999),
       child: Container(
-        width: 30.w,
+        width: 35.w,
         height: 30.w,
         decoration: BoxDecoration(
 
@@ -284,7 +284,7 @@ class _QtyStepper extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 10.w),
           child: Text(
             '$qty',
-            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14.sp),
+            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16.sp),
           ),
         ),
         circle(Icons.add, onIncrease),

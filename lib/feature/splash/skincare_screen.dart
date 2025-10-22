@@ -9,11 +9,10 @@ class SkincareScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade400,
+
       body: Container(
         decoration: BoxDecoration(
-
-          color: Color.fromRGBO(154, 154, 154, 1),
+          color: Color(0xFF9A9A9A),
         ),
         child: Column(
           children: [
@@ -40,27 +39,31 @@ class SkincareScreen extends StatelessWidget {
             ),
             // Text content
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 10.h),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              padding: EdgeInsets.only(left: 20.w,bottom: 20.h),
+              child: Row(
                 children: [
-                  Text(
-                    'Skincare',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 29.sp,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'Poppins',
-                    ),
-                  ),
-                  SizedBox(height: 4.h),
-                  Text(
-                    'Smarter Listings, Faster Sales.',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24.sp,
-                      fontFamily: 'Poppins',
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Skincare',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 29.sp,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Poppins',
+                        ),
+                      ),
+                      SizedBox(height: 4.h),
+                      Text(
+                        'Smarter Listings, Faster Sales.',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.sp,
+                          fontFamily: 'Poppins',
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -71,10 +74,12 @@ class SkincareScreen extends StatelessWidget {
               child: Align(
                 alignment: Alignment.bottomRight,
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
+                  height: 49.h,
+                  width: 115.w,
+                  padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(25.r),
+                    borderRadius: BorderRadius.circular(30.r),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withOpacity(0.2),

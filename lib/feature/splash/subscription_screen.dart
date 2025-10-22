@@ -98,7 +98,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.check, color: Colors.green),
+                Icon(Icons.check, color: Colors.grey),
                 SizedBox(width: 8.w),
                 Text(
                   "No Payment Due Now",
@@ -106,7 +106,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 10.h),
+            SizedBox(height: 5.h),
 
             CustomButton(
               text: 'Start 3-day free trial',
@@ -160,13 +160,18 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                   title,
                   style: TextStyle(
                       fontSize: 20.sp,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Gayathri'),
+
                 ),
                 SizedBox(height: 4.h),
                 Text(
                   subtitle,
-                  style: TextStyle(fontSize: 16.sp, fontFamily: 'Gayathri',fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 16.sp,
+                      color: Color(0xFF2C2B2B),
+
+                      fontFamily: 'Gayathri',fontWeight: FontWeight.bold),
                 ),
               ],
             ),

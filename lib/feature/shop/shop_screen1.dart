@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
 import '../../routes/route_name.dart';
 
 class ShopScreen1 extends StatefulWidget {
@@ -14,11 +13,18 @@ class ShopScreen1 extends StatefulWidget {
 class _ShopScreen1State extends State<ShopScreen1> {
   final TextEditingController _search = TextEditingController();
 
-  final List<String> filters = ['All', 'Cleansers', 'Serums', 'Exfoliants'];
+  final List<String> filters = [
+    'All',
+    'Cleansers',
+    'Serums',
+    'Exfoliants',
+    'Moisturizers',
+    'Toners'
+  ];
   int selectedFilter = 0;
 
   final List<_Product> products = List.generate(
-    8,
+    4,
         (i) => _Product(
       title: 'Maroon Dark Top',
       subtitle: 'Skin',
@@ -65,15 +71,14 @@ class _ShopScreen1State extends State<ShopScreen1> {
               ),
               SizedBox(height: 10.h),
 
-              // ✅ Search bar with proper black elevation
+              // ✅ Search bar
               _SearchPill(controller: _search),
 
+              SizedBox(height: 15.h),
 
-              SizedBox(height: 30.h),
-
-              // Filters
+              // ✅ Filter List
               SizedBox(
-                height: 36.h,
+                height: 50.h,
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   itemCount: filters.length,
@@ -83,6 +88,7 @@ class _ShopScreen1State extends State<ShopScreen1> {
                     return GestureDetector(
                       onTap: () => setState(() => selectedFilter = i),
                       child: Container(
+                        margin: EdgeInsets.symmetric(vertical: 10.h),
                         padding: EdgeInsets.symmetric(horizontal: 14.w),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
@@ -90,8 +96,8 @@ class _ShopScreen1State extends State<ShopScreen1> {
                           borderRadius: BorderRadius.circular(20.r),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.5),
-                              blurRadius: 9,
+                              color: Colors.black.withOpacity(0.4),
+                              blurRadius: 8,
                               offset: const Offset(0, 2),
                             )
                           ],
@@ -109,82 +115,84 @@ class _ShopScreen1State extends State<ShopScreen1> {
                   },
                 ),
               ),
+
               SizedBox(height: 20.h),
 
-              // Product Section
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              // ✅ AI Recommendation Header Row
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(height: 8.h),
                   Text(
                     'AI Recommendation Products',
                     style: TextStyle(
                       fontSize: 16.sp,
                       fontWeight: FontWeight.bold,
                       color: Colors.black87,
-                      fontFamily: "Playfair Display"
+                      fontFamily: "Playfair Display",
                     ),
                   ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'See More',
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: "Playfair Display"
-                        ),
+                  TextButton(
+                    onPressed: () {},
+                    style: TextButton.styleFrom(padding: EdgeInsets.zero),
+                    child: Text(
+                      'See More',
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
                       ),
                     ),
                   ),
-
-                  // Product Grid
-                  GridView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 12.h,
-                      crossAxisSpacing: 12.w,
-                      childAspectRatio: 0.72,
-                    ),
-                    itemCount: products.length,
-                    itemBuilder: (_, i) => _ProductCard(
-                      product: products[i],
-                      onFavToggle: () => setState(() => products[i].isFav = !products[i].isFav),
-                    ),
-                  ),
-                  SizedBox(height: 40.h),
-                  Text(
-                    'Products',
-                    style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
-                        fontFamily: "Playfair Display"
-                    ),
-
-                  ),          SizedBox(height: 20.h),
-                  GridView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 12.h,
-                      crossAxisSpacing: 12.w,
-                      childAspectRatio: 0.72,
-                    ),
-                    itemCount: products.length,
-                    itemBuilder: (_, i) => _ProductCard(
-                      product: products[i],
-                      onFavToggle: () => setState(() => products[i].isFav = !products[i].isFav),
-                    ),
-                  ),
-
                 ],
+              ),
+
+              SizedBox(height: 10.h),
+
+              // ✅ Horizontal Product List (AI Recommendation)
+              SizedBox(
+                height: 260.h,
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: products.length,
+                  separatorBuilder: (_, __) => SizedBox(width: 12.w),
+                  itemBuilder: (_, i) => SizedBox(
+                    width: 180.w,
+                    child: _ProductCard(
+                      product: products[i],
+                      onFavToggle: () => setState(() => products[i].isFav = !products[i].isFav),
+                    ),
+                  ),
+                ),
+              ),
+
+              SizedBox(height: 25.h),
+
+              // ✅ Normal Product Grid
+              Text(
+                'Products',
+                style: TextStyle(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                  fontFamily: "Playfair Display",
+                ),
+              ),
+              SizedBox(height: 16.h),
+
+              GridView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 12.h,
+                  crossAxisSpacing: 12.w,
+                  childAspectRatio: 0.72,
+                ),
+                itemCount: products.length,
+                itemBuilder: (_, i) => _ProductCard(
+                  product: products[i],
+                  onFavToggle: () => setState(() => products[i].isFav = !products[i].isFav),
+                ),
               ),
             ],
           ),
@@ -194,7 +202,7 @@ class _ShopScreen1State extends State<ShopScreen1> {
   }
 }
 
-/// ✅ Search Pill with realistic elevation shadow and rounded style
+/// ✅ Search bar
 class _SearchPill extends StatelessWidget {
   const _SearchPill({required this.controller});
   final TextEditingController controller;
@@ -202,26 +210,26 @@ class _SearchPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 8.h), // Padding around the search bar
+      padding: EdgeInsets.symmetric(vertical: 8.h),
       child: Material(
-        elevation: 8, // Elevation for shadow effect
-        shadowColor: Colors.black.withOpacity(0.9), // Slight shadow for a subtle elevation
-        borderRadius: BorderRadius.circular(30.r), // Rounded edges
-        color: Color.fromRGBO(255, 255, 255, 0.4),
+        elevation: 8,
+        shadowColor: Colors.black.withOpacity(0.3),
+        borderRadius: BorderRadius.circular(30.r),
+        color: Colors.white.withOpacity(0.4),
         child: TextField(
           controller: controller,
-          style: TextStyle(fontSize: 14.sp, color: Colors.black), // Styling the text
+          style: TextStyle(fontSize: 14.sp, color: Colors.black),
           cursorColor: Colors.black87,
           decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h), // Padding inside the TextField
+            contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
             hintText: 'Search Beauty Product',
-            hintStyle: TextStyle(color: Colors.black45, fontSize: 14.sp), // Lighter color for hint
-            prefixIcon: Icon(Icons.search, color: Colors.black54, size: 22.sp), // Search icon
+            hintStyle: TextStyle(color: Colors.black45, fontSize: 14.sp),
+            prefixIcon: Icon(Icons.search, color: Colors.black54, size: 22.sp),
             filled: true,
-            fillColor: Colors.white.withOpacity(0.7), // Background color with subtle opacity
+            fillColor: Colors.white.withOpacity(0.7),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30.r), // Rounded border
-              borderSide: BorderSide.none, // Remove the default border
+              borderRadius: BorderRadius.circular(30.r),
+              borderSide: BorderSide.none,
             ),
           ),
         ),
@@ -230,8 +238,7 @@ class _SearchPill extends StatelessWidget {
   }
 }
 
-
-/// Product Card
+/// ✅ Product Card
 class _ProductCard extends StatelessWidget {
   const _ProductCard({required this.product, required this.onFavToggle});
   final _Product product;
@@ -241,7 +248,7 @@ class _ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Color.fromRGBO(255, 255, 255, 0.4),
+        color: const Color.fromRGBO(255, 255, 255, 0.4),
         borderRadius: BorderRadius.circular(14.r),
         boxShadow: [
           BoxShadow(
@@ -254,7 +261,6 @@ class _ProductCard extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: Column(
         children: [
-          // image + heart
           Expanded(
             child: InkWell(
               onTap: () {
@@ -296,10 +302,8 @@ class _ProductCard extends StatelessWidget {
               ),
             ),
           ),
-
-          // info
           Padding(
-            padding: EdgeInsets.fromLTRB(10.w, 10.h, 10.w, 10.h),
+            padding: EdgeInsets.all(10.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -307,13 +311,10 @@ class _ProductCard extends StatelessWidget {
                   product.title,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.sp),
+                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16.sp),
                 ),
                 SizedBox(height: 2.h),
-                Text(
-                  product.subtitle,
-                  style: TextStyle(color: Colors.black54, fontSize: 14.sp),
-                ),
+                Text(product.subtitle, style: TextStyle(color: Colors.black54, fontSize: 13.sp)),
                 SizedBox(height: 8.h),
                 Row(
                   children: [
@@ -322,8 +323,8 @@ class _ProductCard extends StatelessWidget {
                       style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14.sp),
                     ),
                     const Spacer(),
-                    Icon(Icons.star, size: 16.sp, color: const Color(0xFFFFC107)),
-                    SizedBox(width: 4.w),
+                    Icon(Icons.star, size: 14.sp, color: const Color(0xFFFFC107)),
+                    SizedBox(width: 3.w),
                     Text(
                       product.rating.toStringAsFixed(1),
                       style: TextStyle(fontSize: 12.sp, color: Colors.black87),
@@ -339,7 +340,7 @@ class _ProductCard extends StatelessWidget {
   }
 }
 
-/// Model
+/// ✅ Product Model
 class _Product {
   final String title;
   final String subtitle;
@@ -347,6 +348,7 @@ class _Product {
   final double rating;
   final String image;
   bool isFav;
+
   _Product({
     required this.title,
     required this.subtitle,
