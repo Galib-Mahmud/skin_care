@@ -28,7 +28,7 @@ class _MyAppState extends State<MyApp> {
       builder: (context, child) {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
-          theme: AppTheme.lightTheme, // ✅ use theme here
+          theme: AppTheme.lightTheme, // ✅ use theme her
           initialRoute: RouteName.splashloading,
           getPages: AppRoute.pages,
         );
