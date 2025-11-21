@@ -125,7 +125,39 @@ class _SignInScreenState extends State<SignInScreen> {
                     Get.toNamed(RouteName.signup);
                   },
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 20.h),
+
+                // Social Buttons
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 120.w,
+                      height: 56.h,
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: Image.asset(
+                          'assets/images/auth/Google.png',
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 20.w),
+                    SizedBox(
+                      width: 120.w,
+                      height: 50.h,
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: Image.asset(
+                          'assets/images/auth/apple.png',
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+                SizedBox(height: 30.h),
               ],
             ),
           ),

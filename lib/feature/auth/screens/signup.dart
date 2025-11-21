@@ -35,9 +35,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (_passwordController.text == _rePasswordController.text) {
       print('Sign up successful');
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Passwords do not match')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Passwords do not match')));
     }
   }
 
@@ -49,10 +49,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             SizedBox(height: 50.h),
             CustomBackButton(),
-
 
             // Logo
             Center(
@@ -114,7 +112,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             // Sign Up Button
             CustomButton(
               text: 'Sign Up',
-              onPressed:() {
+              onPressed: () {
                 Get.toNamed(RouteName.signin);
               },
             ),
@@ -125,7 +123,37 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Get.toNamed(RouteName.signin);
               },
             ),
+            SizedBox(height: 20.h),
 
+            // Social Buttons
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 120.w,
+                  height: 56.h,
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Image.asset(
+                      'assets/images/auth/Google.png',
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+                SizedBox(width: 20.w),
+                SizedBox(
+                  width: 120.w,
+                  height: 50.h,
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Image.asset(
+                      'assets/images/auth/apple.png',
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+              ],
+            ),
 
             SizedBox(height: 30.h),
           ],
