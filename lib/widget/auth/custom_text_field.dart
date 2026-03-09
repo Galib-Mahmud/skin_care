@@ -1,7 +1,9 @@
+// lib/widget/auth/custom_text_field.dart
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CustomTextField extends StatelessWidget {
+class CustomTextField extends StatefulWidget {
   final String labelText;
   final bool obscureText;
   final TextEditingController controller;
@@ -18,6 +20,19 @@ class CustomTextField extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<CustomTextField> createState() => _CustomTextFieldState();
+}
+
+class _CustomTextFieldState extends State<CustomTextField> {
+  late bool _obscure;
+
+  @override
+  void initState() {
+    super.initState();
+    _obscure = widget.obscureText;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Material(
       elevation: 4,
@@ -25,8 +40,7 @@ class CustomTextField extends StatelessWidget {
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Color(0xFFE8E8E8),
-          // color: Color(0xFFFFFFFF).withOpacity(0.4),
+          color: const Color(0xFFE8E8E8),
           borderRadius: BorderRadius.circular(10.r),
         ),
         padding: EdgeInsets.all(5.w),
@@ -35,27 +49,42 @@ class CustomTextField extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             SizedBox(width: 10.w),
-            if (icon != null) ...[
+            if (widget.icon != null) ...[
               Icon(
-                icon,
-                color: Color(0xFF555555),
+                widget.icon,
+                color: const Color(0xFF555555),
                 size: 24.sp,
               ),
               SizedBox(width: 5.w),
             ],
             Expanded(
               child: TextField(
-                controller: controller, // Added controller
-                obscureText: obscureText, // Added obscureText
-                keyboardType: keyboardType, // Added keyboardType
+                controller: widget.controller,
+                obscureText: _obscure,
+                keyboardType: widget.keyboardType,
                 style: TextStyle(fontSize: 16.sp),
                 decoration: InputDecoration(
-
-                  fillColor: Color(0xFFE8E8E8),
-                  // fillColor: Color(0xFFFFFFFF).withOpacity(0.4),
-                  hintText: labelText,
-                  hintStyle: TextStyle(color: Colors.grey),
+                  fillColor: const Color(0xFFE8E8E8),
+                  hintText: widget.labelText,
+                  hintStyle: const TextStyle(color: Colors.grey),
                   border: InputBorder.none,
+                  // ─── Toggle icon only for password fields ──────────
+                  suffixIcon: widget.obscureText
+                      ? IconButton(
+                    icon: Icon(
+                      _obscure
+                          ? Icons.visibility_off
+                          : Icons.visibility,
+                      color: const Color(0xFF555555),
+                      size: 22.sp,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _obscure = !_obscure;
+                      });
+                    },
+                  )
+                      : null,
                 ),
               ),
             ),

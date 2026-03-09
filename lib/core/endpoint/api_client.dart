@@ -1,5 +1,10 @@
+// lib/core/endpoint/api_client.dart
+
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
+
+import '../local_storage/user_info.dart';
 
 class ApiClient {
   final String baseUrl;
@@ -8,102 +13,146 @@ class ApiClient {
   ApiClient({required this.baseUrl, http.Client? httpClient})
       : _httpClient = httpClient ?? http.Client();
 
-  final Map<String, String> _defaultHeader = {
+  final Map<String, String> _defaultHeaders = {
     "Accept": "application/json",
     "Content-Type": "application/json",
   };
 
-  /// GET request
-  Future<dynamic> get(String endpoint, {Map<String, String>? headers}) async {
-    final url = Uri.parse('$baseUrl$endpoint');
-    final mergedHeaders = {..._defaultHeader, ...?headers};
-    print("🌐 [GET] URL: $url");
-    print("📋 [GET] Headers: $mergedHeaders");
+  // ─── URL Builder (fixes double slash) ─────────────────────────────
+  String _buildUrl(String endpoint) {
+    final base = baseUrl.endsWith('/')
+        ? baseUrl.substring(0, baseUrl.length - 1)
+        : baseUrl;
+    final path = endpoint.startsWith('/') ? endpoint : '/$endpoint';
+    return '$base$path';
+  }
 
+  // ─── Auth Header ───────────────────────────────────────────────────
+  Future<Map<String, String>> _authHeaders() async {
+    final token = await UserInfo.getAccessToken();
+    return {
+      ..._defaultHeaders,
+      if (token != null && token.isNotEmpty) "Authorization": "Bearer $token",
+    };
+  }
+
+  // ─── GET ───────────────────────────────────────────────────────────
+  Future<dynamic> get(
+      String endpoint, {
+        Map<String, String>? headers,
+        bool requiresAuth = true,
+      }) async {
+    final url = Uri.parse(_buildUrl(endpoint));
+    final baseHeaders = requiresAuth ? await _authHeaders() : {..._defaultHeaders};
+    final mergedHeaders = {...baseHeaders, ...?headers};
+    _logRequest("GET", url, mergedHeaders, null);
     final response = await _httpClient.get(url, headers: mergedHeaders);
     return _handleResponse(response, url, method: "GET");
   }
 
-  /// POST request
+  // ─── POST ──────────────────────────────────────────────────────────
   Future<dynamic> post(
       String endpoint, {
         Map<String, String>? headers,
         dynamic body,
+        bool requiresAuth = true,
       }) async {
-    final url = Uri.parse('$baseUrl$endpoint');
-    final mergedHeaders = {..._defaultHeader, ...?headers};
+    final url = Uri.parse(_buildUrl(endpoint));
+    final baseHeaders = requiresAuth ? await _authHeaders() : {..._defaultHeaders};
+    final mergedHeaders = {...baseHeaders, ...?headers};
     final encodedBody = body != null ? jsonEncode(body) : null;
-
-    print("🌐 [POST] URL: $url");
-    print("📋 [POST] Headers: $mergedHeaders");
-    print("📦 [POST] Body: $body");
-
-    final response =
-    await _httpClient.post(url, headers: mergedHeaders, body: encodedBody);
+    _logRequest("POST", url, mergedHeaders, body);
+    final response = await _httpClient.post(url, headers: mergedHeaders, body: encodedBody);
     return _handleResponse(response, url, method: "POST");
   }
 
-  /// DELETE request
-  Future<dynamic> delete(
+  // ─── PUT ───────────────────────────────────────────────────────────
+  Future<dynamic> put(
       String endpoint, {
         Map<String, String>? headers,
         dynamic body,
+        bool requiresAuth = true,
       }) async {
-    final url = Uri.parse('$baseUrl$endpoint');
-    final mergedHeaders = {..._defaultHeader, ...?headers};
+    final url = Uri.parse(_buildUrl(endpoint));
+    final baseHeaders = requiresAuth ? await _authHeaders() : {..._defaultHeaders};
+    final mergedHeaders = {...baseHeaders, ...?headers};
     final encodedBody = body != null ? jsonEncode(body) : null;
-
-    print("🌐 [DELETE] URL: $url");
-    print("📋 [DELETE] Headers: $mergedHeaders");
-    print("📦 [DELETE] Body: $body");
-
-    final response = await _httpClient.delete(
-      url,
-      headers: mergedHeaders,
-      body: encodedBody,
-    );
-    return _handleResponse(response, url, method: "DELETE");
+    _logRequest("PUT", url, mergedHeaders, body);
+    final response = await _httpClient.put(url, headers: mergedHeaders, body: encodedBody);
+    return _handleResponse(response, url, method: "PUT");
   }
 
-  /// PATCH request
+  // ─── PATCH ─────────────────────────────────────────────────────────
   Future<dynamic> patch(
       String endpoint, {
         Map<String, String>? headers,
         dynamic body,
+        bool requiresAuth = true,
       }) async {
-    final url = Uri.parse('$baseUrl$endpoint');
-    final mergedHeaders = {..._defaultHeader, ...?headers};
+    final url = Uri.parse(_buildUrl(endpoint));
+    final baseHeaders = requiresAuth ? await _authHeaders() : {..._defaultHeaders};
+    final mergedHeaders = {...baseHeaders, ...?headers};
     final encodedBody = body != null ? jsonEncode(body) : null;
-
-    print("🌐 [PATCH] URL: $url");
-    print("📋 [PATCH] Headers: $mergedHeaders");
-    print("📦 [PATCH] Body: $body");
-
-    final response = await _httpClient.patch(
-      url,
-      headers: mergedHeaders,
-      body: encodedBody,
-    );
+    _logRequest("PATCH", url, mergedHeaders, body);
+    final response = await _httpClient.patch(url, headers: mergedHeaders, body: encodedBody);
     return _handleResponse(response, url, method: "PATCH");
   }
 
-  /// Handle all HTTP responses with debug logs
-  dynamic _handleResponse(http.Response response, Uri url,
-      {required String method}) {
-    print("📩 [$method] Response Code: ${response.statusCode}");
-    print("📩 [$method] Raw Response Body: ${response.body}");
+  // ─── DELETE ────────────────────────────────────────────────────────
+  Future<dynamic> delete(
+      String endpoint, {
+        Map<String, String>? headers,
+        dynamic body,
+        bool requiresAuth = true,
+      }) async {
+    final url = Uri.parse(_buildUrl(endpoint));
+    final baseHeaders = requiresAuth ? await _authHeaders() : {..._defaultHeaders};
+    final mergedHeaders = {...baseHeaders, ...?headers};
+    final encodedBody = body != null ? jsonEncode(body) : null;
+    _logRequest("DELETE", url, mergedHeaders, body);
+    final response = await _httpClient.delete(url, headers: mergedHeaders, body: encodedBody);
+    return _handleResponse(response, url, method: "DELETE");
+  }
+
+  // ─── MULTIPART ─────────────────────────────────────────────────────
+  Future<dynamic> multipart(
+      String endpoint, {
+        required String method,
+        Map<String, String>? fields,
+        Map<String, File>? files,
+        bool requiresAuth = true,
+      }) async {
+    final url = Uri.parse(_buildUrl(endpoint));
+    final token = requiresAuth ? await UserInfo.getAccessToken() : null;
+    final request = http.MultipartRequest(method, url);
+    if (token != null && token.isNotEmpty) {
+      request.headers["Authorization"] = "Bearer $token";
+    }
+    request.headers["Accept"] = "application/json";
+    if (fields != null) request.fields.addAll(fields);
+    if (files != null) {
+      for (final entry in files.entries) {
+        request.files.add(await http.MultipartFile.fromPath(entry.key, entry.value.path));
+      }
+    }
+    print("🌐 [$method MULTIPART] URL: $url");
+    print("📋 Fields: $fields");
+    print("📎 Files: ${files?.keys.toList()}");
+    final streamedResponse = await request.send();
+    final response = await http.Response.fromStream(streamedResponse);
+    return _handleResponse(response, url, method: "$method MULTIPART");
+  }
+
+  // ─── Response Handler ──────────────────────────────────────────────
+  dynamic _handleResponse(http.Response response, Uri url, {required String method}) {
+    print("📩 [$method] Status: ${response.statusCode}");
+    print("📩 [$method] Body: ${response.body}");
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      if (response.body.isEmpty) {
-        print("✅ [$method] Empty success response");
-        return null;
-      }
+      if (response.body.isEmpty) return null;
       try {
-        final decoded = jsonDecode(response.body);
-        print("✅ [$method] Decoded Response: $decoded");
-        return decoded;
+        return jsonDecode(response.body);
       } catch (e) {
-        print("❌ [$method] JSON Decode Error: $e");
         throw HttpException(
           message: "Invalid JSON format",
           statusCode: response.statusCode,
@@ -111,25 +160,62 @@ class ApiClient {
           body: response.body,
         );
       }
-    } else {
-      print("🚫 [$method] Request Failed");
-      throw HttpException(
-        message: "Request failed",
-        statusCode: response.statusCode,
-        uri: url,
-        body: response.body,
-      );
     }
+
+    String errorMessage = "Request failed";
+    try {
+      final errorBody = jsonDecode(response.body);
+      if (errorBody is Map<String, dynamic>) {
+        if (errorBody.containsKey('detail')) {
+          errorMessage = errorBody['detail'].toString();
+        } else {
+          errorMessage = errorBody.entries.map((e) {
+            final val = e.value;
+            if (val is List) return "${e.key}: ${val.join(', ')}";
+            return "${e.key}: $val";
+          }).join(" | ");
+        }
+      }
+    } catch (_) {
+      errorMessage = response.body.isNotEmpty ? response.body : "Request failed";
+    }
+
+    switch (response.statusCode) {
+      case 400:
+        throw HttpException(message: errorMessage, statusCode: 400, uri: url, body: response.body);
+      case 401:
+        throw UnauthorizedException(uri: url, body: response.body);
+      case 403:
+        throw ForbiddenException(uri: url, body: response.body);
+      case 404:
+        throw NotFoundException(uri: url, body: response.body);
+      case 500:
+      case 502:
+      case 503:
+        throw ServerException(uri: url, body: response.body);
+      default:
+        throw HttpException(message: errorMessage, statusCode: response.statusCode, uri: url, body: response.body);
+    }
+  }
+
+  // ─── Logger ────────────────────────────────────────────────────────
+  void _logRequest(String method, Uri url, Map<String, String> headers, dynamic body) {
+    print("─────────────────────────────────────");
+    print("🌐 [$method] $url");
+    print("📋 Headers: $headers");
+    if (body != null) print("📦 Body: $body");
+    print("─────────────────────────────────────");
   }
 }
 
+// ─── Exceptions ────────────────────────────────────────────────────
 class HttpException implements Exception {
   final String message;
   final int statusCode;
   final Uri uri;
   final String? body;
 
-  HttpException({
+  const HttpException({
     required this.message,
     required this.statusCode,
     required this.uri,
@@ -137,7 +223,25 @@ class HttpException implements Exception {
   });
 
   @override
-  String toString() {
-    return " message: $message, body: $body)";
-  }
+  String toString() => "HttpException [$statusCode]: $message | URL: $uri";
+}
+
+class UnauthorizedException extends HttpException {
+  UnauthorizedException({required Uri uri, String? body})
+      : super(message: "Unauthorized. Please log in again.", statusCode: 401, uri: uri, body: body);
+}
+
+class ForbiddenException extends HttpException {
+  ForbiddenException({required Uri uri, String? body})
+      : super(message: "Access denied.", statusCode: 403, uri: uri, body: body);
+}
+
+class NotFoundException extends HttpException {
+  NotFoundException({required Uri uri, String? body})
+      : super(message: "Resource not found.", statusCode: 404, uri: uri, body: body);
+}
+
+class ServerException extends HttpException {
+  ServerException({required Uri uri, String? body})
+      : super(message: "Server error. Please try again later.", statusCode: 500, uri: uri, body: body);
 }

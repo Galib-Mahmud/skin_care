@@ -9,6 +9,7 @@ class RouteName{
   static const String signup = '/signup';
   static const String resetPass = '/resetPass';
   static const String updatePass = '/updatePass';
+  static const String newPass = '/newPass';
   static const String accountCreateSuccessfully = '/accountCreateSuccessfully';
   static const String otpScreen = '/otpScreen';
   static const String homeScreen = '/homeScreen';

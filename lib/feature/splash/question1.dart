@@ -1,24 +1,21 @@
+// lib/feature/splash/question1.dart
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:skincare/feature/splash/question2.dart';
-
+import '../../feature/auth/controller/auth_controller.dart';
 import '../../routes/route_name.dart';
 import '../../widget/auth/custom_button.dart';
+import '../../widget/common/option_button.dart';
 
-class Question1 extends StatefulWidget {
+class Question1 extends StatelessWidget {
   const Question1({super.key});
 
   @override
-  _Question1State createState() => _Question1State();
-}
-
-class _Question1State extends State<Question1> {
-  // Variable to store the selected option
-  String selectedOption = "Dry"; // Default selected option
-
-  @override
   Widget build(BuildContext context) {
+    final controller = Get.find<AuthController>();
+    final options = ["Oily", "Dry", "Combination", "Sensitive"];
+
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
@@ -28,71 +25,41 @@ class _Question1State extends State<Question1> {
             Padding(
               padding: EdgeInsets.only(left: 24.w),
               child: Text(
-                textAlign: TextAlign.center,
                 "What best describes your skin Status?",
+                textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontSize: 32.sp,
-                    fontFamily: 'Gayathri',
-                    fontWeight: FontWeight.bold
+                  fontSize: 32.sp,
+                  fontFamily: 'Gayathri',
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
             SizedBox(height: 15.h),
             Text(
-              "What are the top issues you’d like to improve?",
+              "What are the top issues you'd like to improve?",
               style: TextStyle(
-                  fontSize: 16.sp,
-                  fontFamily: 'Gayathri',
-                  fontWeight: FontWeight.bold
+                fontSize: 16.sp,
+                fontFamily: 'Gayathri',
+                fontWeight: FontWeight.bold,
               ),
             ),
             SizedBox(height: 35.h),
-            buildOptionButton("Oily"),
-            SizedBox(height: 10.h),
-            buildOptionButton("Dry"),
-            SizedBox(height: 10.h),
-            buildOptionButton("Combination"),
-            SizedBox(height: 10.h),
-            buildOptionButton("Sensitive"),
+            ...options.map((option) => Column(
+              children: [
+                Obx(() => OptionButton(
+                  label: option,
+                  isSelected: controller.skinStatus.value == option,
+                  onTap: () => controller.skinStatus.value = option,
+                )),
+                SizedBox(height: 10.h),
+              ],
+            )),
             SizedBox(height: 60.h),
-            CustomButton(text: 'Continue', onPressed: () {
-              Get.toNamed(RouteName.question2);
-            }),
+            CustomButton(
+              text: 'Continue',
+              onPressed: () => Get.toNamed(RouteName.question2),
+            ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget buildOptionButton(String label) {
-    // Check if the current label is the selected one
-    bool isSelected = selectedOption == label;
-
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          selectedOption = label; // Update selected option
-        });
-      },
-      child: Container(
-        margin: EdgeInsets.only(bottom: 8.h),
-        height: 60.h,
-        width: 353.w,
-        decoration: BoxDecoration(boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1), // Light shadow color
-            blurRadius: 5, // Spread of the shadow
-            offset: Offset(0, 4), // Position of the shadow (downwards)
-          ),
-        ],
-          color: isSelected ? Color.fromRGBO(0, 0, 0, 0.4) : Color.fromRGBO(255, 255, 255, 0.4),
-          borderRadius: BorderRadius.circular(10.r),
-        ),
-        child: Center(
-          child: Text(
-            label,
-            style: TextStyle(color: isSelected?Colors.white:Colors.black, fontSize: 16.sp, fontFamily: 'Poppins'),
-          ),
         ),
       ),
     );
