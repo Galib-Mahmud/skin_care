@@ -90,7 +90,10 @@ class DailyDaviationScreen extends StatelessWidget {
                           // white ring outline
                           InkWell(
                             onTap: () {
-                              Get.toNamed(RouteName.dailyDaviationchatbot);
+                              // Get.toNamed(RouteName.dailyDaviationchatbot);
+                              Get.toNamed(RouteName.jurnalChatBot,
+                                arguments: "daily_devotion",
+                              );
                             },
                             child: Container(
                               width: 70.w,

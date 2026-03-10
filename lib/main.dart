@@ -2,18 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:skincare/core/local_storage/user_info.dart';
 import 'package:skincare/routes/app_route.dart';
 import 'package:skincare/routes/route_name.dart';
 import 'core/theme/color_theme.dart';
 import 'feature/auth/controller/auth_controller.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
+  bool isAuthenticated = await UserInfo.isLoggedIn();
+  runApp(MyApp(
+    isAuthenticated: isAuthenticated,
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  bool isAuthenticated = false;
+  MyApp({super.key, this.isAuthenticated = false});
+
+  // Get the initial route based on authentication status
+  String get initialRoute {
+    if (isAuthenticated) {
+      return RouteName.homeScreen;
+    } else {
+      return RouteName.splashloading;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +36,11 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
+
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           theme: AppTheme.lightTheme,
-          initialRoute: RouteName.splashloading,
+          initialRoute: initialRoute,
           getPages: AppRoute.pages,
           initialBinding: AppBinding(),
           defaultTransition: Transition.fade,

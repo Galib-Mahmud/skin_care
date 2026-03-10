@@ -90,7 +90,10 @@ class ScreenCareGuide extends StatelessWidget {
                           // white ring outline
                           InkWell(
                             onTap: () {
-                              Get.toNamed(RouteName.skincareChatbot);
+                              // Get.toNamed(RouteName.skincareChatbot);
+                              Get.toNamed(RouteName.jurnalChatBot,
+                                arguments: "skincare",
+                              );
                             },
                             child: Container(
                               width: 70.w,
