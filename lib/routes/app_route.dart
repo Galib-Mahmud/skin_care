@@ -8,7 +8,7 @@ import 'package:skincare/feature/auth/screens/signup.dart';
 import 'package:skincare/feature/auth/screens/account_created_successfully.dart';
 import 'package:skincare/feature/home/main_screen.dart';
 import 'package:skincare/feature/home/ai_recipe_generator.dart';
-import 'package:skincare/feature/home/resources.dart';
+import 'package:skincare/feature/resources/screens/resources.dart';
 import 'package:skincare/feature/home/checkin_screen1.dart';
 import 'package:skincare/feature/home/jurnal_prompts_screen.dart';
 import 'package:skincare/feature/home/profile_screen.dart';
@@ -196,22 +196,26 @@ class AppRoute {
       page: () =>JurnalPromptsScreen(),
       transition: Transition.rightToLeft,
       transitionDuration: Duration(milliseconds: 300),
-    ),GetPage(
-      name: RouteName.skincareChatbot,
-      page: () =>SkincareChatBot(),
-      transition: Transition.rightToLeft,
-      transitionDuration: Duration(milliseconds: 300),
-    ),GetPage(
-      name: RouteName.dailyDaviationchatbot,
-      page: () =>DailyDaviationChatBot(),
-      transition: Transition.rightToLeft,
-      transitionDuration: Duration(milliseconds: 300),
-    ),GetPage(
-      name: RouteName.airecipeGenerator,
-      page: () =>AiRecipeGenerator(),
-      transition: Transition.rightToLeft,
-      transitionDuration: Duration(milliseconds: 300),
-    ),GetPage(
+    ),
+
+    // GetPage(
+    //   name: RouteName.skincareChatbot,
+    //   page: () =>SkincareChatBot(),
+    //   transition: Transition.rightToLeft,
+    //   transitionDuration: Duration(milliseconds: 300),
+    // ),GetPage(
+    //   name: RouteName.dailyDaviationchatbot,
+    //   page: () =>DailyDaviationChatBot(),
+    //   transition: Transition.rightToLeft,
+    //   transitionDuration: Duration(milliseconds: 300),
+    // ),GetPage(
+    //   name: RouteName.airecipeGenerator,
+    //   page: () =>AiRecipeGenerator(),
+    //   transition: Transition.rightToLeft,
+    //   transitionDuration: Duration(milliseconds: 300),
+    // ),
+
+    GetPage(
       name: RouteName.shopScreen1,
       page: () =>ShopScreen1(),
       transition: Transition.rightToLeft,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:skincare/feature/resources/controller/resources_controller.dart';
 import 'package:skincare/routes/route_name.dart';
 
 class CheckinScreen2 extends StatelessWidget {
@@ -8,8 +9,9 @@ class CheckinScreen2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    final ResourcesController resourcesController = Get.put(ResourcesController());
 
+    return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
@@ -78,16 +80,22 @@ class CheckinScreen2 extends StatelessWidget {
                 style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w700),
               ),
               SizedBox(height: 18.h),
-              const _ReadingCard(
-                title: 'Managing Dry Skin in Winter',
-                content:
-                'Learn how to keep your skin healthy during harsh weather—honoring the temple God gave you.',
+              Obx(
+                () => _ReadingCard(
+                  title: resourcesController.recommendedReading.value?.skincare?.title ??
+                      'AI Recommended Skincare Tip',
+                  content: resourcesController.recommendedReading.value?.skincare?.content ??
+                      'Get personalized skincare advice based on your profile and goals.',
+                )
               ),
               SizedBox(height: 12.h),
-              const _ReadingCard(
-                title: 'Finding Rest in His Presence',
-                content:
-                'Devotional on finding peace and rest through faith during stressful times.',
+              Obx(
+                () => _ReadingCard(
+                  title: resourcesController.recommendedReading.value?.devotion?.title ??
+                      'AI Recommended Devotion',
+                  content: resourcesController.recommendedReading.value?.devotion?.content ??
+                      'Receive a daily devotional message tailored to your spiritual journey.',
+                )
               ),
               SizedBox(height: 80.h), // leave space above bottom bar
             ],
@@ -189,46 +197,64 @@ class _ReadingCard extends StatelessWidget {
   final String title;
   final String content;
 
-  const _ReadingCard({required this.title, required this.content});
+  _ReadingCard({required this.title, required this.content});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Color.fromRGBO(255, 255, 255, 0.4),
-        borderRadius: BorderRadius.circular(16.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 8,
-            offset:  Offset(0, 2),
-          ),
-        ],
-      ),
-      padding: EdgeInsets.all(14.w),
-      child: Row(
-        children: [
-          // leading pill
-          Container(
-            width: 6.w,
-            height: 70.h,
-            decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.5),
-              borderRadius: BorderRadius.circular(6.r),
-            ),
-          ),
-          SizedBox(width: 12.w),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(title, style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold)),
-                SizedBox(height: 6.h),
-                Text(content, style: TextStyle(fontSize: 14.sp, color: Colors.black87)),
+    return GestureDetector(
+      onTap: (){
+          Get.dialog(
+            AlertDialog(
+              backgroundColor: Color.fromRGBO(217, 217, 217, 1),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
+              title: Text(title, style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold)),
+              content: Text(content, style: TextStyle(fontSize: 14.sp, color: Colors.black87)),
+              actions: [
+                TextButton(
+                  onPressed: () => Get.back(),
+                  child: Text('Close', style: TextStyle(fontSize: 14.sp)),
+                ),
               ],
             ),
-          ),
-        ],
+          );
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: Color.fromRGBO(255, 255, 255, 0.4),
+          borderRadius: BorderRadius.circular(16.r),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 8,
+              offset:  Offset(0, 2),
+            ),
+          ],
+        ),
+        padding: EdgeInsets.all(14.w),
+        child: Row(
+          children: [
+            // leading pill
+            Container(
+              width: 6.w,
+              height: 70.h,
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.5),
+                borderRadius: BorderRadius.circular(6.r),
+              ),
+            ),
+            SizedBox(width: 12.w),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title, style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold)),
+                  SizedBox(height: 6.h),
+                  Text(content, style: TextStyle(fontSize: 14.sp, color: Colors.black87), maxLines: 2, overflow: TextOverflow.ellipsis),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

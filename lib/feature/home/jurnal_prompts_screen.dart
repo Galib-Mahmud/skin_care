@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:skincare/feature/chat_bot/controller/auth_controller.dart';
+import 'package:skincare/feature/chat_bot/controller/chat_bot_controller.dart';
 
 import '../../routes/route_name.dart';
 
