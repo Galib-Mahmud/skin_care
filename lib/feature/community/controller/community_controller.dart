@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:skincare/feature/chat_bot/models/chat_history_model.dart';
 import 'package:skincare/feature/community/models/post_list_model.dart';
@@ -11,6 +12,8 @@ import '../../../routes/route_name.dart';
 
 class CommunityController extends GetxController {
   final ApiClient _apiClient = ApiClient(baseUrl: ApiEndpoint.baseUrl);
+
+  TextEditingController commentTextController = TextEditingController();
 
   final RxBool isLoading = false.obs;
   final RxString communityType = 'prayer-requests'.obs;
@@ -63,6 +66,64 @@ class CommunityController extends GetxController {
 
     } catch (e) {
       print('❌ Failed to create post: $e');
+    } finally {
+      isCreating.value = false;
+    }
+  }
+
+  Future<void> like(int id) async {
+    isCreating.value = true;
+    try {
+      final token = await UserInfo.getAccessToken();
+      final response = await http.post(
+        Uri.parse(ApiEndpoint.likes),
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+        body: {
+          "post" : id.toString()
+        }
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        await loadPosts();
+      } else {
+        print("❌ Failed to like post: ${response.statusCode} - ${response.body}");
+      }
+
+    } catch (e) {
+      print('❌ Failed to like post: $e');
+    } finally {
+      isCreating.value = false;
+    }
+  }
+
+  Future<void> comment(int id) async {
+    isCreating.value = true;
+
+    print("🔍 Commenting on post ID: $id with text: ${commentTextController.text}");
+
+    try {
+      final token = await UserInfo.getAccessToken();
+      final response = await http.post(
+          Uri.parse(ApiEndpoint.comments),
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+          body: {
+            "post": id.toString(),
+            "comment_text": commentTextController.text,
+          }
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        await loadPosts();
+      } else {
+        print("❌ Failed to comment post: ${response.statusCode} - ${response.body}");
+      }
+
+    } catch (e) {
+      print('❌ Failed to comment post: $e');
     } finally {
       isCreating.value = false;
     }

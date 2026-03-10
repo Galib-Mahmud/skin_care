@@ -154,10 +154,9 @@ class _PrayerRequestsScreenState extends State<PrayerRequestsScreen> {
                           return _PrayerRequestCard(
                             post: post,
                             onLikeTap: () {
-
-                              /// TODO: Like API
-                              // communityController.likePost(post.id);
-
+                              communityController.like(
+                                  post.id!
+                              );
                             },
                           );
                         },
@@ -413,8 +412,7 @@ class _PrayerRequestCard extends StatelessWidget {
                   children: [
                     Expanded(
                       child: TextField(
-                        // controller: communityController.replyController,
-                        // TODO:: Implement separate controllers for each comment if needed
+                        controller: communityController.commentTextController,
                         decoration: InputDecoration(
                           hintText: "Write a reply...",
                           contentPadding: EdgeInsets.symmetric(horizontal: 10.w),
@@ -430,16 +428,15 @@ class _PrayerRequestCard extends StatelessWidget {
                     IconButton(
                       icon: Icon(Icons.send, size: 20.sp),
                       onPressed: () {
-                        // if (communityController.globalCommentController.text
-                        //     .trim()
-                        //     .isEmpty) return;
-                        //
-                        // communityController.addComment(
-                        //     post,
-                        //     communityController.globalCommentController.text
-                        //         .trim());
-                        //
-                        // communityController.globalCommentController.clear();
+                        if (communityController.commentTextController.text
+                            .trim()
+                            .isEmpty) return;
+
+                        communityController.comment(
+                            post.id!
+                        );
+
+                        communityController.commentTextController.clear();
                       },
                     ),
                   ],
