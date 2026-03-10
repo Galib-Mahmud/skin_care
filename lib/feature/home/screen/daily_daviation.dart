@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../routes/route_name.dart';
+import '../../../routes/route_name.dart';
 
-class ScreenCareGuide extends StatelessWidget {
-  const ScreenCareGuide({super.key, this.onConfirm});
+class DailyDaviationScreen extends StatelessWidget {
+  const DailyDaviationScreen({super.key, this.onConfirm});
 
   final VoidCallback? onConfirm;
 
@@ -27,7 +27,7 @@ class ScreenCareGuide extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 24.sp,
                   fontWeight: FontWeight.w700,
-                  color: Colors.black87,
+                  color: Colors.black,
                   height: 1.25,
                 ),
               ),
@@ -51,7 +51,7 @@ class ScreenCareGuide extends StatelessWidget {
                     children: [
                       // Illustration (replace with your asset)
                       Image.asset(
-                        'assets/images/home/skincareguide.png',
+                        'assets/images/home/dailydaviation.png',
                         width: 270.w,
                         fit: BoxFit.cover,
                       ),
@@ -90,7 +90,7 @@ class ScreenCareGuide extends StatelessWidget {
                           // white ring outline
                           InkWell(
                             onTap: () {
-                              Get.toNamed(RouteName.skincareChatbot);
+                              Get.toNamed(RouteName.dailyDaviationchatbot);
                             },
                             child: Container(
                               width: 70.w,

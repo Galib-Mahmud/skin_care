@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../widget/auth/custom_appbar.dart';
-import '../controller/order_controller.dart';
+import '../controller/history_order_controller.dart';
 
 class ShopHistoryScreen extends StatelessWidget {
   const ShopHistoryScreen({super.key});

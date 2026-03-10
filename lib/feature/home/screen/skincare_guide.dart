@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../routes/route_name.dart';
+import '../../../routes/route_name.dart';
 
-class JurnalPromptsScreen extends StatelessWidget {
-  const JurnalPromptsScreen({super.key, this.onConfirm});
+class ScreenCareGuide extends StatelessWidget {
+  const ScreenCareGuide({super.key, this.onConfirm});
 
   final VoidCallback? onConfirm;
 
@@ -25,7 +25,7 @@ class JurnalPromptsScreen extends StatelessWidget {
               Text(
                 "Hello! How can I assist you\ntoday?",
                 style: TextStyle(
-                  fontSize: 22.sp,
+                  fontSize: 24.sp,
                   fontWeight: FontWeight.w700,
                   color: Colors.black87,
                   height: 1.25,
@@ -39,6 +39,7 @@ class JurnalPromptsScreen extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 16.sp,
                   color: Colors.black,
+                  fontFamily: "Playfair Display"
                 ),
               ),
 
@@ -50,7 +51,7 @@ class JurnalPromptsScreen extends StatelessWidget {
                     children: [
                       // Illustration (replace with your asset)
                       Image.asset(
-                        'assets/images/home/jurnal.png',
+                        'assets/images/home/skincareguide.png',
                         width: 270.w,
                         fit: BoxFit.cover,
                       ),
@@ -83,15 +84,15 @@ class JurnalPromptsScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      child: InkWell(
-                        onTap: () {
-                          Get.toNamed(RouteName.jurnalChatBot);
-                        },
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            // white ring outline
-                            Container(
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          // white ring outline
+                          InkWell(
+                            onTap: () {
+                              Get.toNamed(RouteName.skincareChatbot);
+                            },
+                            child: Container(
                               width: 70.w,
                               height: 70.w,
                               decoration: BoxDecoration(
@@ -99,9 +100,9 @@ class JurnalPromptsScreen extends StatelessWidget {
                                 border: Border.all(color: Colors.white, width: 3),
                               ),
                             ),
-                            Icon(Icons.check, color: Colors.white, size: 28.sp),
-                          ],
-                        ),
+                          ),
+                          Icon(Icons.check, color: Colors.white, size: 28.sp),
+                        ],
                       ),
                     ),
                   ),

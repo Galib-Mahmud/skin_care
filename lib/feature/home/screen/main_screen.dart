@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:skincare/feature/home/resources.dart';
-import 'package:skincare/feature/home/checkin_screen1.dart';
-import 'package:skincare/feature/home/home_screen.dart';
+import 'package:skincare/feature/home/screen/home_screen.dart';
+import 'package:skincare/feature/home/screen/resources.dart';
 import 'package:skincare/feature/profile/screen/profile_screen.dart';
 import 'package:skincare/feature/shop/community_screen.dart';
 import 'package:skincare/feature/shop/shop_screen1.dart';
 import 'package:skincare/routes/route_name.dart';
-import '../../widget/home/custom_navbar.dart';
+import '../../../widget/home/custom_navbar.dart';
+import 'checkin_screen1.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});

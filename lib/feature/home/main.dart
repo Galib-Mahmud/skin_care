@@ -8,9 +8,10 @@ import '../../core/theme/color_theme.dart';
 import '../auth/controller/auth_controller.dart';
 import '../profile/controller/edit_profile_controller.dart';
 import '../profile/controller/notification_controller.dart';
-import '../profile/controller/order_controller.dart';
+import '../profile/controller/history_order_controller.dart';
 import '../profile/controller/profile_controller.dart';
 import '../profile/controller/water_goal_controller.dart';
+import 'controller/home_controller.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           theme: AppTheme.lightTheme,
-          initialRoute: RouteName.profileScreen1,
+          initialRoute: RouteName.homeScreen,
           getPages: AppRoute.pages,
           initialBinding: AppBinding(),
           defaultTransition: Transition.fade,
@@ -50,6 +51,7 @@ class AppBinding extends Bindings {
     Get.put(WaterGoalController(), permanent: true);
     Get.put(EditProfileController(), permanent: true);
     Get.put(OrderController(), permanent: true);
+    Get.put(HomeController(), permanent: true); // ← add
 
   }
 }

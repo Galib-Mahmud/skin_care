@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../routes/route_name.dart';
+import '../../../routes/route_name.dart';
 
 class FaithWinsTestimoniesScreen extends StatefulWidget {
   const FaithWinsTestimoniesScreen({super.key});
