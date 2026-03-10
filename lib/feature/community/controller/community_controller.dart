@@ -98,26 +98,34 @@ class CommunityController extends GetxController {
     }
   }
 
-  Future<void> comment(int id) async {
+  Future<void> comment(int id, int? parentID) async {
     isCreating.value = true;
 
-    print("🔍 Commenting on post ID: $id with text: ${commentTextController.text}");
+    print("🔍 Commenting on post ID: $id with parent comment ID: ${parentID ?? 'None'}");
+
+    final Map<String, String> bodyWithOutParent = {
+      "post": id.toString(),
+      "comment_text": commentTextController.text,
+    };
+    final Map<String, String> bodyWithParent = {
+      "post": id.toString(),
+      "comment_text": commentTextController.text,
+    };
 
     try {
       final token = await UserInfo.getAccessToken();
       final response = await http.post(
           Uri.parse(ApiEndpoint.comments),
           headers: {
+            'Content-Type': 'application/json',
             'Authorization': 'Bearer $token',
           },
-          body: {
-            "post": id.toString(),
-            "comment_text": commentTextController.text,
-          }
+          body: parentID != null ? jsonEncode(bodyWithParent) : jsonEncode(bodyWithOutParent)
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        await loadPosts();
+          commentTextController.clear();
+          await loadPosts();
       } else {
         print("❌ Failed to comment post: ${response.statusCode} - ${response.body}");
       }

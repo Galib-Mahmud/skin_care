@@ -255,8 +255,7 @@ class _PrayerRequestCard extends StatelessWidget {
                         children: [
                           Expanded(
                             child: TextField(
-                              // controller: communityController.replyController,
-                              // TODO:: Implement separate controllers for each comment if needed
+                              controller: communityController.commentTextController,
                               decoration: InputDecoration(
                                 hintText: "Write a reply...",
                                 contentPadding: EdgeInsets.symmetric(horizontal: 10.w),
@@ -272,15 +271,7 @@ class _PrayerRequestCard extends StatelessWidget {
                           IconButton(
                             icon: Icon(Icons.send, size: 20.sp),
                             onPressed: () {
-                              // if (communityController.replyController.text.trim().isEmpty) return;
-                              //
-                              // communityController.addReply(
-                              //     post,
-                              //     comment.id,
-                              //     communityController.replyController.text.trim());
-                              //
-                              // communityController.replyController.clear();
-                              // communityController.isReplying.value = false;
+                              communityController.comment(post.id!, comment.id!);
                             },
                           ),
                         ],
@@ -425,20 +416,31 @@ class _PrayerRequestCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    IconButton(
-                      icon: Icon(Icons.send, size: 20.sp),
-                      onPressed: () {
-                        if (communityController.commentTextController.text
-                            .trim()
-                            .isEmpty) return;
+                    Obx(
+                      () => IconButton(
+                        icon: communityController.isCreating.value
+                            ? SizedBox(
+                          width: 16.w,
+                          height: 16.w,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.black,
+                          ),
+                        )
+                            : Icon(Icons.send, size: 20.sp),
+                        onPressed: communityController.isCreating.value
+                            ? null
+                            : () {
+                          if (communityController.commentTextController.text
+                              .trim()
+                              .isEmpty) return;
 
-                        communityController.comment(
-                            post.id!
-                        );
+                          communityController.comment(post.id!, null);
 
-                        communityController.commentTextController.clear();
-                      },
-                    ),
+                          // communityController.commentTextController.clear();
+                        },
+                      ),
+                    )
                   ],
                 ),
 
