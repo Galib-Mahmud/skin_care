@@ -22,9 +22,7 @@ class _PrayerRequestsScreenState extends State<PrayerRequestsScreen> {
     super.initState();
 
     String type = Get.arguments ?? 'prayer-requests';
-
     communityController.communityType.value = type;
-
     communityController.loadPosts();
   }
 

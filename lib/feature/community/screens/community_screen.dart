@@ -69,12 +69,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
             if (i == 0) {
               Get.toNamed(RouteName.prayerRequest, arguments: 'prayer-requests');
             } else if (i == 1) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const EncouragementBoardScreen(),
-                ),
-              );
+              Get.toNamed(RouteName.encouragement, arguments: 'encouragement_board');
             } else if (i == 2) {
               Navigator.push(
                 context,

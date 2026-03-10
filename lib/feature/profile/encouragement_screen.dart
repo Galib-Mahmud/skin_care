@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:skincare/feature/community/controller/community_controller.dart';
 
 class EncouragementBoardScreen extends StatefulWidget {
   const EncouragementBoardScreen({super.key});
@@ -10,26 +15,15 @@ class EncouragementBoardScreen extends StatefulWidget {
 
 class _EncouragementBoardScreenState extends State<EncouragementBoardScreen> {
   final TextEditingController _controller = TextEditingController();
-  final List<_Encouragement> _encouragements = [
-    _Encouragement(
-      'Rachel P.',
-      '1 day ago',
-      'Remember: You are fearfully and wonderfully made! Your skin doesn\'t define your worth.',
-      15,
-    ),
-    _Encouragement(
-      'Grace L.',
-      '3 days ago',
-      'Started using natural oils and praying over my skincare routine. God is so faithful! 🙏',
-      16,
-    ),
-    _Encouragement(
-      'Grace L.',
-      '3 days ago',
-      'Started using natural oils and praying over my skincare routine. God is so faithful! 🙏',
-      16,
-    ),
-  ];
+  final CommunityController communityController = Get.put(CommunityController());
+
+  @override
+  void initState() {
+    String type = Get.arguments ?? 'prayer-requests';
+    communityController.communityType.value = type;
+    communityController.loadPosts();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,16 +78,17 @@ class _EncouragementBoardScreenState extends State<EncouragementBoardScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: ElevatedButton(
                   onPressed: () {
-                    if (_controller.text.isNotEmpty) {
-                      setState(() {
-                        _encouragements.insert(0, _Encouragement(
-                          'You',
-                          'Just Now',
-                          _controller.text,
-                          0,
-                        ));
-                        _controller.clear();
-                      });
+                    String content = _controller.text.trim();
+                    if (content.isNotEmpty) {
+                      communityController.createPosts(
+                        content , null
+                      );
+                      _controller.clear();
+                    } else {
+                      Get.snackbar('Error', 'Please enter some encouragement to share.',
+                        backgroundColor: Colors.redAccent,
+                        colorText: Colors.white,
+                      );
                     }
                   },
                   style: ElevatedButton.styleFrom(
@@ -104,13 +99,28 @@ class _EncouragementBoardScreenState extends State<EncouragementBoardScreen> {
                     padding: EdgeInsets.symmetric(vertical: 14.h),
                     elevation: 0,
                   ),
-                  child: Text(
-                    'Share Encouragement',
-                    style: TextStyle(
-                      fontSize: 13.sp,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                    ),
+                  child: Obx(
+                      (){
+                        if(communityController.isCreating.value){
+                          return SizedBox(
+                            height: 16.h,
+                            width: 16.h,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: Colors.white,
+                            ),
+                          );
+                        } else {
+                          return Text(
+                            'Share Encouragement',
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                            ),
+                          );
+                        }
+                      }
                   ),
                 ),
               ),
@@ -118,145 +128,113 @@ class _EncouragementBoardScreenState extends State<EncouragementBoardScreen> {
               SizedBox(height: 16.h),
 
               // Encouragements List
-              Expanded(
-                child: ListView.separated(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w),
-                  itemCount: _encouragements.length,
-                  separatorBuilder: (_, __) => SizedBox(height: 12.h),
-                  itemBuilder: (context, i) => _EncouragementCard(
-                    encouragement: _encouragements[i],
-                    onLikeChanged: (isLiked) {
-                      setState(() {
-                        _encouragements[i].isLiked = isLiked;
-                        if (isLiked) {
-                          _encouragements[i].likeCount++;
-                        } else {
-                          _encouragements[i].likeCount--;
-                        }
-                      });
-                    },
-                  ),
-                ),
-              ),
+              Obx(
+                  (){
+                    if (communityController.isLoading.value) {
+                      return Center(child: CircularProgressIndicator());
+                    } else if (communityController.postLists.isEmpty) {
+                      return Center(child: Text('No encouragements yet. Be the first to share!'));
+                    } else {
+                      return Expanded(
+                        child: ListView.separated(
+                          padding: EdgeInsets.symmetric(horizontal: 16.w),
+                          itemCount: communityController.postLists.length,
+                          separatorBuilder: (_, __) => SizedBox(height: 12.h),
+                          itemBuilder: (context, index) {
+                            final encouragement = communityController.postLists[index];
+                            return Container(
+                              decoration: BoxDecoration(
+                                color: Color.fromRGBO(255, 255, 255, 0.4),
+                                borderRadius: BorderRadius.circular(12.r),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.04),
+                                    blurRadius: 6,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                              padding: EdgeInsets.all(16.w),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // Name + Timestamp header
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        encouragement.user ?? 'Unknown',
+                                        style: TextStyle(
+                                          fontSize: 13.sp,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.black87,
+                                        ),
+                                      ),
+                                      Text(
+                                        encouragement.timeAgo ?? '',
+                                        style: TextStyle(
+                                          fontSize: 11.sp,
+                                          color: Colors.black45,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+
+                                  SizedBox(height: 10.h),
+
+                                  // Message
+                                  Text(
+                                    encouragement.postContent ?? '',
+                                    style: TextStyle(
+                                      fontSize: 12.sp,
+                                      color: Colors.black87,
+                                      height: 1.4,
+                                    ),
+                                  ),
+
+                                  SizedBox(height: 12.h),
+
+                                  // Like button
+                                  InkWell(
+                                    onTap: () {
+                                      // onLikeChanged(!encouragement.isLiked);
+                                    },
+                                    borderRadius: BorderRadius.circular(20.r),
+                                    child: Padding(
+                                      padding: EdgeInsets.all(4.w),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Icon(
+                                            Icons.favorite,
+                                            size: 16.sp,
+                                            color: Colors.black87,
+                                          ),
+                                          SizedBox(width: 4.w),
+                                          Text(
+                                            '${encouragement.totalLikes}',
+                                            style: TextStyle(
+                                              fontSize: 12.sp,
+                                              color: Colors.black87,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    }
+                  }
+              )
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-/// --- Model for Encouragement ---
-class _Encouragement {
-  final String name;
-  final String timestamp;
-  final String message;
-  int likeCount;
-  bool isLiked;
-
-  _Encouragement(
-      this.name,
-      this.timestamp,
-      this.message,
-      this.likeCount, {
-        this.isLiked = false,
-      });
-}
-
-/// --- Encouragement Card ---
-class _EncouragementCard extends StatelessWidget {
-  const _EncouragementCard({
-    required this.encouragement,
-    required this.onLikeChanged,
-  });
-
-  final _Encouragement encouragement;
-  final Function(bool) onLikeChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Color.fromRGBO(255, 255, 255, 0.4),
-        borderRadius: BorderRadius.circular(12.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.04),
-            blurRadius: 6,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      padding: EdgeInsets.all(16.w),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Name + Timestamp header
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                encouragement.name,
-                style: TextStyle(
-                  fontSize: 13.sp,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black87,
-                ),
-              ),
-              Text(
-                encouragement.timestamp,
-                style: TextStyle(
-                  fontSize: 11.sp,
-                  color: Colors.black45,
-                ),
-              ),
-            ],
-          ),
-
-          SizedBox(height: 10.h),
-
-          // Message
-          Text(
-            encouragement.message,
-            style: TextStyle(
-              fontSize: 12.sp,
-              color: Colors.black87,
-              height: 1.4,
-            ),
-          ),
-
-          SizedBox(height: 12.h),
-
-          // Like button
-          InkWell(
-            onTap: () {
-              onLikeChanged(!encouragement.isLiked);
-            },
-            borderRadius: BorderRadius.circular(20.r),
-            child: Padding(
-              padding: EdgeInsets.all(4.w),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    encouragement.isLiked ? Icons.favorite : Icons.favorite_border,
-                    size: 16.sp,
-                    color: Colors.black87,
-                  ),
-                  SizedBox(width: 4.w),
-                  Text(
-                    '${encouragement.likeCount}',
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                      color: Colors.black87,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }
