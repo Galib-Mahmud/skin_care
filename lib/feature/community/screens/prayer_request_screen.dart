@@ -241,11 +241,7 @@ class _PrayerRequestCard extends StatelessWidget {
                       ),
                       SizedBox(width: 12.w),
                       Text(
-                        comment.createdAt
-                            ?.replaceAll("T", " ")
-                            .split(".")
-                            .first ??
-                            "",
+                        comment.timeAgo,
                         style: TextStyle(
                           fontSize: 11.sp,
                           color: Colors.black45,
@@ -333,7 +329,7 @@ class _PrayerRequestCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    post.updatedAt?.replaceAll("T", " ").split(".").first ?? "",
+                    post.timeAgo?.replaceAll("T", " ").split(".").first ?? "",
                     style: TextStyle(
                       fontSize: 12.sp,
                       color: Colors.black45,

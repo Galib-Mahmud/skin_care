@@ -60,6 +60,22 @@ class PostListModel {
 
     return data;
   }
+
+  /// New getter: returns relative "time ago" for updatedAt
+  String get timeAgo {
+    if (updatedAt == null) return "";
+    final date = DateTime.parse(updatedAt!).toLocal();
+    final now = DateTime.now();
+    final difference = now.difference(date);
+
+    if (difference.inSeconds < 60) return "${difference.inSeconds}s ago";
+    if (difference.inMinutes < 60) return "${difference.inMinutes}m ago";
+    if (difference.inHours < 24) return "${difference.inHours}h ago";
+    if (difference.inDays < 7) return "${difference.inDays}d ago";
+    if (difference.inDays < 30) return "${(difference.inDays / 7).floor()}w ago";
+    if (difference.inDays < 365) return "${(difference.inDays / 30).floor()}mo ago";
+    return "${(difference.inDays / 365).floor()}y ago";
+  }
 }
 
 class CommentModel {
@@ -97,5 +113,21 @@ class CommentModel {
     data['created_at'] = createdAt;
     data['parent_comment_text'] = parentCommentText;
     return data;
+  }
+
+  /// New getter: returns relative "time ago" for comment
+  String get timeAgo {
+    if (createdAt == null) return "";
+    final date = DateTime.parse(createdAt!).toLocal();
+    final now = DateTime.now();
+    final difference = now.difference(date);
+
+    if (difference.inSeconds < 60) return "${difference.inSeconds}s ago";
+    if (difference.inMinutes < 60) return "${difference.inMinutes}m ago";
+    if (difference.inHours < 24) return "${difference.inHours}h ago";
+    if (difference.inDays < 7) return "${difference.inDays}d ago";
+    if (difference.inDays < 30) return "${(difference.inDays / 7).floor()}w ago";
+    if (difference.inDays < 365) return "${(difference.inDays / 30).floor()}mo ago";
+    return "${(difference.inDays / 365).floor()}y ago";
   }
 }
