@@ -1,5 +1,6 @@
 // ─── OtpScreen ─────────────────────────────────────────────────────
 
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -111,26 +112,99 @@ class OtpScreen extends StatelessWidget {
               )),
               SizedBox(height: 20.h),
 
-              Center(
-                child: GestureDetector(
-                  onTap: () {
-                    if (controller.otpFlowType.value == 'register') {
-                      controller.resendRegistrationOtp();
-                    } else {
-                      controller.resendForgotPasswordOtp();
-                    }
-                  },
-                  child: Text(
-                    "Haven't got the email yet? Resend email",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.sp,
-                        decoration: TextDecoration.underline),
-                  ),
+              // ── Resend with 1-min countdown ──
+              _ResendEmailButton(controller: controller),
+
+              SizedBox(height: 30.h),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ─── Resend Email Button with Countdown Timer ───────────────────────
+
+class _ResendEmailButton extends StatefulWidget {
+  final AuthController controller;
+  const _ResendEmailButton({required this.controller});
+
+  @override
+  State<_ResendEmailButton> createState() => _ResendEmailButtonState();
+}
+
+class _ResendEmailButtonState extends State<_ResendEmailButton> {
+  Timer? _timer;
+  int _secondsRemaining = 60;
+  bool _canResend = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _startTimer();
+  }
+
+  void _startTimer() {
+    setState(() {
+      _secondsRemaining = 60;
+      _canResend = false;
+    });
+
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_secondsRemaining == 0) {
+        timer.cancel();
+        setState(() => _canResend = true);
+      } else {
+        setState(() => _secondsRemaining--);
+      }
+    });
+  }
+
+  void _handleResend() {
+    if (!_canResend) return;
+
+    if (widget.controller.otpFlowType.value == 'register') {
+      widget.controller.resendRegistrationOtp();
+    } else if (widget.controller.otpFlowType.value == 'forgot_password') {
+      widget.controller.resendForgotPasswordOtp();
+    }
+
+    _startTimer(); // Reset timer after resend
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: GestureDetector(
+        onTap: _canResend ? _handleResend : null,
+        child: RichText(
+          textAlign: TextAlign.center,
+          text: TextSpan(
+            style: TextStyle(
+              fontFamily: "Inter",
+              fontSize: 16.sp,
+              color: Colors.black,
+            ),
+            children: [
+              const TextSpan(text: "Haven't got the email yet? "),
+              TextSpan(
+                text: _canResend
+                    ? "Resend email"
+                    : "Resend email in ${_secondsRemaining}s",
+                style: TextStyle(
+                  color: _canResend ? Colors.black : Colors.grey,
+                  decoration: _canResend
+                      ? TextDecoration.underline
+                      : TextDecoration.none,
                 ),
               ),
-              SizedBox(height: 30.h),
             ],
           ),
         ),
