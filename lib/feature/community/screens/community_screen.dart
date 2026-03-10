@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:skincare/feature/profile/encouragement_screen.dart';
 import 'package:skincare/feature/profile/faith_wins_screen.dart';
-import 'package:skincare/feature/shop/prayer_request_screen.dart';
+import 'package:skincare/feature/community/screens/prayer_request_screen.dart';
+import 'package:skincare/routes/route_name.dart';
 import 'package:skincare/widget/home/custom_navbar.dart';
 // import your navbar
 
@@ -65,10 +67,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
           item: items[i],
           onTap: () {
             if (i == 0) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const PrayerRequestsScreen()),
-              );
+              Get.toNamed(RouteName.prayerRequest, arguments: 'prayer-requests');
             } else if (i == 1) {
               Navigator.push(
                 context,
