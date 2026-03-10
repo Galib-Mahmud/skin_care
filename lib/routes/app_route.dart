@@ -6,17 +6,6 @@ import 'package:skincare/feature/auth/screens/forget_password_screen.dart';
 import 'package:skincare/feature/auth/screens/sign_in.dart';
 import 'package:skincare/feature/auth/screens/signup.dart';
 import 'package:skincare/feature/auth/screens/account_created_successfully.dart';
-import 'package:skincare/feature/home/screen/main_screen.dart';
-import 'package:skincare/feature/home/screen/ai_recipe_generator.dart';
-
-import 'package:skincare/feature/home/screen/jurnal_prompts_screen.dart';
-import 'package:skincare/feature/home/screen/profile_screen.dart';
-import 'package:skincare/feature/home/screen/recipe_screen.dart';
-import 'package:skincare/feature/profile/screen/water_goals_screen.dart';
-import 'package:skincare/feature/home/screen/encouragement_screen.dart';
-import 'package:skincare/feature/profile/screen/full_story.dart';
-import 'package:skincare/feature/profile/screen/privacy_screen.dart';
-import 'package:skincare/feature/profile/screen/profile_screen.dart';
 import 'package:skincare/feature/shop/cart_screen.dart';
 import 'package:skincare/feature/shop/community_screen.dart';
 import 'package:skincare/feature/shop/order_failed_screen.dart';
@@ -36,18 +25,24 @@ import 'package:skincare/feature/splash/subscription_screen.dart';
 
 import 'package:skincare/routes/route_name.dart';
 
+import '../feature/chat_bot/screens/jurnal_chatbot_screen.dart';
 import '../feature/home/screen/checkin_screen1.dart';
 import '../feature/home/screen/daily_daviation.dart';
-import '../feature/home/screen/daily_daviation_chatbot_screen.dart';
-import '../feature/home/screen/resources.dart';
-import '../feature/profile/screen/edit_profile_screen.dart';
-import '../feature/home/screen/jurnal_chatbot_screen.dart';
-import '../feature/home/screen/skincare_chatbot_screen.dart';
+import '../feature/home/screen/encouragement_screen.dart';
+import '../feature/home/screen/faith_wins_screen.dart';
+import '../feature/home/screen/jurnal_prompts_screen.dart';
+import '../feature/home/screen/main_screen.dart';
+import '../feature/home/screen/recipe_screen.dart';
 import '../feature/home/screen/skincare_guide.dart';
 import '../feature/profile/screen/about_contact_screen.dart';
-import '../feature/home/screen/faith_wins_screen.dart';
+import '../feature/profile/screen/edit_profile_screen.dart';
+import '../feature/profile/screen/full_story.dart';
 import '../feature/profile/screen/notification_screen.dart';
+import '../feature/profile/screen/privacy_screen.dart';
+import '../feature/profile/screen/profile_screen.dart';
 import '../feature/profile/screen/shop_history_screen.dart';
+import '../feature/profile/screen/water_goals_screen.dart';
+import '../feature/resources/screens/resources.dart';
 import '../feature/shop/checkout_screen.dart';
 import '../feature/splash/loading_splash_screen.dart';
 import '../feature/splash/willness_screen.dart';
@@ -192,22 +187,9 @@ class AppRoute {
       page: () =>JurnalPromptsScreen(),
       transition: Transition.rightToLeft,
       transitionDuration: Duration(milliseconds: 300),
-    ),GetPage(
-      name: RouteName.skincareChatbot,
-      page: () =>SkincareChatBot(),
-      transition: Transition.rightToLeft,
-      transitionDuration: Duration(milliseconds: 300),
-    ),GetPage(
-      name: RouteName.dailyDaviationchatbot,
-      page: () =>DailyDaviationChatBot(),
-      transition: Transition.rightToLeft,
-      transitionDuration: Duration(milliseconds: 300),
-    ),GetPage(
-      name: RouteName.airecipeGenerator,
-      page: () =>AiRecipeGenerator(),
-      transition: Transition.rightToLeft,
-      transitionDuration: Duration(milliseconds: 300),
-    ),GetPage(
+    ),
+
+    GetPage(
       name: RouteName.shopScreen1,
       page: () =>ShopScreen1(),
       transition: Transition.rightToLeft,

@@ -1,4 +1,4 @@
-// lib/feature/auth/controller/auth_controller.dart
+// lib/feature/auth/controller/chat_bot_controller.dart
 
 import 'dart:convert';
 import 'package:flutter/material.dart';

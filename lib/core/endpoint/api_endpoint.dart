@@ -1,5 +1,5 @@
 class ApiEndpoint {
-  static const String baseUrl = "http://10.10.7.76:14070/";
+  static const String baseUrl = "http://10.10.7.76:14070";
 
   // ─── Auth - Registration ───────────────────────────────────────────
   static const String register         = "$baseUrl/api/v1/auth/register/";
@@ -46,9 +46,9 @@ class ApiEndpoint {
   static const String comments = "$baseUrl/api/v1/services/comments/";
 
   // ─── AI Section ────────────────────────────────────────────────────
-  static const String aiChatbot              = "$baseUrl/api/v1/services/ai-chatbot/";
-  static const String chatSessions           = "$baseUrl/api/v1/services/chat-sessions/";
-  static const String aiRecommendedReading   = "$baseUrl/api/v1/services/ai-recommended-reading/";
+  static const String aiChatbot              = "/api/v1/services/ai-chatbot/";
+  static const String chatSessions           = "/api/v1/services/chat-sessions/";
+  static const String aiRecommendedReading   = "/api/v1/services/ai-recommended-reading/";
   static const String aiRecommendedProducts  = "$baseUrl/api/v1/services/recommended-products/";
 
   // ─── Shop - Categories (Public) ────────────────────────────────────

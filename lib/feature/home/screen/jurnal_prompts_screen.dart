@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:skincare/feature/chat_bot/controller/chat_bot_controller.dart';
 
 import '../../../routes/route_name.dart';
 
@@ -85,7 +86,9 @@ class JurnalPromptsScreen extends StatelessWidget {
                       ),
                       child: InkWell(
                         onTap: () {
-                          Get.toNamed(RouteName.jurnalChatBot);
+                          Get.toNamed(RouteName.jurnalChatBot,
+                              arguments: "journal"
+                          );
                         },
                         child: Stack(
                           alignment: Alignment.center,
