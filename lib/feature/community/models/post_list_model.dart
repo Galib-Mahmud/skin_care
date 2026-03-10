@@ -65,24 +65,37 @@ class PostListModel {
 class CommentModel {
   int? id;
   String? user;
-  String? comment;
+  int? parentComment;
+  String? commentText;
   String? createdAt;
+  String? parentCommentText;
 
-  CommentModel({this.id, this.user, this.comment, this.createdAt});
+  CommentModel({
+    this.id,
+    this.user,
+    this.parentComment,
+    this.commentText,
+    this.createdAt,
+    this.parentCommentText,
+  });
 
   CommentModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     user = json['user'];
-    comment = json['comment'];
+    parentComment = json['parent_comment'];
+    commentText = json['comment_text'];
     createdAt = json['created_at'];
+    parentCommentText = json['parent_comment_text'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
     data['id'] = id;
     data['user'] = user;
-    data['comment'] = comment;
+    data['parent_comment'] = parentComment;
+    data['comment_text'] = commentText;
     data['created_at'] = createdAt;
+    data['parent_comment_text'] = parentCommentText;
     return data;
   }
 }

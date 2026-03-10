@@ -20,6 +20,12 @@ class CommunityController extends GetxController {
   final RxBool isCreating = false.obs;
   final RxList<ChatHistoryModel> chatHistory = <ChatHistoryModel>[].obs;
 
+  final RxBool isCommenting = false.obs;
+  final RxInt commentingPostId = 0.obs;
+
+  final RxBool isReplying = false.obs;
+  final RxInt replyingCommentId = 0.obs;
+
 
   Future<void> createPosts(String content, String? images) async {
     isCreating.value = true;

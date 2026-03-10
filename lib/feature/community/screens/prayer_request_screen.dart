@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:skincare/feature/community/controller/community_controller.dart';
 
+import '../models/post_list_model.dart';
+
 class PrayerRequestsScreen extends StatefulWidget {
   const PrayerRequestsScreen({super.key});
 
@@ -24,27 +26,6 @@ class _PrayerRequestsScreenState extends State<PrayerRequestsScreen> {
     communityController.communityType.value = type;
 
     communityController.loadPosts();
-  }
-
-  void _showCommentSheet(BuildContext context, int postId) {
-
-    // TODO:
-    // 1️⃣ Load comments API
-    // 2️⃣ Show comment list
-
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (_) {
-        return Container(
-          height: 400,
-          padding: EdgeInsets.all(20),
-          child: Center(
-            child: Text("TODO: Load comments for Post ID $postId"),
-          ),
-        );
-      },
-    );
   }
 
   @override
@@ -180,11 +161,6 @@ class _PrayerRequestsScreenState extends State<PrayerRequestsScreen> {
                               // communityController.likePost(post.id);
 
                             },
-                            onCommentTap: () {
-
-                              // _showCommentSheet(context, post.id);
-
-                            },
                           );
                         },
                       );
@@ -201,156 +177,289 @@ class _PrayerRequestsScreenState extends State<PrayerRequestsScreen> {
     );
   }
 }
-
 /// POST CARD
 class _PrayerRequestCard extends StatelessWidget {
-
-  final dynamic post;
+  final PostListModel post;
   final VoidCallback onLikeTap;
-  final VoidCallback onCommentTap;
 
   const _PrayerRequestCard({
     required this.post,
     required this.onLikeTap,
-    required this.onCommentTap,
   });
 
   @override
   Widget build(BuildContext context) {
+    final CommunityController communityController = Get.put(CommunityController());
 
-    return Container(
-      padding: EdgeInsets.all(16.w),
-      decoration: BoxDecoration(
-        color: Color.fromRGBO(255, 255, 255, 0.4),
-        borderRadius: BorderRadius.circular(10.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 2,
-            offset: Offset(0, 4),
-          )
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+    /// Recursive comment widget to show nested replies
+    Widget _buildComment(CommentModel comment) {
+      final children = post.comments!
+          .where((c) => c.parentComment == comment.id)
+          .toList();
 
-          /// USER
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                post.user ?? "Unknown",
-                style: TextStyle(
-                  fontSize: 15.sp,
-                  fontWeight: FontWeight.w600,
-                ),
+      return Padding(
+        padding: EdgeInsets.only(left: comment.parentComment == null ? 0 : 20.w, top: 8.h),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: EdgeInsets.all(10.w),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8.r),
               ),
-
-              Text(
-                post.updatedAt
-                    ?.replaceAll("T", " ")
-                    .split(".")
-                    .first ??
-                    "",
-                style: TextStyle(
-                  fontSize: 12.sp,
-                  color: Colors.black45,
-                ),
-              ),
-            ],
-          ),
-
-          SizedBox(height: 10.h),
-
-          /// MESSAGE
-          Text(
-            post.postContent ?? "",
-            style: TextStyle(
-              fontSize: 14.sp,
-              height: 1.4,
-            ),
-          ),
-
-          /// IMAGE
-          // if (post.postImage != null)
-          //   Padding(
-          //     padding: EdgeInsets.only(top: 10.h),
-          //     child: ClipRRect(
-          //       borderRadius: BorderRadius.circular(8.r),
-          //       child: Image.network(
-          //         post.postImage,
-          //         height: 180.h,
-          //         width: double.infinity,
-          //         fit: BoxFit.cover,
-          //         errorBuilder: (context, error, stackTrace) => Container(
-          //           height: 180.h,
-          //           color: Colors.black12,
-          //           child: Center(
-          //             child: Icon(Icons.broken_image, size: 40.sp),
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-
-          SizedBox(height: 14.h),
-
-          /// ACTIONS
-          Row(
-            children: [
-
-              /// LIKE
-              InkWell(
-                onTap: onLikeTap,
-                child: Container(
-                  padding:
-                  EdgeInsets.symmetric(horizontal: 14.w, vertical: 8.h),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black54),
-                    borderRadius: BorderRadius.circular(7.r),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    comment.user ?? "Unknown",
+                    style: TextStyle(
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                  child: Row(
+                  SizedBox(height: 4.h),
+                  Text(
+                    comment.commentText ?? "",
+                    style: TextStyle(fontSize: 12.sp),
+                  ),
+                  SizedBox(height: 4.h),
+                  Row(
                     children: [
-
-                      Icon(Icons.favorite_border, size: 16.sp),
-
-                      SizedBox(width: 6.w),
-
+                      GestureDetector(
+                        onTap: () {
+                          communityController.replyingCommentId.value = comment.id!;
+                          communityController.isReplying.value =
+                          !communityController.isReplying.value;
+                        },
+                        child: Text(
+                          "Reply",
+                          style: TextStyle(
+                            fontSize: 12.sp,
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 12.w),
                       Text(
-                        "Praying (${post.totalLikes ?? 0})",
+                        comment.createdAt
+                            ?.replaceAll("T", " ")
+                            .split(".")
+                            .first ??
+                            "",
                         style: TextStyle(
-                          fontSize: 13.sp,
+                          fontSize: 11.sp,
+                          color: Colors.black45,
                         ),
                       ),
                     ],
                   ),
-                ),
-              ),
-
-              Spacer(),
-
-              /// COMMENT
-              InkWell(
-                onTap: onCommentTap,
-                child: Row(
-                  children: [
-
-                    Icon(Icons.chat_bubble_outline, size: 18.sp),
-
-                    SizedBox(width: 6.w),
-
-                    Text(
-                      "${post.totalComments ?? 0}",
-                      style: TextStyle(fontSize: 13.sp),
+                  // Individual reply input
+                  if (communityController.isReplying.value &&
+                      communityController.replyingCommentId.value == comment.id)
+                    Padding(
+                      padding: EdgeInsets.only(top: 6.h),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              // controller: communityController.replyController,
+                              // TODO:: Implement separate controllers for each comment if needed
+                              decoration: InputDecoration(
+                                hintText: "Write a reply...",
+                                contentPadding: EdgeInsets.symmetric(horizontal: 10.w),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(50.r),
+                                  borderSide: BorderSide.none,
+                                ),
+                                filled: true,
+                                fillColor: Colors.white.withOpacity(0.2),
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.send, size: 20.sp),
+                            onPressed: () {
+                              // if (communityController.replyController.text.trim().isEmpty) return;
+                              //
+                              // communityController.addReply(
+                              //     post,
+                              //     comment.id,
+                              //     communityController.replyController.text.trim());
+                              //
+                              // communityController.replyController.clear();
+                              // communityController.isReplying.value = false;
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
-                ),
+                ],
+              ),
+            ),
+            // Nested replies
+            ...children.map((c) => _buildComment(c)).toList(),
+          ],
+        ),
+      );
+    }
+
+    return Column(
+      children: [
+        Container(
+          padding: EdgeInsets.all(16.w),
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.4),
+            borderRadius: BorderRadius.circular(10.r),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.25),
+                blurRadius: 4,
+                offset: Offset(0, 4),
               )
             ],
           ),
-        ],
-      ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              /// USER
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    post.user ?? "Unknown",
+                    style: TextStyle(
+                      fontSize: 15.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Text(
+                    post.updatedAt?.replaceAll("T", " ").split(".").first ?? "",
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      color: Colors.black45,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10.h),
+              /// MESSAGE
+              Text(
+                post.postContent ?? "",
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  height: 1.4,
+                ),
+              ),
+              SizedBox(height: 14.h),
+              /// ACTIONS
+              Row(
+                children: [
+                  /// LIKE
+                  InkWell(
+                    onTap: onLikeTap,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 8.h),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black54),
+                        borderRadius: BorderRadius.circular(7.r),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(Icons.favorite_border, size: 16.sp),
+                          SizedBox(width: 6.w),
+                          Text(
+                            "Praying (${post.totalLikes ?? 0})",
+                            style: TextStyle(fontSize: 13.sp),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Spacer(),
+                  /// COMMENT
+                  InkWell(
+                    onTap: () {
+                      communityController.isCommenting.value =
+                      !communityController.isCommenting.value;
+                      communityController.commentingPostId.value = post.id!;
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.chat_bubble_outline, size: 18.sp),
+                        SizedBox(width: 6.w),
+                        Text(
+                          "${post.totalComments ?? 0}",
+                          style: TextStyle(fontSize: 13.sp),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+
+        /// Comment section
+        Obx(() {
+          if (communityController.isCommenting.value &&
+              communityController.commentingPostId.value == post.id) {
+            final topLevelComments =
+            post.comments!.where((c) => c.parentComment == null).toList();
+
+            return Column(
+              children: [
+                SizedBox(height: 12.h),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        // controller: communityController.replyController,
+                        // TODO:: Implement separate controllers for each comment if needed
+                        decoration: InputDecoration(
+                          hintText: "Write a reply...",
+                          contentPadding: EdgeInsets.symmetric(horizontal: 10.w),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(50.r),
+                            borderSide: BorderSide.none,
+                          ),
+                          filled: true,
+                          fillColor: Colors.white.withOpacity(0.2),
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.send, size: 20.sp),
+                      onPressed: () {
+                        // if (communityController.globalCommentController.text
+                        //     .trim()
+                        //     .isEmpty) return;
+                        //
+                        // communityController.addComment(
+                        //     post,
+                        //     communityController.globalCommentController.text
+                        //         .trim());
+                        //
+                        // communityController.globalCommentController.clear();
+                      },
+                    ),
+                  ],
+                ),
+
+                /// Comments list
+                ListView(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.only(left: 0.w, top: 8.h),
+                  children: topLevelComments.map((c) => _buildComment(c)).toList(),
+                ),
+              ],
+            );
+          } else {
+            return SizedBox.shrink();
+          }
+        }),
+      ],
     );
   }
 }
