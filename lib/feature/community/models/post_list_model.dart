@@ -8,6 +8,7 @@ class PostListModel {
   String? updatedAt;
   int? totalLikes;
   int? totalComments;
+  bool? isLikedByCurrentUser;
   List<CommentModel>? comments;
 
   PostListModel({
@@ -20,6 +21,7 @@ class PostListModel {
     this.updatedAt,
     this.totalLikes,
     this.totalComments,
+    this.isLikedByCurrentUser,
     this.comments,
   });
 
@@ -32,6 +34,7 @@ class PostListModel {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     totalLikes = json['total_likes'];
+    isLikedByCurrentUser = json['is_liked_by_current_user'];
     totalComments = json['total_comments'];
 
     if (json['comments'] != null) {
@@ -53,7 +56,7 @@ class PostListModel {
     data['updated_at'] = updatedAt;
     data['total_likes'] = totalLikes;
     data['total_comments'] = totalComments;
-
+    data['is_liked_by_current_user'] = isLikedByCurrentUser;
     if (comments != null) {
       data['comments'] = comments!.map((v) => v.toJson()).toList();
     }

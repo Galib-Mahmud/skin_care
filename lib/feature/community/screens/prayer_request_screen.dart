@@ -359,7 +359,12 @@ class _PrayerRequestCard extends StatelessWidget {
                       ),
                       child: Row(
                         children: [
-                          Icon(Icons.favorite_border, size: 16.sp),
+                          Icon(
+                              post.isLikedByCurrentUser == true
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              size: 16.sp
+                          ),
                           SizedBox(width: 6.w),
                           Text(
                             "Praying (${post.totalLikes ?? 0})",

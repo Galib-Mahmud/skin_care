@@ -206,7 +206,7 @@ class _EncouragementBoardScreenState extends State<EncouragementBoardScreen> {
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           Icon(
-                                            Icons.favorite,
+                                            encouragement.isLikedByCurrentUser == true ? Icons.favorite : Icons.favorite_border,
                                             size: 16.sp,
                                             color: Colors.black87,
                                           ),
