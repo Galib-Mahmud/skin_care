@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:skincare/feature/home/resources.dart';
+import 'package:skincare/feature/resources/screens/resources.dart';
 import 'package:skincare/feature/home/checkin_screen1.dart';
 import 'package:skincare/feature/home/home_screen.dart';
 import 'package:skincare/feature/profile/profile_screen.dart';

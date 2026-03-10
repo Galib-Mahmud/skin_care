@@ -48,7 +48,7 @@ class ApiEndpoint {
   // ─── AI Section ────────────────────────────────────────────────────
   static const String aiChatbot              = "/api/v1/services/ai-chatbot/";
   static const String chatSessions           = "/api/v1/services/chat-sessions/";
-  static const String aiRecommendedReading   = "$baseUrl/api/v1/services/ai-recommended-reading/";
+  static const String aiRecommendedReading   = "/api/v1/services/ai-recommended-reading/";
   static const String aiRecommendedProducts  = "$baseUrl/api/v1/services/recommended-products/";
 
   // ─── Shop - Categories (Public) ────────────────────────────────────
