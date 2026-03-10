@@ -41,7 +41,7 @@ import 'package:skincare/routes/route_name.dart';
 import '../feature/home/daily_daviation.dart';
 import '../feature/home/daily_daviation_chatbot_screen.dart';
 import '../feature/home/edit_profile_screen.dart';
-import '../feature/home/jurnal_chatbot_screen.dart';
+import '../feature/chat_bot/screens/jurnal_chatbot_screen.dart';
 import '../feature/home/skincare_chatbot_screen.dart';
 import '../feature/home/skincare_guide.dart';
 import '../feature/profile/faith_wins_screen.dart';

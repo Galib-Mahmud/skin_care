@@ -1,7 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:skincare/feature/chat_bot/controller/auth_controller.dart';
 
-import '../../widget/home/custom_app_bar.dart';
+import '../../../widget/home/custom_app_bar.dart';
+import '../models/chat_history_model.dart';
 
 class JurnalChatBot extends StatefulWidget {
   const JurnalChatBot({super.key});
@@ -12,27 +20,53 @@ class JurnalChatBot extends StatefulWidget {
 
 class _JurnalChatBotState extends State<JurnalChatBot> {
   final TextEditingController _controller = TextEditingController();
-  final List<_Msg> _messages = [
-    _Msg.time('10:15'),
-    _Msg.bot(
-      """Hello! I'd be happy to help with that. 😊
-To get started, can you tell me what type of skin you have? You can choose from:
-1. Oily
-2. Dry
-3. Combination
-4. Sensitive
-5. Normal""",
-    ),
-    _Msg.user('I think I have oily skin.'),
-    _Msg.time('11:15'),
-    _Msg.bot(
-      "Got it! Oily skin means your skin tends to get shiny, especially in the T-zone (forehead, nose, chin). I can suggest a skincare routine to help manage that excess oil. Ready? 😉",
-    ),
-    _Msg.user("Yes, please! What should I start with?"),
-  ];
+  final ChatBotController chatBotController = Get.put(ChatBotController());
+  final ScrollController _scrollController = ScrollController();
+
+  void _scrollToBottom() {
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    }
+  }
 
   @override
+  void initState() {
+    super.initState();
+    final type = Get.arguments ?? "skincare";
+    chatBotController.botType.value = type;
+
+    chatBotController.loadHistory();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollToBottom();
+    });
+  }
+  @override
   Widget build(BuildContext context) {
+
+    // Get background image based on bot type
+      String bgImage;
+      switch (chatBotController.botType.value) {
+        case "skincare":
+          bgImage = 'assets/images/home/skincarechatbot.jpg';
+          break;
+        case "daily_devotion":
+          bgImage = 'assets/images/home/daily.jpg';
+          break;
+        case "meal_plan":
+          bgImage = 'assets/images/home/airecipe.jpg';
+          break;
+        case "journal":
+          bgImage = 'assets/images/home/jurnal.jpg';
+          break;
+        default:
+          bgImage = 'assets/images/home/jurnal.jpg';
+      }
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.black,
@@ -42,64 +76,80 @@ To get started, can you tell me what type of skin you have? You can choose from:
       ),
       body: Stack(
         children: [
-          // Background image
           Positioned.fill(
             child: Image.asset(
-              'assets/images/home/jurnal.jpg',
+              bgImage,
               fit: BoxFit.cover,
               color: Colors.white.withOpacity(0.5),
               colorBlendMode: BlendMode.srcOver,
             ),
           ),
 
-          // Dim overlay
           Positioned.fill(
             child: Container(color: Colors.black.withOpacity(0.25)),
           ),
 
-          // Chat
           SafeArea(
             child: Column(
               children: [
-                SizedBox(height: kToolbarHeight + 8.h),
+                /// CHAT LIST
                 Expanded(
-                  child: ListView.builder(
-                    padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.h),
-                    itemCount: _messages.length,
-                    itemBuilder: (_, i) {
-                      final m = _messages[i];
-                      if (m.type == _MsgType.time) {
-                        return _TimeChip(text: m.text);
-                      }
-                      return Align(
-                        alignment: m.type == _MsgType.user
-                            ? Alignment.centerRight
-                            : Alignment.centerLeft,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 6.h),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              if (m.type == _MsgType.bot) ...[
-                                _BotAvatar(size: 22.w),
-                                SizedBox(width: 6.w),
+                  child: Obx(() {
+                    final chats = chatBotController.chatHistory;
+
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      _scrollToBottom();
+                    });
+
+                    if (chatBotController.isLoading.value) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+
+                    return ListView.builder(
+                      controller: _scrollController,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 14.w, vertical: 12.h),
+                      itemCount: chats.length,
+                      itemBuilder: (_, i) {
+                        final m = chats[i];
+
+                        final isUser = m.role == "user";
+
+                        return Align(
+                          alignment: isUser
+                              ? Alignment.centerRight
+                              : Alignment.centerLeft,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 6.h),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                if (!isUser) ...[
+                                  _BotAvatar(size: 22.w),
+                                  SizedBox(width: 6.w),
+                                ],
+                                _Bubble(
+                                  text: m.message ?? "",
+                                  isUser: isUser,
+                                ),
+                                if (isUser) SizedBox(width: 6.w),
                               ],
-                              _Bubble(
-                                text: m.text,
-                                isUser: m.type == _MsgType.user,
-                              ),
-                              if (m.type == _MsgType.user) SizedBox(width: 6.w),
-                            ],
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
+                        );
+                      },
+                    );
+                  }),
                 ),
 
-                // Input bar (single pill with send icon inside)
-                _InputBar(controller: _controller, onSend: _handleSend),
+                /// INPUT
+                _InputBar(
+                  controller: _controller,
+                  onSend: _handleSend,
+                  chatBotController: chatBotController,
+                ),
+
                 SizedBox(height: 10.h),
               ],
             ),
@@ -109,27 +159,46 @@ To get started, can you tell me what type of skin you have? You can choose from:
     );
   }
 
+  /// SEND MESSAGE
   void _handleSend() {
     final txt = _controller.text.trim();
     if (txt.isEmpty) return;
-    setState(() {
-      _messages.add(_Msg.user(txt));
-      _controller.clear();
-      Future.delayed(const Duration(milliseconds: 300), () {
-        setState(() {
-          _messages.add(_Msg.bot('Thanks! I’ll tailor tips for: "$txt".'));
-        });
-      });
-    });
+
+    /// instantly UI te add
+    chatBotController.chatHistory.add(
+      ChatHistoryModel(
+        role: "user",
+        message: txt,
+      ),
+    );
+
+    _controller.clear();
+    Future.delayed(const Duration(milliseconds: 100), _scrollToBottom);
+
+    chatBotController.sendMassage(
+      txt,
+    ).then((botReply) {
+      if (botReply != null) {
+        chatBotController.chatHistory.add(
+          ChatHistoryModel(
+            role: "bot",
+            message: botReply,
+          ),
+        );
+      }
+    }
+    );
+    Future.delayed(const Duration(milliseconds: 100), _scrollToBottom);
   }
 }
 
 /// ====== Widgets ======
 
 class _InputBar extends StatelessWidget {
+  final ChatBotController chatBotController;
   final TextEditingController controller;
   final VoidCallback onSend;
-  const _InputBar({required this.controller, required this.onSend});
+  const _InputBar({required this.controller, required this.onSend, required this.chatBotController});
 
   @override
   Widget build(BuildContext context) {
@@ -172,11 +241,18 @@ class _InputBar extends StatelessWidget {
               suffixIconConstraints: BoxConstraints(minHeight: 40.h, minWidth: 40.w),
               suffixIcon: Padding(
                 padding: EdgeInsets.only(right: 6.w),
-                child: IconButton(
+                child: Obx(() => IconButton(
                   splashRadius: 20.r,
-                  icon: Icon(Icons.send_rounded, size: 24.sp, color: Colors.black45),
-                  onPressed: onSend,
-                ),
+                  icon: chatBotController.isGeneratingResponse.value
+                      ? SizedBox(
+                    width: 16.w,
+                    height: 16.h,
+                    child: CircularProgressIndicator(strokeWidth: 2.h),
+                  )
+                      : Icon(Icons.send_rounded, size: 24.sp, color: Colors.black45),
+                  onPressed: chatBotController.isGeneratingResponse.value ? null : onSend,
+                )
+                )
               ),
             ),
           ),

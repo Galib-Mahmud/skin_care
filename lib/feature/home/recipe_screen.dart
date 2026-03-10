@@ -84,7 +84,10 @@ class RecipeScreen extends StatelessWidget {
                       ),
                       child: InkWell(
                         onTap: () {
-                          Get.toNamed(RouteName.airecipeGenerator);
+                          // Get.toNamed(RouteName.airecipeGenerator);
+                          Get.toNamed(RouteName.jurnalChatBot,
+                              arguments: "meal_plan",
+                          );
                         },
                         child: Stack(
                           alignment: Alignment.center,
