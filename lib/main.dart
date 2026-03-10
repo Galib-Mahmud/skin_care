@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           theme: AppTheme.lightTheme,
-          initialRoute: RouteName.splashloading,
+          initialRoute: RouteName.profileScreen1,
           getPages: AppRoute.pages,
           initialBinding: AppBinding(),
           defaultTransition: Transition.fade,

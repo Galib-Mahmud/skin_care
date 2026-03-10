@@ -132,11 +132,6 @@ class AppRoute {
       transition: Transition.rightToLeft,
       transitionDuration: Duration(milliseconds: 300),
     ),GetPage(
-      name: RouteName.profileScreen,
-      page: () =>ProfileScreen(),
-      transition: Transition.rightToLeft,
-      transitionDuration: Duration(milliseconds: 300),
-    ),GetPage(
       name: RouteName.question1,
       page: () =>Question1(),
       transition: Transition.rightToLeft,
