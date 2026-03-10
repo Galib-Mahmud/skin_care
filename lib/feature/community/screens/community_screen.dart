@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:skincare/feature/community/screens/encouragement_screen.dart';
 import 'package:skincare/feature/community/screens/faith_wins_screen.dart';
 import 'package:skincare/feature/community/screens/prayer_request_screen.dart';
-import 'package:skincare/routes/route_name.dart';
-import 'package:skincare/widget/home/custom_navbar.dart';
-// import your navbar
 
 class CommunityScreen extends StatefulWidget {
   const CommunityScreen({super.key});
@@ -67,11 +63,24 @@ class _CommunityScreenState extends State<CommunityScreen> {
           item: items[i],
           onTap: () {
             if (i == 0) {
-              Get.toNamed(RouteName.prayerRequest, arguments: 'prayer-requests');
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const PrayerRequestsScreen()),
+              );
             } else if (i == 1) {
-              Get.toNamed(RouteName.encouragement, arguments: 'encouragement_board');
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const EncouragementBoardScreen(),
+                ),
+              );
             } else if (i == 2) {
-              Get.toNamed(RouteName.faithWins, arguments: 'waith_wins');
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const FaithWinsTestimoniesScreen(),
+                ),
+              );
             }
           },
         ),

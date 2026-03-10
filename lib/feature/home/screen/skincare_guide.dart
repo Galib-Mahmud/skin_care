@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../routes/route_name.dart';
+import '../../../routes/route_name.dart';
 
 class ScreenCareGuide extends StatelessWidget {
   const ScreenCareGuide({super.key, this.onConfirm});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../widget/home/custom_app_bar.dart';
+import '../../../widget/home/custom_app_bar.dart';
 
 class SkincareChatBot extends StatefulWidget {
   const SkincareChatBot({super.key});

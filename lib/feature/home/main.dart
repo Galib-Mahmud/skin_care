@@ -5,8 +5,14 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:skincare/core/local_storage/user_info.dart';
 import 'package:skincare/routes/app_route.dart';
 import 'package:skincare/routes/route_name.dart';
-import 'core/theme/color_theme.dart';
-import 'feature/auth/controller/auth_controller.dart';
+import '../../core/theme/color_theme.dart';
+import '../auth/controller/auth_controller.dart';
+import '../profile/controller/edit_profile_controller.dart';
+import '../profile/controller/notification_controller.dart';
+import '../profile/controller/history_order_controller.dart';
+import '../profile/controller/profile_controller.dart';
+import '../profile/controller/water_goal_controller.dart';
+import 'controller/home_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -55,5 +61,12 @@ class AppBinding extends Bindings {
   @override
   void dependencies() {
     Get.put(AuthController(), permanent: true);
+    Get.put(ProfileController(), permanent: true);
+    Get.put(NotificationController(), permanent: true);
+    Get.put(WaterGoalController(), permanent: true);
+    Get.put(EditProfileController(), permanent: true);
+    Get.put(OrderController(), permanent: true);
+    Get.put(HomeController(), permanent: true); // ← add
+
   }
 }

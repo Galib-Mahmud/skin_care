@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../routes/route_name.dart';
+import '../../../routes/route_name.dart';
 
-class RecipeScreen extends StatelessWidget {
-  const RecipeScreen({super.key, this.onConfirm});
+class DailyDaviationScreen extends StatelessWidget {
+  const DailyDaviationScreen({super.key, this.onConfirm});
 
   final VoidCallback? onConfirm;
 
@@ -39,7 +39,7 @@ class RecipeScreen extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 16.sp,
                   color: Colors.black,
-                  fontFamily: 'Playfair Display'
+                  fontFamily: "Playfair Display"
                 ),
               ),
 
@@ -51,10 +51,12 @@ class RecipeScreen extends StatelessWidget {
                     children: [
                       // Illustration (replace with your asset)
                       Image.asset(
-                        'assets/images/home/recipe.png',
+                        'assets/images/home/dailydaviation.png',
                         width: 270.w,
                         fit: BoxFit.cover,
                       ),
+
+
 
                     ],
                   ),
@@ -82,18 +84,18 @@ class RecipeScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      child: InkWell(
-                        onTap: () {
-                          // Get.toNamed(RouteName.airecipeGenerator);
-                          Get.toNamed(RouteName.jurnalChatBot,
-                              arguments: "meal_plan",
-                          );
-                        },
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            // white ring outline
-                            Container(
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          // white ring outline
+                          InkWell(
+                            onTap: () {
+                              // Get.toNamed(RouteName.dailyDaviationchatbot);
+                              Get.toNamed(RouteName.jurnalChatBot,
+                                arguments: "daily_devotion",
+                              );
+                            },
+                            child: Container(
                               width: 70.w,
                               height: 70.w,
                               decoration: BoxDecoration(
@@ -101,9 +103,9 @@ class RecipeScreen extends StatelessWidget {
                                 border: Border.all(color: Colors.white, width: 3),
                               ),
                             ),
-                            Icon(Icons.check, color: Colors.white, size: 28.sp),
-                          ],
-                        ),
+                          ),
+                          Icon(Icons.check, color: Colors.white, size: 28.sp),
+                        ],
                       ),
                     ),
                   ),

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:skincare/feature/chat_bot/controller/chat_bot_controller.dart';
 
-import '../../routes/route_name.dart';
+import '../../../routes/route_name.dart';
 
-class DailyDaviationScreen extends StatelessWidget {
-  const DailyDaviationScreen({super.key, this.onConfirm});
+class JurnalPromptsScreen extends StatelessWidget {
+  const JurnalPromptsScreen({super.key, this.onConfirm});
 
   final VoidCallback? onConfirm;
 
@@ -25,9 +26,9 @@ class DailyDaviationScreen extends StatelessWidget {
               Text(
                 "Hello! How can I assist you\ntoday?",
                 style: TextStyle(
-                  fontSize: 24.sp,
+                  fontSize: 22.sp,
                   fontWeight: FontWeight.w700,
-                  color: Colors.black,
+                  color: Colors.black87,
                   height: 1.25,
                 ),
               ),
@@ -39,7 +40,6 @@ class DailyDaviationScreen extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 16.sp,
                   color: Colors.black,
-                  fontFamily: "Playfair Display"
                 ),
               ),
 
@@ -51,7 +51,7 @@ class DailyDaviationScreen extends StatelessWidget {
                     children: [
                       // Illustration (replace with your asset)
                       Image.asset(
-                        'assets/images/home/dailydaviation.png',
+                        'assets/images/home/jurnal.png',
                         width: 270.w,
                         fit: BoxFit.cover,
                       ),
@@ -84,18 +84,17 @@ class DailyDaviationScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          // white ring outline
-                          InkWell(
-                            onTap: () {
-                              // Get.toNamed(RouteName.dailyDaviationchatbot);
-                              Get.toNamed(RouteName.jurnalChatBot,
-                                arguments: "daily_devotion",
-                              );
-                            },
-                            child: Container(
+                      child: InkWell(
+                        onTap: () {
+                          Get.toNamed(RouteName.jurnalChatBot,
+                              arguments: "journal"
+                          );
+                        },
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            // white ring outline
+                            Container(
                               width: 70.w,
                               height: 70.w,
                               decoration: BoxDecoration(
@@ -103,9 +102,9 @@ class DailyDaviationScreen extends StatelessWidget {
                                 border: Border.all(color: Colors.white, width: 3),
                               ),
                             ),
-                          ),
-                          Icon(Icons.check, color: Colors.white, size: 28.sp),
-                        ],
+                            Icon(Icons.check, color: Colors.white, size: 28.sp),
+                          ],
+                        ),
                       ),
                     ),
                   ),

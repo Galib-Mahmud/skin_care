@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:skincare/feature/chat_bot/controller/chat_bot_controller.dart';
 
-import '../../routes/route_name.dart';
+import '../../../routes/route_name.dart';
 
-class JurnalPromptsScreen extends StatelessWidget {
-  const JurnalPromptsScreen({super.key, this.onConfirm});
+class RecipeScreen extends StatelessWidget {
+  const RecipeScreen({super.key, this.onConfirm});
 
   final VoidCallback? onConfirm;
 
@@ -26,9 +25,9 @@ class JurnalPromptsScreen extends StatelessWidget {
               Text(
                 "Hello! How can I assist you\ntoday?",
                 style: TextStyle(
-                  fontSize: 22.sp,
+                  fontSize: 24.sp,
                   fontWeight: FontWeight.w700,
-                  color: Colors.black87,
+                  color: Colors.black,
                   height: 1.25,
                 ),
               ),
@@ -40,6 +39,7 @@ class JurnalPromptsScreen extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 16.sp,
                   color: Colors.black,
+                  fontFamily: 'Playfair Display'
                 ),
               ),
 
@@ -51,12 +51,10 @@ class JurnalPromptsScreen extends StatelessWidget {
                     children: [
                       // Illustration (replace with your asset)
                       Image.asset(
-                        'assets/images/home/jurnal.png',
+                        'assets/images/home/recipe.png',
                         width: 270.w,
                         fit: BoxFit.cover,
                       ),
-
-
 
                     ],
                   ),
@@ -86,8 +84,9 @@ class JurnalPromptsScreen extends StatelessWidget {
                       ),
                       child: InkWell(
                         onTap: () {
+                          // Get.toNamed(RouteName.airecipeGenerator);
                           Get.toNamed(RouteName.jurnalChatBot,
-                              arguments: "journal"
+                              arguments: "meal_plan",
                           );
                         },
                         child: Stack(
