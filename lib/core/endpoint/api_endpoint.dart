@@ -37,7 +37,7 @@ class ApiEndpoint {
 
   // ─── Service - Posts ───────────────────────────────────────────────
   static const String createPost = "$baseUrl/api/v1/services/posts/";
-  static const String listPosts  = "$baseUrl/api/v1/services/posts/list/";
+  static const String listPosts  = "/api/v1/services/posts/list/";
 
   // ─── Service - Likes ───────────────────────────────────────────────
   static const String likes = "$baseUrl/api/v1/services/likes/";

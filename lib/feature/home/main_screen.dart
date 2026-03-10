@@ -5,7 +5,7 @@ import 'package:skincare/feature/resources/screens/resources.dart';
 import 'package:skincare/feature/home/checkin_screen1.dart';
 import 'package:skincare/feature/home/home_screen.dart';
 import 'package:skincare/feature/profile/profile_screen.dart';
-import 'package:skincare/feature/shop/community_screen.dart';
+import 'package:skincare/feature/community/screens/community_screen.dart';
 import 'package:skincare/feature/shop/shop_screen1.dart';
 import 'package:skincare/routes/route_name.dart';
 import '../../widget/home/custom_navbar.dart';
