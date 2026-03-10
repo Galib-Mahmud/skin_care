@@ -7,11 +7,11 @@ import 'package:skincare/feature/auth/screens/sign_in.dart';
 import 'package:skincare/feature/auth/screens/signup.dart';
 import 'package:skincare/feature/auth/screens/account_created_successfully.dart';
 import 'package:skincare/feature/shop/cart_screen.dart';
-import 'package:skincare/feature/shop/community_screen.dart';
+import 'package:skincare/feature/community/screens/community_screen.dart';
 import 'package:skincare/feature/shop/order_failed_screen.dart';
 import 'package:skincare/feature/shop/order_success_screen.dart';
 import 'package:skincare/feature/shop/place_order_screen.dart';
-import 'package:skincare/feature/shop/prayer_request_screen.dart';
+import 'package:skincare/feature/community/screens/prayer_request_screen.dart';
 import 'package:skincare/feature/shop/shop_screen1.dart';
 import 'package:skincare/feature/shop/shop_screen2.dart';
 import 'package:skincare/feature/splash/daily_faith_screen.dart';
@@ -26,10 +26,10 @@ import 'package:skincare/feature/splash/subscription_screen.dart';
 import 'package:skincare/routes/route_name.dart';
 
 import '../feature/chat_bot/screens/jurnal_chatbot_screen.dart';
+import '../feature/community/screens/encouragement_screen.dart';
 import '../feature/home/screen/checkin_screen1.dart';
 import '../feature/home/screen/daily_daviation.dart';
 import '../feature/home/screen/encouragement_screen.dart';
-import '../feature/home/screen/faith_wins_screen.dart';
 import '../feature/home/screen/jurnal_prompts_screen.dart';
 import '../feature/home/screen/main_screen.dart';
 import '../feature/home/screen/recipe_screen.dart';
@@ -43,6 +43,7 @@ import '../feature/profile/screen/profile_screen.dart';
 import '../feature/profile/screen/shop_history_screen.dart';
 import '../feature/profile/screen/water_goals_screen.dart';
 import '../feature/resources/screens/resources.dart';
+import '../feature/community/screens/faith_wins_screen.dart';
 import '../feature/shop/checkout_screen.dart';
 import '../feature/splash/loading_splash_screen.dart';
 import '../feature/splash/willness_screen.dart';
@@ -188,6 +189,23 @@ class AppRoute {
       transition: Transition.rightToLeft,
       transitionDuration: Duration(milliseconds: 300),
     ),
+
+    // GetPage(
+    //   name: RouteName.skincareChatbot,
+    //   page: () =>SkincareChatBot(),
+    //   transition: Transition.rightToLeft,
+    //   transitionDuration: Duration(milliseconds: 300),
+    // ),GetPage(
+    //   name: RouteName.dailyDaviationchatbot,
+    //   page: () =>DailyDaviationChatBot(),
+    //   transition: Transition.rightToLeft,
+    //   transitionDuration: Duration(milliseconds: 300),
+    // ),GetPage(
+    //   name: RouteName.airecipeGenerator,
+    //   page: () =>AiRecipeGenerator(),
+    //   transition: Transition.rightToLeft,
+    //   transitionDuration: Duration(milliseconds: 300),
+    // ),
 
     GetPage(
       name: RouteName.shopScreen1,

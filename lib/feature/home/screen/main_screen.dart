@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:skincare/feature/home/screen/home_screen.dart';
 import 'package:skincare/feature/profile/screen/profile_screen.dart';
 import 'package:skincare/feature/resources/screens/resources.dart';
-import 'package:skincare/feature/shop/community_screen.dart';
+import 'package:skincare/feature/community/screens/community_screen.dart';
 import 'package:skincare/feature/shop/shop_screen1.dart';
 import 'package:skincare/widget/home/custom_navbar.dart';
 

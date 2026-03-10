@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:skincare/feature/home/screen/encouragement_screen.dart';
-import 'package:skincare/feature/home/screen/faith_wins_screen.dart';
-import 'package:skincare/feature/shop/prayer_request_screen.dart';
-import 'package:skincare/widget/home/custom_navbar.dart';
-// import your navbar
+import 'package:skincare/feature/community/screens/encouragement_screen.dart';
+import 'package:skincare/feature/community/screens/faith_wins_screen.dart';
+import 'package:skincare/feature/community/screens/prayer_request_screen.dart';
 
 class CommunityScreen extends StatefulWidget {
   const CommunityScreen({super.key});
