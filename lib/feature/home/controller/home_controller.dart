@@ -11,8 +11,8 @@ class HomeController extends GetxController {
   static HomeController get to => Get.find();
   final ApiClient _apiClient = ApiClient(baseUrl: ApiEndpoint.baseUrl);
 
-  final RxBool isLoading  = false.obs;
-  final RxBool isSaving   = false.obs;
+  final RxBool isLoading = false.obs;
+  final RxBool isSaving  = false.obs;
 
   // ─── Bible Verse ──────────────────────────────────────────────────
   final RxString bibleVerse = ''.obs;
@@ -25,14 +25,17 @@ class HomeController extends GetxController {
   final RxString skinGoal   = ''.obs;
 
   // ─── Water Intake ─────────────────────────────────────────────────
-  final RxInt    waterAchieved    = 0.obs;
-  final RxDouble waterPercentage  = 0.0.obs;
+  final RxInt    waterAchieved   = 0.obs;
+  final RxDouble waterPercentage = 0.0.obs;
 
   // ─── Notes ────────────────────────────────────────────────────────
-  final RxBool   isEditingNote    = false.obs;
-  final RxString noteText         = RxString(
+  final RxBool   isEditingNote = false.obs;
+  final RxBool   isSavingNote  = false.obs;
+  final RxString noteText      = RxString(
       'How is your skin feeling today? Any concerns or improvements?');
-  final noteController            = TextEditingController();
+  final RxInt    noteId        = 0.obs;
+  final RxString noteDate      = ''.obs;
+  final noteController         = TextEditingController();
 
   @override
   void onInit() {
@@ -49,6 +52,7 @@ class HomeController extends GetxController {
       fetchBibleVerse(),
       fetchGoals(),
       fetchWaterIntake(),
+      fetchTodaysNote(),
     ]);
     isLoading.value = false;
   }
@@ -105,8 +109,8 @@ class HomeController extends GetxController {
         requiresAuth: true,
       );
       if (response != null) {
-        waterGoal.value       = response['water_goal']                    ?? 8;
-        waterAchieved.value   = response['water_goal_achieved']           ?? 0;
+        waterGoal.value       = response['water_goal']                   ?? 8;
+        waterAchieved.value   = response['water_goal_achieved']          ?? 0;
         waterPercentage.value =
             (response['water_goal_achieved_percentage'] ?? 0).toDouble();
       }
@@ -118,13 +122,77 @@ class HomeController extends GetxController {
   }
 
   // ──────────────────────────────────────────────────────────────────
-  // PATCH water intake achieved  (+8 or -8 oz)
+  // GET /api/v1/services/todays-notes/detail/
+  // ──────────────────────────────────────────────────────────────────
+  Future<void> fetchTodaysNote() async {
+    try {
+      final response = await _apiClient.get(
+        '/api/v1/services/todays-notes/detail/',
+        requiresAuth: true,
+      );
+      if (response != null) {
+        noteId.value        = response['id']    ?? 0;
+        noteDate.value      = response['date']  ?? '';
+        noteText.value      = response['notes'] ?? '';
+        noteController.text = noteText.value;
+      }
+    } on HttpException catch (e) {
+      // 404 = no note yet today — silently ignore
+      if (e.statusCode != 404) {
+        print('❌ fetchTodaysNote error: ${e.message}');
+      }
+    } catch (e) {
+      print('❌ fetchTodaysNote error: $e');
+    }
+  }
+
+  // ──────────────────────────────────────────────────────────────────
+  // POST /api/v1/services/todays-notes/
+  // ──────────────────────────────────────────────────────────────────
+  Future<void> saveTodaysNote() async {
+    final text = noteController.text.trim();
+    if (text.isEmpty) return;
+
+    isSavingNote.value = true;
+    try {
+      final today = DateTime.now();
+      final date  =
+          '${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}';
+
+      final response = await _apiClient.post(
+        '/api/v1/services/todays-notes/',
+        body: {
+          'date' : date,
+          'notes': text,
+        },
+        requiresAuth: true,
+      );
+
+      if (response != null) {
+        noteId.value   = response['id']    ?? 0;
+        noteDate.value = response['date']  ?? date;
+        noteText.value = response['notes'] ?? text;
+      }
+
+      _showSuccess('Note saved!');
+    } on HttpException catch (e) {
+      _showError(_extractMessage(_tryParseBody(e.body)) ?? e.message);
+    } catch (e) {
+      print('❌ saveTodaysNote error: $e');
+      _showError('Something went wrong. Please try again.');
+    } finally {
+      isSavingNote.value = false;
+    }
+  }
+
+  // ──────────────────────────────────────────────────────────────────
+  // PATCH water intake (+8 or -8 oz)
   // ──────────────────────────────────────────────────────────────────
   Future<void> updateWaterAchieved(int delta) async {
-    final newVal = (waterAchieved.value + delta).clamp(0, waterGoal.value * 10);
-    waterAchieved.value = newVal; // optimistic
+    final newVal =
+    (waterAchieved.value + delta).clamp(0, waterGoal.value * 10);
+    waterAchieved.value = newVal;
 
-    // recalc percentage locally
     if (waterGoal.value > 0) {
       waterPercentage.value =
           ((newVal / waterGoal.value) * 100).clamp(0, 100).toDouble();
@@ -137,9 +205,8 @@ class HomeController extends GetxController {
         requiresAuth: true,
       );
     } on HttpException catch (e) {
-      // revert
-      waterAchieved.value = (waterAchieved.value - delta)
-          .clamp(0, waterGoal.value * 10);
+      waterAchieved.value =
+          (waterAchieved.value - delta).clamp(0, waterGoal.value * 10);
       _showError(_extractMessage(_tryParseBody(e.body)) ?? e.message);
     } catch (e) {
       print('❌ updateWaterAchieved error: $e');
@@ -147,9 +214,12 @@ class HomeController extends GetxController {
   }
 
   // ──────────────────────────────────────────────────────────────────
-  // PATCH mood + skin status  → /api/v1/user/profile/goal/update/
+  // PATCH mood + skin status
   // ──────────────────────────────────────────────────────────────────
-  Future<void> patchGoals({String? newFeeling, String? newSkinStatus}) async {
+  Future<void> patchGoals({
+    String? newFeeling,
+    String? newSkinStatus,
+  }) async {
     if (newFeeling    != null) feeling.value    = newFeeling;
     if (newSkinStatus != null) skinStatus.value = newSkinStatus;
 
@@ -171,36 +241,12 @@ class HomeController extends GetxController {
   }
 
   // ──────────────────────────────────────────────────────────────────
-  // PUT full goal update  → /api/v1/user/profile/goal/update/
+  // NOTE TOGGLE — edit ↔ save
   // ──────────────────────────────────────────────────────────────────
-  Future<void> putGoals() async {
-    isSaving.value = true;
-    try {
-      await _apiClient.put(
-        '/api/v1/user/profile/goal/update/',
-        body: {
-          'skin_status': skinStatus.value,
-          'water_goal' : waterGoal.value,
-          'feeling'    : feeling.value,
-          'remainder'  : remainder.value,
-          'skin_goal'  : skinGoal.value,
-        },
-        requiresAuth: true,
-      );
-      _showSuccess('Goals updated!');
-    } on HttpException catch (e) {
-      _showError(_extractMessage(_tryParseBody(e.body)) ?? e.message);
-    } catch (e) {
-      print('❌ putGoals error: $e');
-    } finally {
-      isSaving.value = false;
-    }
-  }
-
-  // ─── Note helpers ──────────────────────────────────────────────────
   void toggleNote() {
     if (isEditingNote.value) {
       noteText.value = noteController.text;
+      saveTodaysNote();        // ← POST on checkmark
     } else {
       noteController.text = noteText.value;
     }

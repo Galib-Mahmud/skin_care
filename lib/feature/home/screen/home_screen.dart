@@ -38,13 +38,14 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               children: [
 
-                // ─── Header ─────────────────────────────────
+                // ─── Header ───────────────────────────────
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.grey[400],
                     borderRadius: BorderRadius.circular(20.r),
                     image: const DecorationImage(
-                      image: AssetImage('assets/images/home/Frame.png'),
+                      image: AssetImage(
+                          'assets/images/home/Frame.png'),
                       fit: BoxFit.cover,
                       opacity: 0.6,
                     ),
@@ -107,8 +108,8 @@ class HomeScreen extends StatelessWidget {
                             BorderRadius.circular(12.r),
                             boxShadow: [
                               BoxShadow(
-                                color:
-                                Colors.black.withOpacity(0.1),
+                                color: Colors.black
+                                    .withOpacity(0.1),
                                 blurRadius: 8.r,
                                 offset: const Offset(0, 2),
                               ),
@@ -214,15 +215,18 @@ class HomeScreen extends StatelessWidget {
                                 SizedBox(
                                   width: 140.w,
                                   height: 140.w,
-                                  child: CircularProgressIndicator(
-                                    value: (c.waterPercentage.value
+                                  child:
+                                  CircularProgressIndicator(
+                                    value: (c.waterPercentage
+                                        .value
                                         .clamp(0, 100)) /
                                         100,
                                     strokeWidth: 10.w,
                                     valueColor:
                                     const AlwaysStoppedAnimation(
                                         Color(0xFF333333)),
-                                    backgroundColor: Colors.black12,
+                                    backgroundColor:
+                                    Colors.black12,
                                   ),
                                 ),
                                 Column(
@@ -255,20 +259,21 @@ class HomeScreen extends StatelessWidget {
                             ),
                             child: Row(
                               children: [
-                                // ── Remove 8oz ──
                                 Expanded(
                                   child: InkWell(
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius:
+                                    BorderRadius.only(
                                       topLeft:
                                       Radius.circular(24.r),
                                       bottomLeft:
                                       Radius.circular(24.r),
                                     ),
                                     onTap: () =>
-                                        c.updateWaterAchieved(-8),
+                                        c.updateWaterAchieved(
+                                            -8),
                                     child: Padding(
-                                      padding:
-                                      EdgeInsets.symmetric(
+                                      padding: EdgeInsets
+                                          .symmetric(
                                           vertical: 12.h),
                                       child: Row(
                                         mainAxisAlignment:
@@ -280,8 +285,8 @@ class HomeScreen extends StatelessWidget {
                                           SizedBox(width: 5.w),
                                           Text('8 oz',
                                               style: TextStyle(
-                                                  color:
-                                                  Colors.white,
+                                                  color: Colors
+                                                      .white,
                                                   fontSize:
                                                   16.sp)),
                                         ],
@@ -293,10 +298,10 @@ class HomeScreen extends StatelessWidget {
                                     width: 1.w,
                                     height: 28.h,
                                     color: Colors.white24),
-                                // ── Add 8oz ──
                                 Expanded(
                                   child: InkWell(
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius:
+                                    BorderRadius.only(
                                       topRight:
                                       Radius.circular(24.r),
                                       bottomRight:
@@ -305,8 +310,8 @@ class HomeScreen extends StatelessWidget {
                                     onTap: () =>
                                         c.updateWaterAchieved(8),
                                     child: Padding(
-                                      padding:
-                                      EdgeInsets.symmetric(
+                                      padding: EdgeInsets
+                                          .symmetric(
                                           vertical: 12.h),
                                       child: Row(
                                         mainAxisAlignment:
@@ -318,8 +323,8 @@ class HomeScreen extends StatelessWidget {
                                           SizedBox(width: 5.w),
                                           Text('8 oz',
                                               style: TextStyle(
-                                                  color:
-                                                  Colors.white,
+                                                  color: Colors
+                                                      .white,
                                                   fontSize:
                                                   16.sp)),
                                         ],
@@ -336,90 +341,104 @@ class HomeScreen extends StatelessWidget {
                     SizedBox(height: 16.h),
 
                     // ─── Notes Card ────────────────────────
-                    Card(
-                      color: Colors.transparent,
-                      elevation: 0,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: const Color.fromRGBO(
-                              217, 217, 217, 1),
-                          borderRadius:
-                          BorderRadius.circular(16.r),
-                          boxShadow: [
-                            BoxShadow(
-                              color:
-                              Colors.black.withOpacity(0.2),
-                              blurRadius: 10,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 12.r, horizontal: 16.r),
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Today's Notes",
-                                    style: TextStyle(
-                                        fontSize: 16.sp,
-                                        fontWeight:
-                                        FontWeight.bold),
-                                  ),
-                                  Obx(() => IconButton(
-                                    icon: Icon(
-                                      c.isEditingNote.value
-                                          ? Icons.check
-                                          : Icons.edit,
-                                      size: 23.7.sp,
-                                    ),
-                                    onPressed: c.toggleNote,
-                                  )),
-                                ],
-                              ),
-                              Obx(() => c.isEditingNote.value
-                                  ? TextField(
-                                controller: c.noteController,
-                                maxLines: 4,
-                                decoration: InputDecoration(
-                                  hintText:
-                                  'How is your skin feeling today?',
-                                  hintStyle: TextStyle(
-                                      color: const Color
-                                          .fromRGBO(
-                                          0, 0, 0, 0.4),
-                                      fontSize: 14.sp),
-                                  border: OutlineInputBorder(
-                                    borderRadius:
-                                    BorderRadius.circular(
-                                        12.r),
-                                    borderSide:
-                                    BorderSide.none,
-                                  ),
-                                  contentPadding:
-                                  EdgeInsets.symmetric(
-                                      vertical: 12.r,
-                                      horizontal: 16.r),
-                                  filled: true,
-                                  fillColor:
-                                  const Color.fromRGBO(
-                                      255, 255, 255, 0.25),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(
+                            217, 217, 217, 1),
+                        borderRadius:
+                        BorderRadius.circular(16.r),
+                        boxShadow: [
+                          BoxShadow(
+                            color:
+                            Colors.black.withOpacity(0.2),
+                            blurRadius: 10,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 12.r, horizontal: 16.r),
+                        child: Column(
+                          crossAxisAlignment:
+                          CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment:
+                              MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Today's Notes",
+                                  style: TextStyle(
+                                      fontSize: 16.sp,
+                                      fontWeight:
+                                      FontWeight.bold),
                                 ),
-                              )
-                                  : Text(
-                                c.noteText.value,
-                                style: TextStyle(
-                                    fontSize: 14.sp,
+                                // ── edit / save icon ──────
+                                Obx(() => c.isSavingNote.value
+                                    ? Padding(
+                                  padding: EdgeInsets.all(
+                                      12.r),
+                                  child: SizedBox(
+                                    width: 20.w,
+                                    height: 20.h,
+                                    child: const CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                        color: Colors
+                                            .black54),
+                                  ),
+                                )
+                                    : IconButton(
+                                  icon: Icon(
+                                    c.isEditingNote.value
+                                        ? Icons.check
+                                        : Icons.edit,
+                                    size: 23.7.sp,
+                                  ),
+                                  onPressed: c.toggleNote,
+                                )),
+                              ],
+                            ),
+
+                            // ── note content ──────────────
+                            Obx(() => c.isEditingNote.value
+                                ? TextField(
+                              controller: c.noteController,
+                              maxLines: 4,
+                              decoration: InputDecoration(
+                                hintText:
+                                'How is your skin feeling today?',
+                                hintStyle: TextStyle(
                                     color: const Color
                                         .fromRGBO(
-                                        0, 0, 0, 0.6)),
-                              )),
-                            ],
-                          ),
+                                        0, 0, 0, 0.4),
+                                    fontSize: 14.sp),
+                                border: OutlineInputBorder(
+                                  borderRadius:
+                                  BorderRadius.circular(
+                                      12.r),
+                                  borderSide:
+                                  BorderSide.none,
+                                ),
+                                contentPadding:
+                                EdgeInsets.symmetric(
+                                    vertical: 12.r,
+                                    horizontal: 16.r),
+                                filled: true,
+                                fillColor:
+                                const Color.fromRGBO(
+                                    255, 255, 255, 0.25),
+                              ),
+                            )
+                                : Text(
+                              c.noteText.value,
+                              style: TextStyle(
+                                  fontSize: 14.sp,
+                                  color: const Color
+                                      .fromRGBO(
+                                      0, 0, 0, 0.6)),
+                            )),
+                          ],
                         ),
                       ),
                     ),
@@ -435,7 +454,7 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-/* ═══════════════════ Extracted reactive widgets ═════════════════════════ */
+/* ═══════════════════ Reactive widgets ═══════════════════════════════════ */
 
 class _MoodItem extends StatelessWidget {
   final String label;
@@ -528,7 +547,8 @@ class _SkinChip extends StatelessWidget {
               ),
             ],
             border: Border.all(
-              color: isSelected ? Colors.black : const Color(0xFFE5E5E5),
+              color:
+              isSelected ? Colors.black : const Color(0xFFE5E5E5),
               width: 1,
             ),
           ),
