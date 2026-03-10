@@ -101,7 +101,7 @@ class _AccountCreateSuccessfullyState extends State<AccountCreateSuccessfully> {
                 CustomButton(
                   text: 'Sign In',
                   onPressed: () {
-                    Get.toNamed(RouteName.mainScreen);
+                    Get.toNamed(RouteName.signin);
 
 
                   },

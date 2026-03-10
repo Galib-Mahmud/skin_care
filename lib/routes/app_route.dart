@@ -80,6 +80,11 @@ class AppRoute {
       page: () =>ResetPassword(),
       transition: Transition.rightToLeft,
       transitionDuration: Duration(milliseconds: 300),
+    ),GetPage(
+      name: RouteName.newPass,
+      page: () =>PasswordResetScreen(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 300),
     ),
     GetPage(
       name: RouteName.otpScreen,
@@ -93,7 +98,7 @@ class AppRoute {
       transitionDuration: Duration(milliseconds: 300),
     ), GetPage(
       name: RouteName.accountCreateSuccessfully,
-      page: () =>PasswordResetScreen(),
+      page: () =>AccountCreateSuccessfully(),
       transition: Transition.rightToLeft,
       transitionDuration: Duration(milliseconds: 300),
     ),GetPage(

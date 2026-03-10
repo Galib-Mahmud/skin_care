@@ -1,115 +1,73 @@
+// ─── ResetPassword (Forgot Password - enter email) ─────────────────
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:skincare/routes/route_name.dart';
 import '../../../widget/auth/custom_back_button.dart';
 import '../../../widget/auth/custom_button.dart';
 import '../../../widget/auth/custom_text_field.dart';
+import '../controller/auth_controller.dart';
 
-/// Reusable custom back button
-
-
-class ResetPassword extends StatefulWidget {
+class ResetPassword extends StatelessWidget {
   const ResetPassword({super.key});
 
   @override
-  _ResetPasswordState createState() => _ResetPasswordState();
-}
-
-class _ResetPasswordState extends State<ResetPassword> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
-  }
-
-  void _login() {
-    print('Login attempted with email: ${_emailController.text}');
-  }
-
-  void _navigateToSignUp() {
-    print('Navigate to Sign Up screen');
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
+    final controller = Get.find<AuthController>();
 
     return Scaffold(
       body: SingleChildScrollView(
         child: ConstrainedBox(
-          constraints: BoxConstraints(
-            minHeight: screenHeight,
-          ),
+          constraints:
+          BoxConstraints(minHeight: MediaQuery.of(context).size.height),
           child: Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20),
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 50),
-                CustomBackButton(), // Back button at top-left
-                const SizedBox(height: 16),
+                SizedBox(height: 50.h),
+                const CustomBackButton(),
+                SizedBox(height: 16.h),
                 Center(
-                  child: Image.asset(
-                    'assets/images/splash/signin.png',
-
-                    fit: BoxFit.contain,
-                  ),
+                  child: Image.asset('assets/images/splash/signin.png',
+                      fit: BoxFit.contain),
                 ),
                 Center(
                   child: Column(
                     children: [
                       Text(
-                        "Forgot password",
+                        "Forgot Password",
                         style: TextStyle(
-                          fontFamily: "Inter",
-                          fontSize: 24.sp,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
+                            fontFamily: "Inter",
+                            fontSize: 24.sp,
+                            fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 8.h),
                       Text(
                         "Please enter your email to reset the password",
-                        style: TextStyle(
-
-                          fontFamily: "Inter",
-                          fontSize: 16.sp,
-                        ),
+                        style:
+                        TextStyle(fontFamily: "Inter", fontSize: 16.sp),
                       ),
                     ],
                   ),
                 ),
-
-                const SizedBox(height: 32),
+                SizedBox(height: 32.h),
                 CustomTextField(
                   icon: Icons.email,
                   labelText: 'Enter Email Address',
-                  controller: _emailController,
+                  controller: controller.forgotEmailController,
                   keyboardType: TextInputType.emailAddress,
                 ),
-                const SizedBox(height: 16),
-
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-
-                ),
-                const SizedBox(height: 16),
-                CustomButton(
-                  text: 'Reset Password',
-                  onPressed: () {
-                    Get.toNamed(RouteName.otpScreen);
-
-                  },
-                ),
-                const SizedBox(height: 16),
-
-                const SizedBox(height: 16),
+                SizedBox(height: 24.h),
+                Obx(() => CustomButton(
+                  text: controller.isLoading.value
+                      ? 'Sending...'
+                      : 'Reset Password',
+                  onPressed: controller.isLoading.value
+                      ? () {}
+                      : controller.forgotPassword,
+                )),
+                SizedBox(height: 30.h),
               ],
             ),
           ),

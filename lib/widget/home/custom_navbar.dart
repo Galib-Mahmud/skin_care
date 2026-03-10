@@ -44,7 +44,7 @@ class CustomBottomNavBar extends StatelessWidget {
               label: 'Resources',
             ),
             _NavItem(
-              icon: Image.asset('assets/images/home/shopicon.png'),
+              icon: Image.asset('assets/images/home/shopIcon.png'),
               isSelected: selectedIndex == 2,
               onTap: () => onItemSelected(2),
               label: 'Shop',
