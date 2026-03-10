@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:skincare/feature/profile/encouragement_screen.dart';
-import 'package:skincare/feature/profile/faith_wins_screen.dart';
+import 'package:skincare/feature/home/encouragement_screen.dart';
+import 'package:skincare/feature/home/faith_wins_screen.dart';
 import 'package:skincare/feature/shop/prayer_request_screen.dart';
 import 'package:skincare/widget/home/custom_navbar.dart';
 // import your navbar

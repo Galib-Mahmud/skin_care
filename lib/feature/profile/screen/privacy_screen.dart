@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:skincare/widget/auth/custom_appbar.dart';
 
 class PrivacyScreen extends StatelessWidget {
   const PrivacyScreen({super.key});
@@ -7,16 +8,7 @@ class PrivacyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(56.h),
-        child: SafeArea(
-          bottom: false,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
-
-          ),
-        ),
-      ),
+      appBar: CustomAppBar(title: "Privacy"),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(20.w),
         child: Container(
@@ -35,14 +27,7 @@ class PrivacyScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Privacy',
-                style: TextStyle(
-                  fontSize: 24.sp,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.black87,
-                ),
-              ),
+
               SizedBox(height: 8.h),
 
               Text(
