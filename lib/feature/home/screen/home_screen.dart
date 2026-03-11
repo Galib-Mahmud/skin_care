@@ -81,22 +81,22 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 8.h),
-                        Obx(() => Text(
-                          c.bibleVerse.value.isNotEmpty
-                              ? '"${c.bibleVerse.value}"'
-                              : '',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 13.sp,
-                            height: 1.4,
-                            shadows: const [
-                              Shadow(
-                                  offset: Offset(0, 1),
-                                  blurRadius: 2,
-                                  color: Colors.black26)
-                            ],
-                          ),
-                        )),
+                        // Obx(() => Text(
+                        //   c.bibleVerse.value.isNotEmpty
+                        //       ? '"${c.bibleVerse.value}"'
+                        //       : '',
+                        //   style: TextStyle(
+                        //     color: Colors.white,
+                        //     fontSize: 13.sp,
+                        //     height: 1.4,
+                        //     shadows: const [
+                        //       Shadow(
+                        //           offset: Offset(0, 1),
+                        //           blurRadius: 2,
+                        //           color: Colors.black26)
+                        //     ],
+                        //   ),
+                        // )),
                         SizedBox(height: 16.h),
                         Container(
                           width: double.infinity,
