@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:skincare/feature/community/screens/encouragement_screen.dart';
 import 'package:skincare/feature/community/screens/faith_wins_screen.dart';
 import 'package:skincare/feature/community/screens/prayer_request_screen.dart';
@@ -63,24 +65,11 @@ class _CommunityScreenState extends State<CommunityScreen> {
           item: items[i],
           onTap: () {
             if (i == 0) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const PrayerRequestsScreen()),
-              );
+              Get.to(() => const PrayerRequestsScreen(), arguments: 'prayer-requests');
             } else if (i == 1) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const EncouragementBoardScreen(),
-                ),
-              );
+              Get.to(() => const EncouragementBoardScreen(), arguments: 'encouragement_board');
             } else if (i == 2) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const FaithWinsTestimoniesScreen(),
-                ),
-              );
+              Get.to(() => const FaithWinsTestimoniesScreen(), arguments: 'waith_wins');
             }
           },
         ),

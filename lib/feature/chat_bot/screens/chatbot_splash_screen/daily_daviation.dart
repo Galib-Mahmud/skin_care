@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../routes/route_name.dart';
+import '../../../../routes/route_name.dart';
 
-class ScreenCareGuide extends StatelessWidget {
-  const ScreenCareGuide({super.key, this.onConfirm});
-
-  final VoidCallback? onConfirm;
-
+class DailyDaviationScreen extends StatelessWidget {
+  const DailyDaviationScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +24,7 @@ class ScreenCareGuide extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 24.sp,
                   fontWeight: FontWeight.w700,
-                  color: Colors.black87,
+                  color: Colors.black,
                   height: 1.25,
                 ),
               ),
@@ -51,13 +48,10 @@ class ScreenCareGuide extends StatelessWidget {
                     children: [
                       // Illustration (replace with your asset)
                       Image.asset(
-                        'assets/images/home/skincareguide.png',
+                        'assets/images/home/dailydaviation.png',
                         width: 270.w,
                         fit: BoxFit.cover,
                       ),
-
-
-
                     ],
                   ),
                 ),
@@ -68,8 +62,12 @@ class ScreenCareGuide extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: 100.h),
                 child: Center(
                   child: InkWell(
+                    onTap: (){
+                      Get.toNamed(RouteName.jurnalChatBot,
+                        arguments: "daily_devotion",
+                      );
+                    },
                     borderRadius: BorderRadius.circular(1000.r),
-                    onTap: onConfirm ?? () {},
                     child: Container(
                       width: 70.w,
                       height: 70.w,
@@ -89,12 +87,6 @@ class ScreenCareGuide extends StatelessWidget {
                         children: [
                           // white ring outline
                           InkWell(
-                            onTap: () {
-                              // Get.toNamed(RouteName.skincareChatbot);
-                              Get.toNamed(RouteName.jurnalChatBot,
-                                arguments: "skincare",
-                              );
-                            },
                             child: Container(
                               width: 70.w,
                               height: 70.w,
@@ -110,7 +102,7 @@ class ScreenCareGuide extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
+              )
             ],
           ),
         ),

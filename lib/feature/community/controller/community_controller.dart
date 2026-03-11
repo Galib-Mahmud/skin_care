@@ -33,42 +33,45 @@ class CommunityController extends GetxController {
   final RxInt replyingCommentId = 0.obs;
 
 
-  Future<void> createPosts(String content, String? images) async {
+  Future<void> createPosts(String content, String? imagePath) async {
     isCreating.value = true;
-    print("🔍 Creating post for bot type: ${communityType.value}");
-
-    final Map<String, dynamic> bodyWithImage = {
-      'post_content': content,
-      'images': images,
-      'post_image': communityType.value,
-    };
-
-    final Map<String, dynamic> bodyWithoutImage = {
-      'post_content': content,
-      'post_type': communityType.value,
-    };
 
     try {
       final token = await UserInfo.getAccessToken();
-      final response = await http.post(
+
+      var request = http.MultipartRequest(
+        "POST",
         Uri.parse(ApiEndpoint.createPost),
-        headers: {
-          'Authorization': 'Bearer $token',
-          "Content-Type": "application/json"
-        },
-        body: images != null ? jsonEncode(bodyWithImage) : jsonEncode(bodyWithoutImage),
       );
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        print("✅ Post created successfully: ${response.body}");
-        await loadPosts(); // Refresh the post list after creation
-      } else {
-        print("❌ Failed to create post: ${response.statusCode} - ${response.body}");
+      request.headers['Authorization'] = 'Bearer $token';
+
+      request.fields['post_content'] = content;
+      request.fields['post_type'] = communityType.value;
+
+      /// attach image if exists
+      if (imagePath != null) {
+        request.files.add(
+          await http.MultipartFile.fromPath(
+            'post_image', // backend field name
+            imagePath,
+          ),
+        );
       }
 
+      var response = await request.send();
+      var responseBody = await response.stream.bytesToString();
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        print("✅ Post created successfully: $responseBody");
+
+        await loadPosts();
+      } else {
+        print("❌ Failed to create post: ${response.statusCode} - $responseBody");
+      }
 
     } catch (e) {
-      print('❌ Failed to create post: $e');
+      print("❌ Failed to create post: $e");
     } finally {
       isCreating.value = false;
     }
@@ -164,7 +167,7 @@ class CommunityController extends GetxController {
 
     try {
       final response = await _apiClient.get(
-        "${ApiEndpoint.listPosts}?bot_type=${communityType.value}",
+        "${ApiEndpoint.listPosts}?post_type=${communityType.value}",
         requiresAuth: true,
       );
 
