@@ -1,5 +1,6 @@
 class ApiEndpoint {
-  static const String baseUrl = "http://10.10.7.76:14070";
+  // static const String baseUrl = "http://10.10.7.76:14070";
+  static const String baseUrl = "https://beauty.dsrt321.online";
 
   // ─── Auth - Registration ───────────────────────────────────────────
   static const String register         = "$baseUrl/api/v1/auth/register/";

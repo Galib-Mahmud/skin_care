@@ -130,9 +130,7 @@ class _EncouragementBoardScreenState extends State<EncouragementBoardScreen> {
               // Encouragements List
               Obx(
                   (){
-                    if (communityController.isLoading.value) {
-                      return Center(child: CircularProgressIndicator());
-                    } else if (communityController.postLists.isEmpty) {
+                    if (communityController.postLists.isEmpty) {
                       return Center(child: Text('No encouragements yet. Be the first to share!'));
                     } else {
                       return Expanded(
@@ -197,7 +195,7 @@ class _EncouragementBoardScreenState extends State<EncouragementBoardScreen> {
                                   // Like button
                                   InkWell(
                                     onTap: () {
-                                      // onLikeChanged(!encouragement.isLiked);
+                                      communityController.like(encouragement.id ?? 0);
                                     },
                                     borderRadius: BorderRadius.circular(20.r),
                                     child: Padding(
