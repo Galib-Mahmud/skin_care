@@ -14,6 +14,7 @@ class CommunityController extends GetxController {
   final ApiClient _apiClient = ApiClient(baseUrl: ApiEndpoint.baseUrl);
 
   TextEditingController commentTextController = TextEditingController();
+  TextEditingController globalCommentTextController = TextEditingController();
 
   final RxBool isLoading = false.obs;
   final RxString communityType = 'prayer-requests'.obs;
@@ -105,11 +106,13 @@ class CommunityController extends GetxController {
 
     final Map<String, String> bodyWithOutParent = {
       "post": id.toString(),
-      "comment_text": commentTextController.text,
+      "comment_text": globalCommentTextController.text,
     };
+
     final Map<String, String> bodyWithParent = {
       "post": id.toString(),
       "comment_text": commentTextController.text,
+      "parent_comment": parentID.toString(),
     };
 
     try {
@@ -126,6 +129,10 @@ class CommunityController extends GetxController {
       if (response.statusCode == 200 || response.statusCode == 201) {
           commentTextController.clear();
           await loadPosts();
+
+          if(parentID != null) {
+            isReplying.value = !isReplying.value;
+          }
       } else {
         print("❌ Failed to comment post: ${response.statusCode} - ${response.body}");
       }
@@ -133,7 +140,10 @@ class CommunityController extends GetxController {
     } catch (e) {
       print('❌ Failed to comment post: $e');
     } finally {
+      commentTextController.clear();
+      globalCommentTextController.clear();
       isCreating.value = false;
+
     }
   }
 

@@ -368,9 +368,12 @@ class _PrayerRequestCard extends StatelessWidget {
                   /// COMMENT
                   InkWell(
                     onTap: () {
-                      communityController.isCommenting.value =
-                      !communityController.isCommenting.value;
                       communityController.commentingPostId.value = post.id!;
+                      if(post.id != communityController.commentingPostId.value) {
+                        communityController.isCommenting.value = !communityController.isCommenting.value;
+                      } else {
+                        communityController.isCommenting.value = true;
+                      }
                     },
                     child: Row(
                       children: [
@@ -403,9 +406,9 @@ class _PrayerRequestCard extends StatelessWidget {
                   children: [
                     Expanded(
                       child: TextField(
-                        controller: communityController.commentTextController,
+                        controller: communityController.globalCommentTextController,
                         decoration: InputDecoration(
-                          hintText: "Write a reply...",
+                          hintText: "Write a comment...",
                           contentPadding: EdgeInsets.symmetric(horizontal: 10.w),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(50.r),
@@ -428,17 +431,10 @@ class _PrayerRequestCard extends StatelessWidget {
                           ),
                         )
                             : Icon(Icons.send, size: 20.sp),
-                        onPressed: communityController.isCreating.value
-                            ? null
-                            : () {
-                          if (communityController.commentTextController.text
-                              .trim()
-                              .isEmpty) return;
-
+                        onPressed: (){
+                          if (communityController.globalCommentTextController.text.isEmpty) return;
                           communityController.comment(post.id!, null);
-
-                          // communityController.commentTextController.clear();
-                        },
+                        }
                       ),
                     )
                   ],
