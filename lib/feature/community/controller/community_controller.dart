@@ -14,6 +14,7 @@ class CommunityController extends GetxController {
   final ApiClient _apiClient = ApiClient(baseUrl: ApiEndpoint.baseUrl);
 
   TextEditingController commentTextController = TextEditingController();
+  TextEditingController globalCommentTextController = TextEditingController();
 
   final RxBool isLoading = false.obs;
   final RxString communityType = 'prayer-requests'.obs;
@@ -24,9 +25,11 @@ class CommunityController extends GetxController {
   final RxList<ChatHistoryModel> chatHistory = <ChatHistoryModel>[].obs;
 
   final RxBool isCommenting = false.obs;
+  final RxBool isCommentingInProgress = false.obs;
   final RxInt commentingPostId = 0.obs;
 
   final RxBool isReplying = false.obs;
+  final RxBool isReplyingInProgress = false.obs;
   final RxInt replyingCommentId = 0.obs;
 
 
@@ -72,7 +75,6 @@ class CommunityController extends GetxController {
   }
 
   Future<void> like(int id) async {
-    isCreating.value = true;
     try {
       final token = await UserInfo.getAccessToken();
       final response = await http.post(
@@ -94,30 +96,50 @@ class CommunityController extends GetxController {
     } catch (e) {
       print('❌ Failed to like post: $e');
     } finally {
-      isCreating.value = false;
     }
   }
 
-  Future<void> comment(int id) async {
-    isCreating.value = true;
+  Future<void> comment(int id, int? parentID) async {
 
-    print("🔍 Commenting on post ID: $id with text: ${commentTextController.text}");
+    if(parentID != null) {
+      isReplyingInProgress.value = true;
+      replyingCommentId.value = parentID;
+    } else {
+      isCommentingInProgress.value = true;
+      commentingPostId.value = id;
+    }
+
+    print("🔍 Commenting on post ID: $id with parent comment ID: ${parentID ?? 'None'}");
+
+    final Map<String, String> bodyWithOutParent = {
+      "post": id.toString(),
+      "comment_text": globalCommentTextController.text,
+    };
+
+    final Map<String, String> bodyWithParent = {
+      "post": id.toString(),
+      "comment_text": commentTextController.text,
+      "parent_comment": parentID.toString(),
+    };
 
     try {
       final token = await UserInfo.getAccessToken();
       final response = await http.post(
           Uri.parse(ApiEndpoint.comments),
           headers: {
+            'Content-Type': 'application/json',
             'Authorization': 'Bearer $token',
           },
-          body: {
-            "post": id.toString(),
-            "comment_text": commentTextController.text,
-          }
+          body: parentID != null ? jsonEncode(bodyWithParent) : jsonEncode(bodyWithOutParent)
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        await loadPosts();
+          commentTextController.clear();
+          await loadPosts();
+
+          if(parentID != null) {
+            isReplying.value = !isReplying.value;
+          }
       } else {
         print("❌ Failed to comment post: ${response.statusCode} - ${response.body}");
       }
@@ -125,7 +147,13 @@ class CommunityController extends GetxController {
     } catch (e) {
       print('❌ Failed to comment post: $e');
     } finally {
-      isCreating.value = false;
+      commentTextController.clear();
+      globalCommentTextController.clear();
+        if(parentID != null) {
+          isReplyingInProgress.value = false;
+        } else {
+          isCommentingInProgress.value = false;
+        }
     }
   }
 
