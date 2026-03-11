@@ -117,14 +117,27 @@ class CartItemModel {
   factory CartItemModel.fromJson(Map<String, dynamic> j) {
     final product = j['product'];
     final isMap = product is Map<String, dynamic>;
+
     return CartItemModel(
       id: j['id'] ?? 0,
-      productId: isMap ? (product['id'] ?? 0) : (product ?? 0),
-      productName: isMap ? (product['name'] ?? '') : '',
-      productImage: isMap ? (product['image'] ?? '') : '',
+
+      // API returns product as String (name), not Map — so no productId available
+      productId: isMap ? (product['id'] ?? 0) : 0,
+
+      // product is a plain String → use it directly as name
+      productName: isMap
+          ? (product['name'] ?? '')
+          : (product?.toString() ?? ''),
+
+      // image & price are top-level fields in this API response
+      productImage: isMap
+          ? (product['image'] ?? '')
+          : (j['image'] ?? ''),
+
       productPrice: isMap
           ? (double.tryParse(product['price']?.toString() ?? '0') ?? 0)
-          : 0,
+          : (double.tryParse(j['price']?.toString() ?? '0') ?? 0),
+
       quantity: j['quantity'] ?? 1,
       totalPrice:
       double.tryParse(j['total_price']?.toString() ?? '0') ?? 0,
@@ -296,17 +309,24 @@ class ShopController extends GetxController {
   Future<void> addToCart(int productId, int quantity) async {
     isUpdatingCart.value = true;
     try {
-      await _api.post(
+      print('🛒 addToCart CALLED → productId: $productId, qty: $quantity');
+
+      final res = await _api.post(
         '/api/v1/shop/cart/',
         body: {'product': productId, 'quantity': quantity},
         requiresAuth: true,
       );
+
+      print('✅ addToCart SUCCESS → $res');
       await fetchCart();
+      print('🛒 cartItems after fetch: ${cartItems.length}');
       _showSuccess('Added to cart!');
     } on HttpException catch (e) {
+      print('❌ HttpException → status: ${e.statusCode}, msg: ${e.message}, body: ${e.body}');
       _showError(_extractMessage(_tryParseBody(e.body)) ?? e.message);
-    } catch (e) {
-      print('❌ addToCart: $e');
+    } catch (e, st) {
+      print('❌ Unknown error → $e');
+      print('📍 StackTrace → $st');
     } finally {
       isUpdatingCart.value = false;
     }
