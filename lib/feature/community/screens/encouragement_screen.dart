@@ -130,9 +130,7 @@ class _EncouragementBoardScreenState extends State<EncouragementBoardScreen> {
               // Encouragements List
               Obx(
                   (){
-                    if (communityController.isLoading.value) {
-                      return Center(child: CircularProgressIndicator());
-                    } else if (communityController.postLists.isEmpty) {
+                    if (communityController.postLists.isEmpty) {
                       return Center(child: Text('No encouragements yet. Be the first to share!'));
                     } else {
                       return Expanded(
