@@ -164,7 +164,7 @@ class CommunityController extends GetxController {
 
     try {
       final response = await _apiClient.get(
-        "${ApiEndpoint.listPosts}?bot_type=${communityType.value}",
+        "${ApiEndpoint.listPosts}?post_type=${communityType.value}",
         requiresAuth: true,
       );
 

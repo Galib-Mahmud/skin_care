@@ -197,7 +197,7 @@ class _EncouragementBoardScreenState extends State<EncouragementBoardScreen> {
                                   // Like button
                                   InkWell(
                                     onTap: () {
-                                      // onLikeChanged(!encouragement.isLiked);
+                                      communityController.like(encouragement.id ?? 0);
                                     },
                                     borderRadius: BorderRadius.circular(20.r),
                                     child: Padding(
