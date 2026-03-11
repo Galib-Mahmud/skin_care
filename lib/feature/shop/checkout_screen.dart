@@ -3,18 +3,203 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../../../routes/route_name.dart';
+
 import 'controller/shop_controller.dart';
 
 
-class CheckoutScreen extends StatelessWidget {
+class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});
+
+  @override
+  State<CheckoutScreen> createState() => _CheckoutScreenState();
+}
+
+class _CheckoutScreenState extends State<CheckoutScreen> {
+  final _addressCtrl = TextEditingController();
+  final _addressFocus = FocusNode();
+
+  @override
+  void dispose() {
+    _addressCtrl.dispose();
+    _addressFocus.dispose();
+    super.dispose();
+  }
+
+  // ── Address bottom sheet ──────────────────────────────────────────
+  void _openAddressSheet() {
+    final tempCtrl =
+    TextEditingController(text: _addressCtrl.text);
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => Padding(
+        padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius:
+            BorderRadius.vertical(top: Radius.circular(20.r)),
+          ),
+          padding:
+          EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Handle bar
+              Center(
+                child: Container(
+                  width: 40.w,
+                  height: 4.h,
+                  decoration: BoxDecoration(
+                    color: Colors.black12,
+                    borderRadius: BorderRadius.circular(4.r),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20.h),
+
+              Text('Delivery Address',
+                  style: TextStyle(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black87)),
+              SizedBox(height: 6.h),
+              Text('Enter your full delivery address',
+                  style: TextStyle(
+                      fontSize: 13.sp, color: Colors.black45)),
+              SizedBox(height: 18.h),
+
+              // Address text field
+              TextField(
+                controller: tempCtrl,
+                autofocus: true,
+                maxLines: 3,
+                textInputAction: TextInputAction.done,
+                style: TextStyle(
+                    fontSize: 15.sp, color: Colors.black87),
+                decoration: InputDecoration(
+                  hintText:
+                  'e.g. House 12, Road 5, Dhanmondi, Dhaka',
+                  hintStyle: TextStyle(
+                      fontSize: 14.sp, color: Colors.black38),
+                  prefixIcon: Padding(
+                    padding: EdgeInsets.only(
+                        left: 12.w, right: 8.w, top: 12.h),
+                    child: Icon(Icons.location_on_outlined,
+                        size: 22.sp, color: Colors.black54),
+                  ),
+                  prefixIconConstraints:
+                  const BoxConstraints(minWidth: 0),
+                  filled: true,
+                  fillColor: const Color(0xFFF5F7FA),
+                  contentPadding: EdgeInsets.symmetric(
+                      horizontal: 14.w, vertical: 14.h),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.r),
+                    borderSide: BorderSide.none,
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.r),
+                    borderSide: BorderSide(
+                        color: Colors.black87, width: 1.5),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20.h),
+
+              // Quick address chips
+              Text('Quick Select',
+                  style: TextStyle(
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black54)),
+              SizedBox(height: 10.h),
+              Wrap(
+                spacing: 8.w,
+                runSpacing: 8.h,
+                children: [
+                  'Home',
+                  'Office',
+                  'Other',
+                ].map((label) {
+                  return GestureDetector(
+                    onTap: () {
+                      if (tempCtrl.text.isEmpty) {
+                        tempCtrl.text = '$label - ';
+                        tempCtrl.selection =
+                            TextSelection.fromPosition(
+                                TextPosition(
+                                    offset:
+                                    tempCtrl.text.length));
+                      }
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 14.w, vertical: 8.h),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF0F2F5),
+                        borderRadius:
+                        BorderRadius.circular(20.r),
+                        border: Border.all(
+                            color: Colors.black12, width: 1),
+                      ),
+                      child: Text(label,
+                          style: TextStyle(
+                              fontSize: 13.sp,
+                              color: Colors.black87)),
+                    ),
+                  );
+                }).toList(),
+              ),
+              SizedBox(height: 24.h),
+
+              // Save button
+              SizedBox(
+                width: double.infinity,
+                height: 50.h,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black87,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                        borderRadius:
+                        BorderRadius.circular(14.r)),
+                    elevation: 0,
+                  ),
+                  onPressed: () {
+                    final addr = tempCtrl.text.trim();
+                    if (addr.isEmpty) {
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(const SnackBar(
+                        content:
+                        Text('Please enter your address'),
+                      ));
+                      return;
+                    }
+                    setState(() => _addressCtrl.text = addr);
+                    Navigator.pop(context);
+                  },
+                  child: Text('Save Address',
+                      style: TextStyle(
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.w600)),
+                ),
+              ),
+              SizedBox(height: 10.h),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     final c = Get.find<ShopController>();
-    final addressCtrl =
-    TextEditingController(text: 'Home - 123 Main St, Apt 4B');
 
     return Scaffold(
       appBar: PreferredSize(
@@ -68,17 +253,21 @@ class CheckoutScreen extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 16.w),
             child: Column(
               children: [
+                // ── Address card — tappable ──────────────────
                 _SelectionCard(
                   label: 'Deliver to',
                   leading: Icons.location_on_outlined,
-                  value: addressCtrl.text,
-                  onTap: () {},
+                  value: _addressCtrl.text.isEmpty
+                      ? 'Tap to add delivery address'
+                      : _addressCtrl.text,
+                  isEmpty: _addressCtrl.text.isEmpty,
+                  onTap: _openAddressSheet,
                 ),
                 SizedBox(height: 10.h),
                 _SelectionCard(
                   label: 'Payment from',
                   leading: Icons.credit_card,
-                  value: 'Mastercard - Cash on Delivery',
+                  value: 'Cash on Delivery',
                   onTap: () {},
                 ),
               ],
@@ -93,16 +282,20 @@ class CheckoutScreen extends StatelessWidget {
               children: [
                 _SummaryRow(
                     label: 'Subtotal',
-                    value: c.cartSubtotal.toStringAsFixed(2)),
+                    value:
+                    '\$ ${c.cartSubtotal.toStringAsFixed(2)}'),
                 SizedBox(height: 8.h),
                 Container(
-                    height: 1, color: const Color(0xFFE5EDF2)),
+                    height: 1,
+                    color: const Color(0xFFE5EDF2)),
                 SizedBox(height: 8.h),
                 _SummaryRow(
-                    label: 'Delivery Charges', value: '+3.99'),
+                    label: 'Delivery Charges',
+                    value: '+\$ 3.99'),
                 SizedBox(height: 14.h),
                 Container(
-                    height: 1, color: const Color(0xFFE5EDF2)),
+                    height: 1,
+                    color: const Color(0xFFE5EDF2)),
                 SizedBox(height: 8.h),
                 Row(
                   children: [
@@ -112,7 +305,8 @@ class CheckoutScreen extends StatelessWidget {
                             fontWeight: FontWeight.w700,
                             color: Colors.black87)),
                     const Spacer(),
-                    Text(c.cartTotal.toStringAsFixed(2),
+                    Text(
+                        '\$ ${c.cartTotal.toStringAsFixed(2)}',
                         style: TextStyle(
                             fontSize: 16.sp,
                             fontWeight: FontWeight.w700,
@@ -151,12 +345,23 @@ class CheckoutScreen extends StatelessWidget {
                     ),
                     onPressed: c.isPlacingOrder.value
                         ? null
-                        : () => c.placeOrder(
-                        shippingAddress: addressCtrl.text,
-                        paymentMethod: 'Cash on Delivery'),
+                        : () {
+                      final addr =
+                      _addressCtrl.text.trim();
+                      if (addr.isEmpty) {
+                        _openAddressSheet();
+                        return;
+                      }
+                      c.placeOrder(
+                        shippingAddress: addr,
+                        paymentMethod:
+                        'Cash on Delivery',
+                      );
+                    },
                     child: c.isPlacingOrder.value
                         ? const CircularProgressIndicator(
-                        color: Colors.white, strokeWidth: 2)
+                        color: Colors.white,
+                        strokeWidth: 2)
                         : Text('Proceed to Payment',
                         style: TextStyle(
                             fontSize: 14.sp,
@@ -173,15 +378,21 @@ class CheckoutScreen extends StatelessWidget {
   }
 }
 
+// ─── Reusable widgets ─────────────────────────────────────────────────────────
+
 class _SelectionCard extends StatelessWidget {
-  const _SelectionCard(
-      {required this.label,
-        required this.leading,
-        required this.value,
-        this.onTap});
+  const _SelectionCard({
+    required this.label,
+    required this.leading,
+    required this.value,
+    this.isEmpty = false,
+    this.onTap,
+  });
+
   final String label;
   final IconData leading;
   final String value;
+  final bool isEmpty;
   final VoidCallback? onTap;
 
   @override
@@ -211,16 +422,24 @@ class _SelectionCard extends StatelessWidget {
             onTap: onTap,
             child: Row(
               children: [
-                Icon(leading, size: 24.sp, color: Colors.black87),
+                Icon(leading,
+                    size: 24.sp,
+                    color: isEmpty
+                        ? Colors.black38
+                        : Colors.black87),
                 SizedBox(width: 10.w),
                 Expanded(
                   child: Text(value,
-                      maxLines: 1,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize: 15.sp,
-                          color: Colors.black87,
-                          fontWeight: FontWeight.w600)),
+                          color: isEmpty
+                              ? Colors.black38
+                              : Colors.black87,
+                          fontWeight: isEmpty
+                              ? FontWeight.w400
+                              : FontWeight.w600)),
                 ),
                 Icon(Icons.chevron_right_rounded,
                     size: 22.sp, color: Colors.black38),
@@ -243,12 +462,12 @@ class _SummaryRow extends StatelessWidget {
     return Row(
       children: [
         Text(label,
-            style:
-            TextStyle(fontSize: 15.sp, color: Colors.black87)),
+            style: TextStyle(
+                fontSize: 15.sp, color: Colors.black87)),
         const Spacer(),
         Text(value,
-            style:
-            TextStyle(fontSize: 15.sp, color: Colors.black87)),
+            style: TextStyle(
+                fontSize: 15.sp, color: Colors.black87)),
       ],
     );
   }
