@@ -1,28 +1,22 @@
+// lib/feature/shop/screen/checkout_screen.dart
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:skincare/routes/route_name.dart';
+import '../../../routes/route_name.dart';
+import 'controller/shop_controller.dart';
 
-class CheckoutScreen extends StatefulWidget {
+
+class CheckoutScreen extends StatelessWidget {
   const CheckoutScreen({super.key});
 
   @override
-  State<CheckoutScreen> createState() => _CheckoutScreenState();
-}
-
-class _CheckoutScreenState extends State<CheckoutScreen> {
-  // Numbers chosen to match your screenshot (28.13 + 3.99 = 32.12)
-  double subtotal = 28.13;
-  double delivery = 3.99;
-
-  @override
   Widget build(BuildContext context) {
-    final total = subtotal + delivery;
+    final c = Get.find<ShopController>();
+    final addressCtrl =
+    TextEditingController(text: 'Home - 123 Main St, Apt 4B');
 
     return Scaffold(
-
-
-      // Header area
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(56.h),
         child: SafeArea(
@@ -38,60 +32,54 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     onTap: () => Navigator.maybePop(context),
                     borderRadius: BorderRadius.circular(8),
                     child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 6.w),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 8.h, horizontal: 6.w),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.arrow_back_ios_new_rounded, size: 16.sp, color: Colors.black87),
+                          Icon(Icons.arrow_back_ios_new_rounded,
+                              size: 16.sp, color: Colors.black87),
                           SizedBox(width: 4.w),
-                          Text('Back', style: TextStyle(fontSize: 14.sp, color: Colors.black87)),
+                          Text('Back',
+                              style: TextStyle(
+                                  fontSize: 14.sp,
+                                  color: Colors.black87)),
                         ],
                       ),
                     ),
                   ),
                 ),
-                Text(
-                  'Checkout',
-                  style: TextStyle(
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black87,
-                  ),
-                ),
-
+                Text('Checkout',
+                    style: TextStyle(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black87)),
               ],
             ),
           ),
         ),
       ),
-
-      body: Column(
+      body: Obx(() => Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SizedBox(height: 8.h),
 
-          // ---- Selection Cards ----
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w),
             child: Column(
-
               children: [
                 _SelectionCard(
-                  label: '             Deliver to',
+                  label: 'Deliver to',
                   leading: Icons.location_on_outlined,
-                  value: 'Home - 123 Main St, Apt 4B',
-                  onTap: () {
-                    // TODO: choose address
-                  },
+                  value: addressCtrl.text,
+                  onTap: () {},
                 ),
                 SizedBox(height: 10.h),
                 _SelectionCard(
-                  label: '            Payment from',
+                  label: 'Payment from',
                   leading: Icons.credit_card,
-                  value: 'Mastercard - Daniel Jones',
-                  onTap: () {
-                    // TODO: choose payment
-                  },
+                  value: 'Mastercard - Cash on Delivery',
+                  onTap: () {},
                 ),
               ],
             ),
@@ -99,104 +87,98 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
           SizedBox(height: 18.h),
 
-          // ---- Summary ----
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 18.w),
             child: Column(
               children: [
-                _SummaryRow(label: 'Subtotal', value: subtotal.toStringAsFixed(2)),
+                _SummaryRow(
+                    label: 'Subtotal',
+                    value: c.cartSubtotal.toStringAsFixed(2)),
                 SizedBox(height: 8.h),
-                Container(height: 1, color: const Color(0xFFE5EDF2)), // divider
+                Container(
+                    height: 1, color: const Color(0xFFE5EDF2)),
                 SizedBox(height: 8.h),
-                _SummaryRow(label: 'Delivery Charges', value: '+${delivery.toStringAsFixed(2)}'),
+                _SummaryRow(
+                    label: 'Delivery Charges', value: '+3.99'),
                 SizedBox(height: 14.h),
-                Container(height: 1, color: const Color(0xFFE5EDF2)), // divider
+                Container(
+                    height: 1, color: const Color(0xFFE5EDF2)),
                 SizedBox(height: 8.h),
                 Row(
                   children: [
-                    Text(
-                      'Total',
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black87,
-                      ),
-                    ),
+                    Text('Total',
+                        style: TextStyle(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black87)),
                     const Spacer(),
-                    Text(
-                      total.toStringAsFixed(2),
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black87,
-                      ),
-                    ),
+                    Text(c.cartTotal.toStringAsFixed(2),
+                        style: TextStyle(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black87)),
                   ],
                 ),
               ],
             ),
           ),
-        Spacer(),
 
+          const Spacer(),
 
-          // ---- Bottom amount + button ----
           SafeArea(
             top: false,
-            minimum: EdgeInsets.only(left: 30.w, right: 15.w, bottom: 130.h),
+            minimum: EdgeInsets.only(
+                left: 30.w, right: 15.w, bottom: 130.h),
             child: Row(
               children: [
-                Text(
-                  '\$ ${total.toStringAsFixed(2)}',
-                  style: TextStyle(
-                    fontSize: 22.sp,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black87,
-                  ),
-                ),
+                Text('\$ ${c.cartTotal.toStringAsFixed(2)}',
+                    style: TextStyle(
+                        fontSize: 22.sp,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black87)),
                 const Spacer(),
                 SizedBox(
                   height: 50.h,
-                  width: 230.w, // wider like the mock
+                  width: 230.w,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black87,
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(24.r),
-                      ),
+                          borderRadius:
+                          BorderRadius.circular(24.r)),
                       elevation: 0,
                     ),
-                    onPressed: () {
-
-                      Get.toNamed(RouteName.orderSuccess);
-
-                    },
-                    child: Text(
-                      'Proceed to Payment',
-                      style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600),
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                    onPressed: c.isPlacingOrder.value
+                        ? null
+                        : () => c.placeOrder(
+                        shippingAddress: addressCtrl.text,
+                        paymentMethod: 'Cash on Delivery'),
+                    child: c.isPlacingOrder.value
+                        ? const CircularProgressIndicator(
+                        color: Colors.white, strokeWidth: 2)
+                        : Text('Proceed to Payment',
+                        style: TextStyle(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w600),
+                        overflow: TextOverflow.ellipsis),
                   ),
                 ),
               ],
             ),
           ),
         ],
-      ),
+      )),
     );
   }
 }
 
-/// ===== Widgets =====
-
 class _SelectionCard extends StatelessWidget {
-  const _SelectionCard({
-    required this.label,
-    required this.leading,
-    required this.value,
-    this.onTap,
-  });
-
+  const _SelectionCard(
+      {required this.label,
+        required this.leading,
+        required this.value,
+        this.onTap});
   final String label;
   final IconData leading;
   final String value;
@@ -206,60 +188,43 @@ class _SelectionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Color.fromRGBO(255,255, 255, 0.4),
+        color: const Color.fromRGBO(255, 255, 255, 0.4),
         borderRadius: BorderRadius.circular(12.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 2))
         ],
       ),
       padding: EdgeInsets.fromLTRB(12.w, 10.h, 12.w, 10.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // subtle label
-          Text(
-            label,
-            style: TextStyle(
-
-              fontSize: 12.5.sp,
-              color: Colors.black54,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
+          Text(label,
+              style: TextStyle(
+                  fontSize: 12.sp,
+                  color: Colors.black54,
+                  fontWeight: FontWeight.w500)),
           SizedBox(height: 8.h),
           InkWell(
             onTap: onTap,
-            borderRadius: BorderRadius.circular(10.r),
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 2.h),
-              child: Row(
-                children: [
-                  Container(
-                    width: 34.w,
-                    height: 34.w,
-                    decoration: BoxDecoration(
-
-                      borderRadius: BorderRadius.circular(8.r),
-                    ),
-                    alignment: Alignment.center,
-                    child: Icon(leading, size: 25.sp, color: Colors.black87),
-                  ),
-                  SizedBox(width: 10.w),
-                  Expanded(
-                    child: Text(
-                      value,
+            child: Row(
+              children: [
+                Icon(leading, size: 24.sp, color: Colors.black87),
+                SizedBox(width: 10.w),
+                Expanded(
+                  child: Text(value,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: 16.sp, color: Colors.black87, fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                  Icon(Icons.chevron_right_rounded, size: 22.sp, color: Colors.black38),
-                ],
-              ),
+                      style: TextStyle(
+                          fontSize: 15.sp,
+                          color: Colors.black87,
+                          fontWeight: FontWeight.w600)),
+                ),
+                Icon(Icons.chevron_right_rounded,
+                    size: 22.sp, color: Colors.black38),
+              ],
             ),
           ),
         ],
@@ -277,9 +242,13 @@ class _SummaryRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(label, style: TextStyle(fontSize: 16.sp, color: Colors.black87)),
+        Text(label,
+            style:
+            TextStyle(fontSize: 15.sp, color: Colors.black87)),
         const Spacer(),
-        Text(value, style: TextStyle(fontSize: 16.sp, color: Colors.black87)),
+        Text(value,
+            style:
+            TextStyle(fontSize: 15.sp, color: Colors.black87)),
       ],
     );
   }

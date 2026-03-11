@@ -13,6 +13,7 @@ import 'feature/profile/controller/history_order_controller.dart';
 import 'feature/profile/controller/profile_controller.dart';
 import 'feature/profile/controller/water_goal_controller.dart';
 import 'feature/home/controller/home_controller.dart';
+import 'feature/shop/controller/shop_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -66,7 +67,8 @@ class AppBinding extends Bindings {
     Get.put(WaterGoalController(), permanent: true);
     Get.put(EditProfileController(), permanent: true);
     Get.put(OrderController(), permanent: true);
-    Get.put(HomeController(), permanent: true); // ← add
+    Get.put(HomeController(), permanent: true);
+    Get.put(ShopController(), permanent: true);
 
   }
 }

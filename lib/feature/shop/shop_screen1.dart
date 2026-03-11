@@ -1,236 +1,346 @@
+// lib/feature/shop/screen/shop_screen1.dart
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../../routes/route_name.dart';
+import '../../../routes/route_name.dart';
+import 'controller/shop_controller.dart';
 
-class ShopScreen1 extends StatefulWidget {
+
+class ShopScreen1 extends StatelessWidget {
   const ShopScreen1({super.key});
 
   @override
-  State<ShopScreen1> createState() => _ShopScreen1State();
-}
-
-class _ShopScreen1State extends State<ShopScreen1> {
-  final TextEditingController _search = TextEditingController();
-
-  final List<String> filters = [
-    'All',
-    'Cleansers',
-    'Serums',
-    'Exfoliants',
-    'Moisturizers',
-    'Toners'
-  ];
-  int selectedFilter = 0;
-
-  final List<_Product> products = List.generate(
-    4,
-        (i) => _Product(
-      title: 'Maroon Dark Top',
-      subtitle: 'Skin',
-      price: 194.99,
-      rating: 5.0,
-      image: 'assets/images/shop/product1.png',
-      isFav: i.isEven,
-    ),
-  );
-
-  @override
   Widget build(BuildContext context) {
+    final c = Get.find<ShopController>();
+    final searchCtrl = TextEditingController();
+
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Header Row
-              Row(
+        child: Column(
+          children: [
+            // ── Header ──────────────────────────────────────────
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.w),
+              child: Row(
                 children: [
                   IconButton(
                     onPressed: () => Navigator.maybePop(context),
-                    icon: Icon(Icons.arrow_back_ios_new, size: 18.sp, color: Colors.black87),
+                    icon: Icon(Icons.arrow_back_ios_new,
+                        size: 18.sp, color: Colors.black87),
                   ),
                   Expanded(
                     child: Center(
-                      child: Text(
-                        'Shop',
-                        style: TextStyle(
-                          fontSize: 20.sp,
-                          fontFamily: 'Playfair Display',
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
+                      child: Text('Shop',
+                          style: TextStyle(
+                              fontSize: 20.sp,
+                              fontFamily: 'Playfair Display',
+                              fontWeight: FontWeight.w800)),
                     ),
                   ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.shopping_cart_outlined, size: 20.sp, color: Colors.black87),
-                  ),
-                ],
-              ),
-              SizedBox(height: 10.h),
-
-              // ✅ Search bar
-              _SearchPill(controller: _search),
-
-              SizedBox(height: 15.h),
-
-              // ✅ Filter List
-              SizedBox(
-                height: 50.h,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: filters.length,
-                  separatorBuilder: (_, __) => SizedBox(width: 30.w),
-                  itemBuilder: (_, i) {
-                    final selected = i == selectedFilter;
-                    return GestureDetector(
-                      onTap: () => setState(() => selectedFilter = i),
-                      child: Container(
-                        margin: EdgeInsets.symmetric(vertical: 10.h),
-                        padding: EdgeInsets.symmetric(horizontal: 14.w),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: selected ? Colors.black : Colors.white.withOpacity(0.85),
-                          borderRadius: BorderRadius.circular(20.r),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.4),
-                              blurRadius: 8,
-                              offset: const Offset(0, 2),
-                            )
-                          ],
-                        ),
-                        child: Text(
-                          filters[i],
-                          style: TextStyle(
-                            fontSize: 13.sp,
-                            color: selected ? Colors.white : Colors.black87,
-                            fontWeight: FontWeight.w600,
+                  Obx(() => Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      IconButton(
+                        onPressed: () =>
+                            Get.toNamed(RouteName.cart),
+                        icon: Icon(Icons.shopping_cart_outlined,
+                            size: 22.sp, color: Colors.black87),
+                      ),
+                      if (c.cartCount > 0)
+                        Positioned(
+                          right: 6.w,
+                          top: 6.h,
+                          child: Container(
+                            width: 16.w,
+                            height: 16.w,
+                            decoration: const BoxDecoration(
+                                color: Colors.red,
+                                shape: BoxShape.circle),
+                            alignment: Alignment.center,
+                            child: Text('${c.cartCount}',
+                                style: TextStyle(
+                                    fontSize: 9.sp,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold)),
                           ),
                         ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-
-              SizedBox(height: 20.h),
-
-              // ✅ AI Recommendation Header Row
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'AI Recommendation Products',
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                      fontFamily: "Playfair Display",
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    style: TextButton.styleFrom(padding: EdgeInsets.zero),
-                    child: Text(
-                      'See More',
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
-                      ),
-                    ),
-                  ),
+                    ],
+                  )),
                 ],
               ),
+            ),
 
-              SizedBox(height: 10.h),
+            Expanded(
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  c.selectedCategory.value = 'All';
+                  searchCtrl.clear();
+                  c.searchQuery.value = '';
+                  await Future.wait(
+                      [c.fetchCategories(), c.fetchProducts()]);
+                },
+                color: Colors.black,
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 10.h),
 
-              // ✅ Horizontal Product List (AI Recommendation)
-              SizedBox(
-                height: 260.h,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: products.length,
-                  separatorBuilder: (_, __) => SizedBox(width: 12.w),
-                  itemBuilder: (_, i) => SizedBox(
-                    width: 180.w,
-                    child: _ProductCard(
-                      product: products[i],
-                      onFavToggle: () => setState(() => products[i].isFav = !products[i].isFav),
-                    ),
+                      // ── Search ──────────────────────────────────
+                      _SearchPill(
+                        controller: searchCtrl,
+                        onChanged: c.onSearch,
+                      ),
+                      SizedBox(height: 15.h),
+
+                      // ── Filter Chips ────────────────────────────
+                      // FIXED: each chip has its own Obx
+                      Obx(() {
+                        final cats = [
+                          CategoryModel(
+                              id: 0, name: 'All', description: ''),
+                          ...c.categories,
+                        ];
+                        return SizedBox(
+                          height: 50.h,
+                          child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: cats.length,
+                            separatorBuilder: (_, __) =>
+                                SizedBox(width: 12.w),
+                            itemBuilder: (_, i) {
+                              final cat = cats[i];
+                              // ← Obx INSIDE each chip item
+                              return Obx(() {
+                                final selected =
+                                    c.selectedCategory.value ==
+                                        cat.name;
+                                return GestureDetector(
+                                  onTap: () =>
+                                      c.selectCategory(cat.name),
+                                  child: Container(
+                                    margin: EdgeInsets.symmetric(
+                                        vertical: 8.h),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 16.w),
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: selected
+                                          ? Colors.black
+                                          : Colors.white
+                                          .withOpacity(0.85),
+                                      borderRadius:
+                                      BorderRadius.circular(20.r),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black
+                                              .withOpacity(0.2),
+                                          blurRadius: 8,
+                                          offset: const Offset(0, 2),
+                                        )
+                                      ],
+                                    ),
+                                    child: Text(
+                                      cat.name,
+                                      style: TextStyle(
+                                        fontSize: 13.sp,
+                                        color: selected
+                                            ? Colors.white
+                                            : Colors.black87,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              });
+                            },
+                          ),
+                        );
+                      }),
+
+                      SizedBox(height: 20.h),
+
+                      // ── AI Recommendations ──────────────────────
+                      Row(
+                        mainAxisAlignment:
+                        MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('AI Recommendation Products',
+                              style: TextStyle(
+                                  fontSize: 15.sp,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Playfair Display')),
+                          TextButton(
+                            onPressed: () {},
+                            style: TextButton.styleFrom(
+                                padding: EdgeInsets.zero),
+                            child: Text('See More',
+                                style: TextStyle(
+                                    fontSize: 13.sp,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black87)),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10.h),
+
+                      Obx(() {
+                        if (c.isLoadingProducts.value &&
+                            c.products.isEmpty) {
+                          return SizedBox(
+                            height: 180.h,
+                            child: const Center(
+                                child: CircularProgressIndicator(
+                                    color: Colors.black)),
+                          );
+                        }
+                        final recs = c.products.take(4).toList();
+                        if (recs.isEmpty) {
+                          return SizedBox(
+                            height: 100.h,
+                            child: Center(
+                                child: Text('No products',
+                                    style: TextStyle(
+                                        fontSize: 14.sp,
+                                        color: Colors.black54))),
+                          );
+                        }
+                        return SizedBox(
+                          height: 260.h,
+                          child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: recs.length,
+                            separatorBuilder: (_, __) =>
+                                SizedBox(width: 12.w),
+                            itemBuilder: (_, i) => SizedBox(
+                              width: 180.w,
+                              child: _ProductCard(product: recs[i]),
+                            ),
+                          ),
+                        );
+                      }),
+
+                      SizedBox(height: 25.h),
+
+                      // ── Products Grid ───────────────────────────
+                      Text('Products',
+                          style: TextStyle(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Playfair Display')),
+                      SizedBox(height: 16.h),
+
+                      Obx(() {
+                        if (c.isLoadingProducts.value &&
+                            c.filteredProducts.isEmpty) {
+                          return SizedBox(
+                            height: 200.h,
+                            child: const Center(
+                                child: CircularProgressIndicator(
+                                    color: Colors.black)),
+                          );
+                        }
+                        if (c.filteredProducts.isEmpty) {
+                          return SizedBox(
+                            height: 120.h,
+                            child: Center(
+                                child: Text('No products found',
+                                    style: TextStyle(
+                                        fontSize: 14.sp,
+                                        color: Colors.black54))),
+                          );
+                        }
+                        return GridView.builder(
+                          physics:
+                          const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          gridDelegate:
+                          SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 12.h,
+                            crossAxisSpacing: 12.w,
+                            childAspectRatio: 0.72,
+                          ),
+                          itemCount: c.filteredProducts.length,
+                          itemBuilder: (_, i) => _ProductCard(
+                              product: c.filteredProducts[i]),
+                        );
+                      }),
+
+                      Obx(() => c.hasMore.value
+                          ? Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 16.h),
+                        child: Center(
+                          child: OutlinedButton(
+                            onPressed: () => c.fetchProducts(
+                                loadMore: true),
+                            child: c.isLoadingProducts.value
+                                ? SizedBox(
+                                width: 20.w,
+                                height: 20.w,
+                                child:
+                                const CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    color: Colors.black))
+                                : Text('Load More',
+                                style: TextStyle(
+                                    fontSize: 14.sp,
+                                    color: Colors.black,
+                                    fontWeight:
+                                    FontWeight.bold)),
+                          ),
+                        ),
+                      )
+                          : SizedBox(height: 20.h)),
+                    ],
                   ),
                 ),
               ),
-
-              SizedBox(height: 25.h),
-
-              // ✅ Normal Product Grid
-              Text(
-                'Products',
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                  fontFamily: "Playfair Display",
-                ),
-              ),
-              SizedBox(height: 16.h),
-
-              GridView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 12.h,
-                  crossAxisSpacing: 12.w,
-                  childAspectRatio: 0.72,
-                ),
-                itemCount: products.length,
-                itemBuilder: (_, i) => _ProductCard(
-                  product: products[i],
-                  onFavToggle: () => setState(() => products[i].isFav = !products[i].isFav),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// ✅ Search bar
-class _SearchPill extends StatelessWidget {
-  const _SearchPill({required this.controller});
-  final TextEditingController controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 8.h),
-      child: Material(
-        elevation: 8,
-        shadowColor: Colors.black.withOpacity(0.3),
-        borderRadius: BorderRadius.circular(30.r),
-        color: Colors.white.withOpacity(0.4),
-        child: TextField(
-          controller: controller,
-          style: TextStyle(fontSize: 14.sp, color: Colors.black),
-          cursorColor: Colors.black87,
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
-            hintText: 'Search Beauty Product',
-            hintStyle: TextStyle(color: Colors.black45, fontSize: 14.sp),
-            prefixIcon: Icon(Icons.search, color: Colors.black54, size: 22.sp),
-            filled: true,
-            fillColor: Colors.white.withOpacity(0.7),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30.r),
-              borderSide: BorderSide.none,
             ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ── Search bar ───────────────────────────────────────────────────────────────
+
+class _SearchPill extends StatelessWidget {
+  const _SearchPill(
+      {required this.controller, required this.onChanged});
+  final TextEditingController controller;
+  final ValueChanged<String> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      elevation: 6,
+      shadowColor: Colors.black.withOpacity(0.2),
+      borderRadius: BorderRadius.circular(30.r),
+      color: Colors.white.withOpacity(0.7),
+      child: TextField(
+        controller: controller,
+        onChanged: onChanged,
+        style: TextStyle(fontSize: 14.sp, color: Colors.black),
+        cursorColor: Colors.black87,
+        decoration: InputDecoration(
+          contentPadding:
+          EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+          hintText: 'Search Beauty Product',
+          hintStyle:
+          TextStyle(color: Colors.black45, fontSize: 14.sp),
+          prefixIcon:
+          Icon(Icons.search, color: Colors.black54, size: 22.sp),
+          filled: true,
+          fillColor: Colors.white.withOpacity(0.7),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30.r),
+            borderSide: BorderSide.none,
           ),
         ),
       ),
@@ -238,123 +348,104 @@ class _SearchPill extends StatelessWidget {
   }
 }
 
-/// ✅ Product Card
+// ── Product Card ─────────────────────────────────────────────────────────────
+
 class _ProductCard extends StatelessWidget {
-  const _ProductCard({required this.product, required this.onFavToggle});
-  final _Product product;
-  final VoidCallback onFavToggle;
+  const _ProductCard({required this.product});
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: const Color.fromRGBO(255, 255, 255, 0.4),
-        borderRadius: BorderRadius.circular(14.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.10),
-            blurRadius: 8,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: Column(
-        children: [
-          Expanded(
-            child: InkWell(
-              onTap: () {
-                Get.toNamed(RouteName.shopScreen2);
-              },
+    return GestureDetector(
+      onTap: () {
+        Get.find<ShopController>().fetchProductDetail(product.id);
+        Get.toNamed(RouteName.shopScreen2);
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: const Color.fromRGBO(255, 255, 255, 0.4),
+          borderRadius: BorderRadius.circular(14.r),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.10),
+              blurRadius: 8,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: Column(
+          children: [
+            Expanded(
               child: Stack(
                 children: [
                   Positioned.fill(
-                    child: Image.asset(product.image, fit: BoxFit.cover),
+                    child: product.image.isNotEmpty
+                        ? Image.network(product.image,
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, __, ___) =>
+                            Container(color: Colors.grey[200]))
+                        : Container(color: Colors.grey[200]),
                   ),
                   Positioned(
                     top: 8.h,
                     right: 8.w,
-                    child: InkWell(
-                      onTap: onFavToggle,
-                      child: Container(
-                        width: 26.w,
-                        height: 26.w,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.92),
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.15),
-                              blurRadius: 6,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
-                        ),
-                        child: Icon(
-                          product.isFav ? Icons.favorite : Icons.favorite_border,
-                          size: 16.sp,
-                          color: product.isFav ? Colors.redAccent : Colors.black87,
-                        ),
+                    child: Container(
+                      width: 26.w,
+                      height: 26.w,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.92),
+                        shape: BoxShape.circle,
                       ),
+                      child: Icon(Icons.favorite_border,
+                          size: 14.sp, color: Colors.black87),
                     ),
                   ),
                 ],
               ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(10.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  product.title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16.sp),
-                ),
-                SizedBox(height: 2.h),
-                Text(product.subtitle, style: TextStyle(color: Colors.black54, fontSize: 13.sp)),
-                SizedBox(height: 8.h),
-                Row(
-                  children: [
-                    Text(
-                      '\$${product.price.toStringAsFixed(2)}',
-                      style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14.sp),
-                    ),
-                    const Spacer(),
-                    Icon(Icons.star, size: 14.sp, color: const Color(0xFFFFC107)),
-                    SizedBox(width: 3.w),
-                    Text(
-                      product.rating.toStringAsFixed(1),
-                      style: TextStyle(fontSize: 12.sp, color: Colors.black87),
-                    ),
-                  ],
-                ),
-              ],
+            Padding(
+              padding: EdgeInsets.all(10.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(product.name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 12.sp)),
+                  SizedBox(height: 2.h),
+                  Text(product.category,
+                      style: TextStyle(
+                          color: Colors.black54, fontSize: 11.sp)),
+                  SizedBox(height: 6.h),
+                  Row(
+                    children: [
+                      Text(
+                        '\$${product.price.toStringAsFixed(2)}',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 12.sp),
+                      ),
+                      const Spacer(),
+                      Icon(Icons.star,
+                          size: 12.sp,
+                          color: const Color(0xFFFFC107)),
+                      SizedBox(width: 2.w),
+                      Text(
+                        product.averageRating.toStringAsFixed(1),
+                        style: TextStyle(
+                            fontSize: 10.sp, color: Colors.black87),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
-}
-
-/// ✅ Product Model
-class _Product {
-  final String title;
-  final String subtitle;
-  final double price;
-  final double rating;
-  final String image;
-  bool isFav;
-
-  _Product({
-    required this.title,
-    required this.subtitle,
-    required this.price,
-    required this.rating,
-    required this.image,
-    this.isFav = false,
-  });
 }
