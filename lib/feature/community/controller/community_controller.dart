@@ -25,9 +25,11 @@ class CommunityController extends GetxController {
   final RxList<ChatHistoryModel> chatHistory = <ChatHistoryModel>[].obs;
 
   final RxBool isCommenting = false.obs;
+  final RxBool isCommentingInProgress = false.obs;
   final RxInt commentingPostId = 0.obs;
 
   final RxBool isReplying = false.obs;
+  final RxBool isReplyingInProgress = false.obs;
   final RxInt replyingCommentId = 0.obs;
 
 
@@ -73,7 +75,6 @@ class CommunityController extends GetxController {
   }
 
   Future<void> like(int id) async {
-    isCreating.value = true;
     try {
       final token = await UserInfo.getAccessToken();
       final response = await http.post(
@@ -95,12 +96,18 @@ class CommunityController extends GetxController {
     } catch (e) {
       print('❌ Failed to like post: $e');
     } finally {
-      isCreating.value = false;
     }
   }
 
   Future<void> comment(int id, int? parentID) async {
-    isCreating.value = true;
+
+    if(parentID != null) {
+      isReplyingInProgress.value = true;
+      replyingCommentId.value = parentID;
+    } else {
+      isCommentingInProgress.value = true;
+      commentingPostId.value = id;
+    }
 
     print("🔍 Commenting on post ID: $id with parent comment ID: ${parentID ?? 'None'}");
 
@@ -142,8 +149,11 @@ class CommunityController extends GetxController {
     } finally {
       commentTextController.clear();
       globalCommentTextController.clear();
-      isCreating.value = false;
-
+        if(parentID != null) {
+          isReplyingInProgress.value = false;
+        } else {
+          isCommentingInProgress.value = false;
+        }
     }
   }
 

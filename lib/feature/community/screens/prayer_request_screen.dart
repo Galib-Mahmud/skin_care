@@ -269,7 +269,16 @@ class _PrayerRequestCard extends StatelessWidget {
                             ),
                           ),
                           IconButton(
-                            icon: Icon(Icons.send, size: 20.sp),
+                            icon: communityController.isReplyingInProgress.value
+                                ? SizedBox(
+                              width: 16.w,
+                              height: 16.w,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.black,
+                              ),
+                            )
+                                : Icon(Icons.send, size: 20.sp),
                             onPressed: () {
                               communityController.comment(post.id!, comment.id!);
                             },
@@ -421,7 +430,7 @@ class _PrayerRequestCard extends StatelessWidget {
                     ),
                     Obx(
                       () => IconButton(
-                        icon: communityController.isCreating.value
+                        icon: communityController.isCommentingInProgress.value
                             ? SizedBox(
                           width: 16.w,
                           height: 16.w,
