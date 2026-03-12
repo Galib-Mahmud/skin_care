@@ -32,6 +32,7 @@ class Question5 extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            SizedBox(height: 50.h),
             Text(
               "What's your top skin goal?",
               textAlign: TextAlign.center,
@@ -51,6 +52,8 @@ class Question5 extends StatelessWidget {
               ),
             ),
             SizedBox(height: 30.h),
+
+
             ...options.map((option) => Column(
               children: [
                 Obx(() => OptionButton(
@@ -61,7 +64,7 @@ class Question5 extends StatelessWidget {
                 SizedBox(height: 10.h),
               ],
             )),
-            SizedBox(height: 60.h),
+            SizedBox(height: 20.h),
             CustomButton(
               text: 'Continue',
               onPressed: () => Get.toNamed(RouteName.subscription),

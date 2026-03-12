@@ -223,19 +223,65 @@ class ShopController extends GetxController {
   // ──────────────────────────────────────────────────────────────────
   // GET /api/v1/shop/products/active/?page=N
   // ──────────────────────────────────────────────────────────────────
+  // Future<void> fetchProducts({bool loadMore = false}) async {
+  //   if (isLoadingProducts.value) return;
+  //   isLoadingProducts.value = true;
+  //   try {
+  //     final url = loadMore && nextPageUrl.value.isNotEmpty
+  //         ? nextPageUrl.value
+  //         : '/api/v1/shop/products/active/';
+  //
+  //     final res = await _api.get(url, requiresAuth: false);
+  //     if (res is Map<String, dynamic>) {
+  //       totalCount.value  = res['count'] ?? 0;
+  //       nextPageUrl.value = res['next'] ?? '';
+  //       hasMore.value     = nextPageUrl.value.isNotEmpty;
+  //
+  //       final list = (res['results'] as List? ?? [])
+  //           .map((j) => ProductModel.fromJson(j))
+  //           .toList();
+  //
+  //       if (loadMore) {
+  //         products.addAll(list);
+  //       } else {
+  //         products.value = list;
+  //       }
+  //       _applyFilter();
+  //     }
+  //   } on HttpException catch (e) {
+  //     print('❌ fetchProducts: ${e.message}');
+  //   } catch (e) {
+  //     print('❌ fetchProducts: $e');
+  //   } finally {
+  //     isLoadingProducts.value = false;
+  //   }
+  // }
+
   Future<void> fetchProducts({bool loadMore = false}) async {
     if (isLoadingProducts.value) return;
+
     isLoadingProducts.value = true;
+
     try {
-      final url = loadMore && nextPageUrl.value.isEmpty
-          ? nextPageUrl.value
-          : '/api/v1/shop/products/active/';
+      String url;
+
+      if (loadMore && nextPageUrl.value.isNotEmpty) {
+        // next URL full url -> domain remove
+        url = nextPageUrl.value.replaceFirst(
+          'http://beauty.dsrt321.online',
+          '',
+        );
+      } else {
+        url = '/api/v1/shop/products/active/';
+      }
 
       final res = await _api.get(url, requiresAuth: false);
+
       if (res is Map<String, dynamic>) {
-        totalCount.value  = res['count'] ?? 0;
+        totalCount.value = res['count'] ?? 0;
+
         nextPageUrl.value = res['next'] ?? '';
-        hasMore.value     = nextPageUrl.value.isNotEmpty;
+        hasMore.value = nextPageUrl.value.isNotEmpty;
 
         final list = (res['results'] as List? ?? [])
             .map((j) => ProductModel.fromJson(j))
@@ -246,6 +292,7 @@ class ShopController extends GetxController {
         } else {
           products.value = list;
         }
+
         _applyFilter();
       }
     } on HttpException catch (e) {

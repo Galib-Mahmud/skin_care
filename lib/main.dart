@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
     if (isAuthenticated) {
       return RouteName.homeScreen;
     } else {
-      return RouteName.splashloading;
+      return RouteName.question5;
     }
   }
 

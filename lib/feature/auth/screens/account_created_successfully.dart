@@ -77,7 +77,7 @@ class _AccountCreateSuccessfullyState extends State<AccountCreateSuccessfully> {
                       Center(
                         child: Text(
                           textAlign: TextAlign.center,
-                          "  Your account has been created. You can now log in and start exploring your account.",
+                          "  Your account has been created. You can now start exploring your account.",
                           style: TextStyle(
                             fontFamily: "Inter",
                             fontSize: 16.sp,
@@ -101,7 +101,7 @@ class _AccountCreateSuccessfullyState extends State<AccountCreateSuccessfully> {
                 CustomButton(
                   text: 'Sign In',
                   onPressed: () {
-                    Get.toNamed(RouteName.signin);
+                    Get.toNamed(RouteName.question1);
 
 
                   },
