@@ -9,7 +9,7 @@ import '../../../core/endpoint/api_endpoint.dart';
 
 class WaterGoalController extends GetxController {
 
-  static WaterGoalController get to => Get.find();
+  static WaterGoalController get to => Get.put(WaterGoalController());
   final ApiClient _apiClient = ApiClient(baseUrl: ApiEndpoint.baseUrl);
 
   final RxBool isLoading  = false.obs;
@@ -24,6 +24,7 @@ class WaterGoalController extends GetxController {
   // ─── Goals (from /user/profile/goal/update/) ──────────────────────
   final RxString skinGoal   = 'Hydration'.obs;
   final RxInt prayerGoal    = 1.obs;
+  final RxInt waterGoalValue    = 8.obs;
 
   // ─── Local slider/prayer state ────────────────────────────────────
   final RxDouble sliderValue = 8.0.obs;
@@ -58,7 +59,7 @@ class WaterGoalController extends GetxController {
       );
       if (response != null) {
         _waterIntakeId             = response['id'];
-        waterGoal.value            = response['water_goal']                  ?? 8;
+        waterGoal.value            = response['water_goal_achieved']                  ?? 8;
         waterGoalAchieved.value    = response['water_goal_achieved']         ?? 0;
         achievedPercentage.value   = (response['water_goal_achieved_percentage'] ?? 0).toDouble();
         sliderValue.value          = waterGoal.value.toDouble();
@@ -82,7 +83,10 @@ class WaterGoalController extends GetxController {
       if (response != null) {
         skinGoal.value    = response['skin_goal'] ?? 'Hydration';
         prayerGoal.value  = response['remainder'] ?? 1;
+        waterGoal.value            = response['water_goal_achieved']                  ?? 8;
         prayerValue.value = prayerGoal.value;
+
+
       }
     } on HttpException catch (e) {
       _showError(_extractMessage(_tryParseBody(e.body)) ?? e.message);
@@ -99,8 +103,8 @@ class WaterGoalController extends GetxController {
       await _apiClient.put(
         '/api/v1/services/water-intake/',
         body: {
-          'water_goal'         : sliderValue.value.toInt(),
-          'water_goal_achieved': waterGoalAchieved.value,
+          'water_goal_achieved'         : sliderValue.value.toInt(),
+
         },
         requiresAuth: true,
       );
@@ -140,6 +144,8 @@ class WaterGoalController extends GetxController {
         body: {
           'skin_goal': skinGoal.value,
           'remainder': prayerValue.value,
+          'water_goal': waterGoalValue.value,
+
         },
         requiresAuth: true,
       );
@@ -164,7 +170,7 @@ class WaterGoalController extends GetxController {
       await fetchAll();
 
       // ─── Refresh profile screen instantly ──────────────────────
-      final profileController = Get.find<ProfileController>();
+      final profileController = Get.put(ProfileController());
       await profileController.fetchGoals();  // ← add this
 
       _showSuccess('Goals saved successfully!');

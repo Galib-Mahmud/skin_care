@@ -13,8 +13,8 @@ class Question1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<AuthController>();
-    final options = ["Oily", "Dry", "Combination", "Sensitive"];
+    final controller = Get.put(AuthController());
+    final options = ["Clear", "Dry", "Oily", "Breakout"];
 
     return Scaffold(
       body: Padding(

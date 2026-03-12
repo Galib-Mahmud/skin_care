@@ -11,7 +11,7 @@ class ShopHistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<OrderController>();
+    final controller = Get.put(OrderController());
 
     return Scaffold(
       appBar: CustomAppBar(title: 'Shop History'),

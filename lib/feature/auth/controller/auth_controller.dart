@@ -10,7 +10,7 @@ import '../../../routes/route_name.dart';
 
 class AuthController extends GetxController {
 
-  static AuthController get to => Get.find();
+  static AuthController get to => Get.put(AuthController());
 
   final ApiClient _apiClient = ApiClient(baseUrl: ApiEndpoint.baseUrl);
 
@@ -390,7 +390,7 @@ class AuthController extends GetxController {
         ),
         backgroundColor: Colors.red.shade700,
         behavior: SnackBarBehavior.floating,
-        margin: const EdgeInsets.all(16),
+        margin: const EdgeInsets.only(left: 16, right: 16, top: 50), // Adjusted margin for top
         duration: const Duration(seconds: 3),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
@@ -418,7 +418,7 @@ class AuthController extends GetxController {
         ),
         backgroundColor: Colors.green.shade700,
         behavior: SnackBarBehavior.floating,
-        margin: const EdgeInsets.all(16),
+        margin: const EdgeInsets.only(left: 16, right: 16, top: 50), // Adjusted margin for top
         duration: const Duration(seconds: 3),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),

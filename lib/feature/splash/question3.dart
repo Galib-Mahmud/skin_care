@@ -14,7 +14,7 @@ class Question3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<AuthController>();
-    final options = ["Happy 😀", "Stressed 😓", "Tired 😴", "Excited 🤩", "Calm 🙂"];
+    final options = ["Struggling😞", "Okay 😕", "Good 😊", "Great 😄", "Blessed 🙏"];
 
     return Scaffold(
       backgroundColor: const Color.fromRGBO(217, 217, 217, 1),

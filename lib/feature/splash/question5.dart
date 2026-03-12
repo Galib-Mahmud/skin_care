@@ -13,13 +13,16 @@ class Question5 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<AuthController>();
+    final controller = Get.put(AuthController());
     final options = [
-      "Clear & acne-free skin",
-      "Glowing & hydrated skin",
-      "Anti-aging & wrinkle care",
-      "Even skin tone",
-      "Daily maintenance",
+      "Hydration",
+      "Dry",
+      "Firm",
+      "Smooth",
+      "Oily",
+      "Breakout",
+      "Bright",
+      "Soft",
     ];
 
     return Scaffold(
@@ -29,6 +32,7 @@ class Question5 extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            SizedBox(height: 50.h),
             Text(
               "What's your top skin goal?",
               textAlign: TextAlign.center,
@@ -48,6 +52,8 @@ class Question5 extends StatelessWidget {
               ),
             ),
             SizedBox(height: 30.h),
+
+
             ...options.map((option) => Column(
               children: [
                 Obx(() => OptionButton(
@@ -58,7 +64,7 @@ class Question5 extends StatelessWidget {
                 SizedBox(height: 10.h),
               ],
             )),
-            SizedBox(height: 60.h),
+            SizedBox(height: 20.h),
             CustomButton(
               text: 'Continue',
               onPressed: () => Get.toNamed(RouteName.subscription),

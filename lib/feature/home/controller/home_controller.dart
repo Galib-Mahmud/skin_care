@@ -8,7 +8,7 @@ import '../../../core/endpoint/api_endpoint.dart';
 
 class HomeController extends GetxController {
 
-  static HomeController get to => Get.find();
+  static HomeController get to => Get.put(HomeController());
   final ApiClient _apiClient = ApiClient(baseUrl: ApiEndpoint.baseUrl);
 
   final RxBool isLoading = false.obs;

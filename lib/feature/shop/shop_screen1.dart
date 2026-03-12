@@ -12,7 +12,7 @@ class ShopScreen1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = Get.find<ShopController>();
+    final c = Get.put(ShopController());
     final searchCtrl = TextEditingController();
 
     return Scaffold(

@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:skincare/feature/splash/question1.dart';
 import 'package:skincare/routes/route_name.dart';
 
+import '../auth/screens/sign_in.dart';
+
 class WellnessScreen extends StatelessWidget {
   const WellnessScreen({super.key});
 
@@ -93,7 +95,7 @@ class WellnessScreen extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) =>  Question1()));
+                          MaterialPageRoute(builder: (context) =>  SignInScreen()));
                     },
                     child: Row(
                       mainAxisSize: MainAxisSize.min,

@@ -11,7 +11,7 @@ class ProfileScreen1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<ProfileController>();
+    final controller = Get.put(ProfileController());
 
     return Scaffold(
       backgroundColor: const Color(0xFFD9D9D9),

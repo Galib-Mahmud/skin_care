@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
     if (isAuthenticated) {
       return RouteName.homeScreen;
     } else {
-      return RouteName.splashloading;
+      return RouteName.question5;
     }
   }
 
@@ -49,7 +49,6 @@ class MyApp extends StatelessWidget {
           theme: AppTheme.lightTheme,
           initialRoute: initialRoute,
           getPages: AppRoute.pages,
-          initialBinding: AppBinding(),
           defaultTransition: Transition.fade,
         );
       },
@@ -57,18 +56,3 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// ─── App Bindings ──────────────────────────────────────────────────
-class AppBinding extends Bindings {
-  @override
-  void dependencies() {
-    Get.put(AuthController(), permanent: true);
-    Get.put(ProfileController(), permanent: true);
-    Get.put(NotificationController(), permanent: true);
-    Get.put(WaterGoalController(), permanent: true);
-    Get.put(EditProfileController(), permanent: true);
-    Get.put(OrderController(), permanent: true);
-    Get.put(HomeController(), permanent: true);
-    Get.put(ShopController(), permanent: true);
-
-  }
-}

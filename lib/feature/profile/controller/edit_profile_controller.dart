@@ -11,7 +11,7 @@ import 'profile_controller.dart';
 
 class EditProfileController extends GetxController {
 
-  static EditProfileController get to => Get.find();
+  static EditProfileController get to => Get.put(EditProfileController());
   final ApiClient _apiClient = ApiClient(baseUrl: ApiEndpoint.baseUrl);
 
   final RxBool isLoading  = false.obs;
