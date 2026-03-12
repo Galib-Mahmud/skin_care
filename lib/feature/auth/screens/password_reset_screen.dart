@@ -13,7 +13,7 @@ class PasswordResetScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<AuthController>();
+    final controller = Get.put(AuthController());
 
     return Scaffold(
       body: SingleChildScrollView(

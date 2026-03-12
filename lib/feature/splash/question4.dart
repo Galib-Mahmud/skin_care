@@ -13,7 +13,7 @@ class Question4 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<AuthController>();
+    final controller = Get.put(AuthController());
     final options = ["1 time", "2 time", "3 time", "4 time"];
 
     return Scaffold(

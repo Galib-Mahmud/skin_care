@@ -14,6 +14,7 @@ class HomeScreen extends StatelessWidget {
     {'label': 'Good',       'emoji': '😊', 'key': 'Good 😊'},
     {'label': 'Great',      'emoji': '😄', 'key': 'Great 😄'},
     {'label': 'Blessed',    'emoji': '🙏', 'key': 'Blessed 🙏'},
+
   ];
 
   static const List<String> _skinOptions = [
@@ -22,7 +23,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = Get.find<HomeController>();
+    final c = Get.put(HomeController());
 
     return Scaffold(
       body: SafeArea(
@@ -159,6 +160,8 @@ class HomeScreen extends StatelessWidget {
                           SizedBox(height: 8.h),
                           Wrap(
                             alignment: WrapAlignment.spaceAround,
+                            spacing: 12.h,
+
                             runSpacing: 12.h,
                             children: _moods.map((m) {
                               return _MoodItem(
@@ -233,20 +236,21 @@ class HomeScreen extends StatelessWidget {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Text(
-                                      '${c.waterPercentage.value.toStringAsFixed(1)}%',
+                                      '${c.waterAchieved.value} oz',
                                       style: TextStyle(
-                                          fontSize: 22.sp,
-                                          fontWeight:
-                                          FontWeight.w700),
+                                        fontSize: 22.sp,
+                                        fontWeight: FontWeight.w700,
+                                      ),
                                     ),
                                     Text(
-                                      '${c.waterAchieved.value}/${c.waterGoal.value} oz',
+                                      '/ ${c.waterGoal.value} oz',
                                       style: TextStyle(
-                                          fontSize: 11.sp,
-                                          color: Colors.black54),
+                                        fontSize: 11.sp,
+                                        color: Colors.black54,
+                                      ),
                                     ),
                                   ],
-                                ),
+                                )
                               ],
                             )),
                           ),

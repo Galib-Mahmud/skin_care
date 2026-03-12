@@ -13,7 +13,7 @@ class Question2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<AuthController>();
+    final controller = Get.put(AuthController());
     final options = ["8 oz", "16 oz", "32 oz", "64 oz", "80 oz"];
 
     return Scaffold(

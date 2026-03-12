@@ -16,7 +16,7 @@ class WaterGoalsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<WaterGoalController>();
+    final controller = Get.put(WaterGoalController());
 
     return Scaffold(
       appBar: CustomAppBar(title: 'Edit Goals'),
@@ -104,7 +104,7 @@ class WaterGoalsScreen extends StatelessWidget {
                             value: controller.sliderValue.value,
                             min: 0,
                             max: 32,
-                            divisions: 32,
+                            divisions: 4,
                             onChanged: (v) =>
                             controller.sliderValue.value = v,
                           ),

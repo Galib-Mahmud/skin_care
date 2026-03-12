@@ -150,7 +150,7 @@ class CartItemModel {
 // ─── Controller ───────────────────────────────────────────────────────────────
 
 class ShopController extends GetxController {
-  static ShopController get to => Get.find();
+  static ShopController get to => Get.put(ShopController());
   final ApiClient _api = ApiClient(baseUrl: ApiEndpoint.baseUrl);
 
   // ── Loading states ─────────────────────────────────────────────────
@@ -227,7 +227,7 @@ class ShopController extends GetxController {
     if (isLoadingProducts.value) return;
     isLoadingProducts.value = true;
     try {
-      final url = loadMore && nextPageUrl.value.isNotEmpty
+      final url = loadMore && nextPageUrl.value.isEmpty
           ? nextPageUrl.value
           : '/api/v1/shop/products/active/';
 

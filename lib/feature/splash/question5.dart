@@ -13,13 +13,16 @@ class Question5 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<AuthController>();
+    final controller = Get.put(AuthController());
     final options = [
-      "Clear & acne-free skin",
-      "Glowing & hydrated skin",
-      "Anti-aging & wrinkle care",
-      "Even skin tone",
-      "Daily maintenance",
+      "Hydration",
+      "Dry",
+      "Firm",
+      "Smooth",
+      "Oily",
+      "Breakout",
+      "Bright",
+      "Soft",
     ];
 
     return Scaffold(

@@ -10,7 +10,7 @@ import '../../../routes/route_name.dart';
 
 class ProfileController extends GetxController {
 
-  static ProfileController get to => Get.find();
+  static ProfileController get to => Get.put(ProfileController());
   final ApiClient _apiClient = ApiClient(baseUrl: ApiEndpoint.baseUrl);
 
   final RxBool isLoading     = false.obs;

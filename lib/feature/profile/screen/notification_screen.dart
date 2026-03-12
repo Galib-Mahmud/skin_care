@@ -12,7 +12,7 @@ class NotificationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<NotificationController>();
+    final controller = Get.put(NotificationController());
 
     return Scaffold(
       appBar: CustomAppBar(title: 'Notifications'),  // ← replaced

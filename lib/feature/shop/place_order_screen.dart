@@ -12,7 +12,7 @@ class PlaceOrderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = Get.find<ShopController>();
+    final c = Get.put(ShopController());
 
     return Scaffold(
       backgroundColor: const Color.fromRGBO(217, 217, 217, 1),

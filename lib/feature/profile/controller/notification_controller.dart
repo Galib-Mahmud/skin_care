@@ -8,7 +8,7 @@ import '../../../core/endpoint/api_endpoint.dart';
 
 class NotificationController extends GetxController {
 
-  static NotificationController get to => Get.find();
+  static NotificationController get to => Get.put(NotificationController());
   final ApiClient _apiClient = ApiClient(baseUrl: ApiEndpoint.baseUrl);
 
   final RxBool isLoading              = false.obs;
