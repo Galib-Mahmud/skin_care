@@ -26,8 +26,8 @@ class PayScreen extends StatelessWidget {
           "type": "PAYMENT_GATEWAY",
           "parameters": {
             "gateway": "stripe",
-            "stripe:version": "2024-06-20",
-            "stripe:publishableKey": "pk_test_51T9fbJGmiuH1TWCJkdakHn9C6ASLHjkNus1N59aooE4LM65BduaKJ6GE9DKnhaH3UDMSH0aLES7hgMSGvGcVOb1K00yo5V9Ej9"
+            "str"stripe:publishableKey": "pk_test_51T9fbJGmiuH1TWCJkdakHn9C6ASLHjkNus1N59aooE4LM65BduaKJ6GE9DKnhaH3UDMSH0aLES7hgMSGvGcVOb1K00yo5V9Ej9"ipe:version": "2024-06-20",
+            
            
           }
         }
