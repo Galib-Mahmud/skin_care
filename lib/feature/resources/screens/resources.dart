@@ -81,20 +81,20 @@ class CheckinScreen2 extends StatelessWidget {
               ),
               SizedBox(height: 18.h),
               Obx(
-                () => _ReadingCard(
-                  title: resourcesController.recommendedReading.value?.skincare?.title ??
-                      'AI Recommended Skincare Tip',
-                  content: resourcesController.recommendedReading.value?.skincare?.content ??
-                      'Get personalized skincare advice based on your profile and goals.',
+                () => resourcesController.isLoading.value
+                    ? Center(child: LinearProgressIndicator(minHeight: 0.1,))
+                    : _ReadingCard(
+                  title: resourcesController.recommendedReading.value?.skincare!.title ?? '',
+                  content: resourcesController.recommendedReading.value?.skincare?.content ?? '',
                 )
               ),
               SizedBox(height: 12.h),
               Obx(
-                () => _ReadingCard(
-                  title: resourcesController.recommendedReading.value?.devotion?.title ??
-                      'AI Recommended Devotion',
-                  content: resourcesController.recommendedReading.value?.devotion?.content ??
-                      'Receive a daily devotional message tailored to your spiritual journey.',
+                () => resourcesController.isLoading.value
+                    ? Center(child: LinearProgressIndicator(minHeight: 0.1,))
+                    : _ReadingCard(
+                  title: resourcesController.recommendedReading.value?.devotion?.title ?? '',
+                  content: resourcesController.recommendedReading.value?.devotion?.content ?? '',
                 )
               ),
               SizedBox(height: 80.h), // leave space above bottom bar
