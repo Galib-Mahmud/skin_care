@@ -50,8 +50,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ],
               ),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Back button (no splash to match static mock)
                   InkWell(
                     onTap: onBack ?? () => Navigator.of(context).maybePop(),
                     borderRadius: BorderRadius.circular(22.r),
@@ -69,7 +69,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                         title,
                         style: TextStyle(
                           fontSize: 20.sp,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w900,
                           color: Colors.black87,
                           letterSpacing: 0.2,
                         ),

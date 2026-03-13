@@ -79,7 +79,7 @@ class EditProfileScreen extends StatelessWidget {
                           controller.currentImageUrl.value);
                     } else {
                       imageProvider = const AssetImage(
-                          'assets/images/home/bot.png');
+                          'assets/images/home/img.png');
                     }
                     return CircleAvatar(
                       radius: 48.r,
@@ -172,6 +172,7 @@ class EditProfileScreen extends StatelessWidget {
 
                   // Email
                   TextField(
+                    enabled: false,
                     controller: controller.emailController,
                     keyboardType: TextInputType.emailAddress,
                     decoration: _fieldDecoration('Email'),

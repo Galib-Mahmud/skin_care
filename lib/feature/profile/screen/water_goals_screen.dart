@@ -35,48 +35,6 @@ class WaterGoalsScreen extends StatelessWidget {
             )
                 : const SizedBox.shrink()),
 
-            // ─── Water progress card ───────────────────────────────
-            _GoalCard(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const _SectionTitle('Water Intake Today'),
-                  SizedBox(height: 10.h),
-                  Obx(() => Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '${controller.waterGoalAchieved.value} / ${controller.waterGoal.value} oz',
-                        style: const TextStyle(
-                            fontSize: 14, color: Colors.black54),
-                      ),
-                      Text(
-                        '${controller.achievedPercentage.value.toStringAsFixed(0)}%',
-                        style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black87),
-                      ),
-                    ],
-                  )),
-                  SizedBox(height: 8.h),
-                  Obx(() => ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: LinearProgressIndicator(
-                      value: (controller.achievedPercentage.value / 100)
-                          .clamp(0.0, 1.0),
-                      minHeight: 10,
-                      backgroundColor: Colors.black12,
-                      valueColor:
-                      const AlwaysStoppedAnimation(Colors.black87),
-                    ),
-                  )),
-                ],
-              ),
-            ),
-
-            SizedBox(height: 12.h),
-
             // ─── Water Goal slider ─────────────────────────────────
             _GoalCard(
               child: Column(
@@ -84,18 +42,28 @@ class WaterGoalsScreen extends StatelessWidget {
                 children: [
                   const _SectionTitle('Water Goals'),
                   SizedBox(height: 30.h),
-                  Obx(() => Row(
+                  Obx(() => Column(
                     children: [
-                      Expanded(
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: Text(
+                          '${controller.sliderValue.value.toInt()} oz/32 oz',
+                          style: const TextStyle(
+                              fontSize: 16, color: Colors.black),
+                        ),
+                      ),
+                      SizedBox(height: 10.w),
+                      SizedBox(
+                        width: double.infinity,
                         child: SliderTheme(
                           data: SliderTheme.of(context).copyWith(
-                            trackHeight: 8,
+                            trackHeight: 10,
                             activeTrackColor: Colors.black87,
                             inactiveTrackColor: const Color(0x22000000),
                             thumbColor: Colors.black,
                             overlayShape: SliderComponentShape.noOverlay,
                             thumbShape: const RoundSliderThumbShape(
-                                enabledThumbRadius: 14),
+                                enabledThumbRadius: 10),
                             tickMarkShape: SliderTickMarkShape.noTickMark,
                             activeTickMarkColor: Colors.transparent,
                             inactiveTickMarkColor: Colors.transparent,
@@ -109,12 +77,6 @@ class WaterGoalsScreen extends StatelessWidget {
                             controller.sliderValue.value = v,
                           ),
                         ),
-                      ),
-                      SizedBox(width: 10.w),
-                      Text(
-                        '${controller.sliderValue.value.toInt()} oz/32 oz',
-                        style: const TextStyle(
-                            fontSize: 16, color: Colors.black),
                       ),
                     ],
                   )),

@@ -24,7 +24,7 @@ class CheckinScreen2 extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 22.sp,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w900,
                   color: Colors.black,
                 ),
               ),
@@ -32,7 +32,7 @@ class CheckinScreen2 extends StatelessWidget {
               Text(
                 'Grow in faith and wellness',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 22.sp, color: Colors.black,fontWeight: FontWeight.w700),
+                style: TextStyle(fontSize: 20.sp, color: Colors.black,fontWeight: FontWeight.w700),
               ),
               SizedBox(height: 16.h),
 
@@ -169,7 +169,7 @@ class _ResourceCard extends StatelessWidget {
               title,
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 16.sp,
+                fontSize: 17.sp,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),
@@ -207,8 +207,8 @@ class _ReadingCard extends StatelessWidget {
             AlertDialog(
               backgroundColor: Color.fromRGBO(217, 217, 217, 1),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
-              title: Text(title, style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold)),
-              content: Text(content, style: TextStyle(fontSize: 14.sp, color: Colors.black87)),
+              title: Text(title, style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold)),
+              content: Text(content, style: TextStyle(fontSize: 16.sp, color: Colors.black87, height: 1.6)),
               actions: [
                 TextButton(
                   onPressed: () => Get.back(),
