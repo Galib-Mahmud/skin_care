@@ -49,7 +49,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
               'Community',
               style: TextStyle(
                 fontSize: 20.sp,
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w900,
                 color: Colors.black87,
               ),
             ),
@@ -105,12 +105,12 @@ class _CommunityCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(10.r),
       child: Container(
         decoration: BoxDecoration(
-          color: Color.fromRGBO(255, 255, 255, 0.4),
+          color: Colors.white.withOpacity(0.7),
           borderRadius: BorderRadius.circular(10.r),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.15),
-              blurRadius: 14,
+              color: Colors.black.withOpacity(0.25),
+              blurRadius: 20,
               offset: const Offset(0, 6),
             ),
           ],
@@ -142,12 +142,12 @@ class _CommunityCard extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      fontSize: 22.sp,
-                      fontWeight: FontWeight.w700,
+                      fontSize: 19.sp,
+                      fontWeight: FontWeight.w600,
                       color: Colors.black87,
                     ),
                   ),
-                  SizedBox(height: 15.h),
+                  SizedBox(height: 10.h),
                   Text(
                     item.subtitle,
                     maxLines: 1,

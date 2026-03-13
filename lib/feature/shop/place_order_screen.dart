@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:skincare/core/endpoint/api_endpoint.dart';
 import '../../../routes/route_name.dart';
 import 'controller/shop_controller.dart';
 
@@ -70,8 +71,9 @@ class PlaceOrderScreen extends StatelessWidget {
                       fontSize: 15.sp, color: Colors.black54)));
         }
 
-        final displayItems = c.cartItems.take(3).toList();
-        final remaining = c.cartItems.length - 3;
+        final displayItems = c.cartItems
+            .where((item) => item.quantity > 0)
+            .toList();
 
         return Column(
           children: [
@@ -101,16 +103,7 @@ class PlaceOrderScreen extends StatelessWidget {
                 }).toList(),
               ),
             ),
-
-            if (remaining > 0)
-              Padding(
-                padding: EdgeInsets.only(bottom: 10.h),
-                child: Text('+$remaining more',
-                    style: TextStyle(
-                        fontSize: 16.sp,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold)),
-              ),
+            SizedBox(height: 26.h),
 
             // ── Summary ──────────────────────────────────────
             Padding(
@@ -222,7 +215,7 @@ class _OrderCard extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(8.r),
             child: item.productImage.isNotEmpty
-                ? Image.network(item.productImage,
+                ? Image.network("${ApiEndpoint.baseUrl}${item.productImage}",
                 width: 90.w,
                 height: 82.w,
                 fit: BoxFit.cover,

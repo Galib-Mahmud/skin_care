@@ -110,53 +110,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 ),
               ),
               SizedBox(height: 20.h),
-
-              // Quick address chips
-              Text('Quick Select',
-                  style: TextStyle(
-                      fontSize: 13.sp,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black54)),
-              SizedBox(height: 10.h),
-              Wrap(
-                spacing: 8.w,
-                runSpacing: 8.h,
-                children: [
-                  'Home',
-                  'Office',
-                  'Other',
-                ].map((label) {
-                  return GestureDetector(
-                    onTap: () {
-                      if (tempCtrl.text.isEmpty) {
-                        tempCtrl.text = '$label - ';
-                        tempCtrl.selection =
-                            TextSelection.fromPosition(
-                                TextPosition(
-                                    offset:
-                                    tempCtrl.text.length));
-                      }
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 14.w, vertical: 8.h),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFF0F2F5),
-                        borderRadius:
-                        BorderRadius.circular(20.r),
-                        border: Border.all(
-                            color: Colors.black12, width: 1),
-                      ),
-                      child: Text(label,
-                          style: TextStyle(
-                              fontSize: 13.sp,
-                              color: Colors.black87)),
-                    ),
-                  );
-                }).toList(),
-              ),
-              SizedBox(height: 24.h),
-
               // Save button
               SizedBox(
                 width: double.infinity,

@@ -93,6 +93,19 @@ flutter:
            weight: 700
          - asset: fonts/Gayathri-Thin.ttf
            weight: 100
+
+
+
+     - family: Playfair Display
+       fonts:
+         - asset: assets/fonts/playfair_display/regular.ttf
+           weight: 400
+         - asset: assets/fonts/playfair_display/medium.ttf
+           weight: 500
+         - asset: assets/fonts/playfair_display/bold.ttf
+           weight: 700
+         - asset: assets/fonts/playfair_display/black.ttf
+           weight: 900
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

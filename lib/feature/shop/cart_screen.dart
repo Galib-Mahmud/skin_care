@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:skincare/core/endpoint/api_endpoint.dart';
 import '../../../routes/route_name.dart';
 import 'controller/shop_controller.dart';
 
@@ -76,6 +77,7 @@ class CartScreen extends StatelessWidget {
             ),
           );
         }
+
         return Column(
           children: [
             SizedBox(height: 6.h),
@@ -179,7 +181,7 @@ class _CartCard extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(8.r),
             child: item.productImage.isNotEmpty
-                ? Image.network(item.productImage,
+                ? Image.network("${ApiEndpoint.baseUrl}${item.productImage}",
                 width: 56.w,
                 height: 56.w,
                 fit: BoxFit.cover,
