@@ -220,10 +220,7 @@ class HomeScreen extends StatelessWidget {
                                   height: 140.w,
                                   child:
                                   CircularProgressIndicator(
-                                    value: (c.waterPercentage
-                                        .value
-                                        .clamp(0, 100)) /
-                                        100,
+                                    value: (c.waterPercentage.value.clamp(0, 100)) / 100,
                                     strokeWidth: 10.w,
                                     valueColor:
                                     const AlwaysStoppedAnimation(
@@ -272,12 +269,10 @@ class HomeScreen extends StatelessWidget {
                                       bottomLeft:
                                       Radius.circular(24.r),
                                     ),
-                                    onTap: () =>
-                                        c.updateWaterAchieved(
-                                            -8),
-                                    child: Padding(
-                                      padding: EdgeInsets
-                                          .symmetric(
+                                    onTap: c.waterAchieved.value > 0 ? () => c.updateWaterAchieved(-8) : null,
+                                    child:  c.waterAchieved.value > 0
+                                        ? Padding(
+                                      padding: EdgeInsets.symmetric(
                                           vertical: 12.h),
                                       child: Row(
                                         mainAxisAlignment:
@@ -295,7 +290,27 @@ class HomeScreen extends StatelessWidget {
                                                   16.sp)),
                                         ],
                                       ),
-                                    ),
+                                    )
+                                        : Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 12.h),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment
+                                            .center,
+                                        children: [
+                                          const Icon(Icons.remove,
+                                              color: Colors.grey),
+                                          SizedBox(width: 5.w),
+                                          Text('8 oz',
+                                              style: TextStyle(
+                                                  color: Colors
+                                                      .grey,
+                                                  fontSize:
+                                                  16.sp)),
+                                        ],
+                                      ),
+                                    )
                                   ),
                                 ),
                                 Container(
@@ -311,11 +326,10 @@ class HomeScreen extends StatelessWidget {
                                       bottomRight:
                                       Radius.circular(24.r),
                                     ),
-                                    onTap: () =>
-                                        c.updateWaterAchieved(8),
-                                    child: Padding(
-                                      padding: EdgeInsets
-                                          .symmetric(
+                                    onTap:c.waterAchieved.value < c.waterGoal.value ? () => c.updateWaterAchieved(8) : null,
+                                    child: c.waterAchieved.value < c.waterGoal.value
+                                        ? Padding(
+                                      padding: EdgeInsets.symmetric(
                                           vertical: 12.h),
                                       child: Row(
                                         mainAxisAlignment:
@@ -333,7 +347,28 @@ class HomeScreen extends StatelessWidget {
                                                   16.sp)),
                                         ],
                                       ),
-                                    ),
+                                    )
+                                        : Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 12.h),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment
+                                            .center,
+                                        children: [
+                                          const Icon(Icons.add,
+                                              color: Colors.grey),
+                                          SizedBox(width: 5.w),
+                                          Text('8 oz',
+                                              style: TextStyle(
+                                                  color: Colors
+                                                      .grey,
+                                                  fontSize:
+                                                  16.sp)),
+
+                                        ],
+                                      ),
+                                    )
                                   ),
                                 ),
                               ],
