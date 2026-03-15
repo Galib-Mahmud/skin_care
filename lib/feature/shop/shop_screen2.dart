@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:readmore/readmore.dart';
 import '../../../routes/route_name.dart';
 import 'controller/shop_controller.dart';
 
@@ -64,22 +65,12 @@ class ShopScreen2 extends StatelessWidget {
                       ),
                     ),
                     Positioned(
-                      top: 12.h,
-                      left: 12.w,
+                      top: 16.h,
+                      left: 16.w,
                       child: _CircleBtn(
                         icon: Icons.arrow_back_ios_new_rounded,
-                        onTap: () => Navigator.maybePop(context),
+                        onTap: () => Get.back(),
                       ),
-                    ),
-                    Positioned(
-                      top: 12.h,
-                      right: 12.w,
-                      child: Obx(() => _CircleBtn(
-                        icon: c.detailFav.value
-                            ? Icons.favorite
-                            : Icons.favorite_border,
-                        onTap: c.toggleFav,
-                      )),
                     ),
                   ],
                 ),
@@ -113,7 +104,7 @@ class ShopScreen2 extends StatelessWidget {
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
-                                    fontSize: 18.sp,
+                                    fontSize: 20.sp,
                                     fontWeight: FontWeight.w700)),
                           ),
                           SizedBox(width: 10.w),
@@ -130,17 +121,17 @@ class ShopScreen2 extends StatelessWidget {
                       Row(
                         children: [
                           Icon(Icons.star,
-                              size: 17.sp,
+                              size: 20.sp,
                               color: const Color(0xFFFFC107)),
                           SizedBox(width: 4.w),
                           Text(p.averageRating.toStringAsFixed(1),
                               style: TextStyle(
                                   fontWeight: FontWeight.w700,
-                                  fontSize: 13.sp)),
+                                  fontSize: 14.sp)),
                           SizedBox(width: 6.w),
                           Text('(${p.totalReviews} reviews)',
                               style: TextStyle(
-                                  fontSize: 12.sp,
+                                  fontSize: 14.sp,
                                   color: Colors.black54)),
                           const Spacer(),
                           Container(
@@ -158,7 +149,7 @@ class ShopScreen2 extends StatelessWidget {
                                   ? 'In Stock (${p.stock})'
                                   : 'Out of Stock',
                               style: TextStyle(
-                                  fontSize: 11.sp,
+                                  fontSize: 14.sp,
                                   color: p.stock > 0
                                       ? Colors.green.shade700
                                       : Colors.red.shade700,
@@ -170,11 +161,23 @@ class ShopScreen2 extends StatelessWidget {
                       SizedBox(height: 10.h),
 
                       // Description
-                      Text(p.description,
-                          style: TextStyle(
-                              fontSize: 13.sp,
-                              color: Colors.black87,
-                              height: 1.45)
+                      ReadMoreText(
+                        p.description,
+                        trimLines: 3,
+                        colorClickableText: Colors.black87,
+                        trimMode: TrimMode.Line,
+                        trimCollapsedText: ' Read more',
+                        trimExpandedText: ' Show less',
+                        moreStyle: TextStyle(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w900,
+                            color: Colors.black87),
+                        lessStyle: TextStyle(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w900,
+                            color: Colors.black87),
+                        style: TextStyle(
+                            fontSize: 14.sp, color: Colors.black87, height: 1.7),
                       ),
                       SizedBox(height: 16.h),
 
@@ -233,7 +236,7 @@ class ShopScreen2 extends StatelessWidget {
                         children: [
                           Text('Reviews',
                               style: TextStyle(
-                                  fontSize: 15.sp,
+                                  fontSize: 16.sp,
                                   fontWeight: FontWeight.bold)),
                           SizedBox(width: 8.w),
                           Container(
@@ -246,7 +249,7 @@ class ShopScreen2 extends StatelessWidget {
                             ),
                             child: Text('${p.totalReviews}',
                                 style: TextStyle(
-                                    fontSize: 11.sp,
+                                    fontSize: 14.sp,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold)),
                           ),
@@ -272,7 +275,7 @@ class ShopScreen2 extends StatelessWidget {
                       // ── Write Review ───────────────────────────
                       Text('Write a Review',
                           style: TextStyle(
-                              fontSize: 16.sp,
+                              fontSize: 18.sp,
                               fontWeight: FontWeight.w600)),
                       SizedBox(height: 10.h),
 
@@ -306,7 +309,7 @@ class ShopScreen2 extends StatelessWidget {
                           hintText: 'Share your experience...',
                           hintStyle: TextStyle(
                               color: Colors.black45,
-                              fontSize: 13.sp),
+                              fontSize: 16.sp),
                           filled: true,
                           fillColor: const Color.fromRGBO(
                               255, 255, 255, 0.5),
@@ -338,7 +341,7 @@ class ShopScreen2 extends StatelessWidget {
                               strokeWidth: 2)
                               : Text('Submit Review',
                               style: TextStyle(
-                                  fontSize: 16.sp,
+                                  fontSize: 18.sp,
                                   color: Colors.white,
                                   fontWeight: FontWeight.w600)),
                         ),
@@ -408,8 +411,8 @@ class _CircleBtn extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(999),
       child: Container(
-        width: 36.w,
-        height: 36.w,
+        width: 40.w,
+        height: 40.w,
         decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.95),
           shape: BoxShape.circle,

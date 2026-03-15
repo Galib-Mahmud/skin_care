@@ -6,7 +6,6 @@ import 'package:skincare/feature/auth/screens/forget_password_screen.dart';
 import 'package:skincare/feature/auth/screens/sign_in.dart';
 import 'package:skincare/feature/auth/screens/signup.dart';
 import 'package:skincare/feature/auth/screens/account_created_successfully.dart';
-import 'package:skincare/feature/shop/cart_screen.dart';
 import 'package:skincare/feature/community/screens/community_screen.dart';
 import 'package:skincare/feature/shop/order_failed_screen.dart';
 import 'package:skincare/feature/shop/order_success_screen.dart';
@@ -215,11 +214,6 @@ class AppRoute {
     ),GetPage(
       name: RouteName.shopScreen2,
       page: () =>ShopScreen2(),
-      transition: Transition.rightToLeft,
-      transitionDuration: Duration(milliseconds: 300),
-    ),GetPage(
-      name: RouteName.cart,
-      page: () =>CartScreen(),
       transition: Transition.rightToLeft,
       transitionDuration: Duration(milliseconds: 300),
     ),GetPage(

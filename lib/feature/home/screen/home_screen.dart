@@ -25,8 +25,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = Get.put(HomeController());
-    final GoalTrackerController goalTrackerController =
-    Get.put(GoalTrackerController());
 
     return Scaffold(
       body: SafeArea(
@@ -85,23 +83,6 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 8.h),
-                        // Obx(() => Text(
-                        //   c.bibleVerse.value.isNotEmpty
-                        //       ? '"${c.bibleVerse.value}"'
-                        //       : '',
-                        //   style: TextStyle(
-                        //     color: Colors.white,
-                        //     fontSize: 13.sp,
-                        //     height: 1.4,
-                        //     shadows: const [
-                        //       Shadow(
-                        //           offset: Offset(0, 1),
-                        //           blurRadius: 2,
-                        //           color: Colors.black26)
-                        //     ],
-                        //   ),
-                        // )),
-                        SizedBox(height: 16.h),
                         Container(
                           width: double.infinity,
                           padding: EdgeInsets.all(14.r),
@@ -127,7 +108,7 @@ class HomeScreen extends StatelessWidget {
                                 'Bible Verse',
                                 style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 18.sp,
+                                  fontSize: 20.sp,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -138,7 +119,7 @@ class HomeScreen extends StatelessWidget {
                                     : 'Loading verse...',
                                 style: TextStyle(
                                   color: Colors.black87,
-                                  fontSize: 16.sp,
+                                  fontSize: 18.sp,
                                   height: 1.5,
                                 ),
                               )),
@@ -245,7 +226,7 @@ class HomeScreen extends StatelessWidget {
                                     Text(
                                       '/ ${c.waterGoal.value} oz',
                                       style: TextStyle(
-                                        fontSize: 11.sp,
+                                        fontSize: 14.sp,
                                         color: Colors.black54,
                                       ),
                                     ),

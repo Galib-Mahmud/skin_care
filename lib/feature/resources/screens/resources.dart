@@ -26,7 +26,7 @@ class CheckinScreen2 extends StatelessWidget {
                 'Resources',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 22.sp,
+                  fontSize: 24.sp,
                   fontWeight: FontWeight.w900,
                   color: Colors.black,
                 ),

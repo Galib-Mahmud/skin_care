@@ -34,9 +34,9 @@ class AboutScreen extends StatelessWidget {
               Text(
                 'Welcome to [Skin Care], a place where simplicity meets innovation. We are committed to building a platform that makes your digital journey smoother, safer, and more enjoyable. Whether you\'re managing your profile, staying updated with notifications, or exploring new features, everything is designed with you in mind.',
                 style: TextStyle(
-                  fontSize: 14.sp,
+                  fontSize: 16.sp,
                   color: Colors.black87,
-                  height: 1.5,
+                  height: 1.7,
                 ),
               ),
               SizedBox(height: 12.h),
@@ -44,9 +44,9 @@ class AboutScreen extends StatelessWidget {
               Text(
                 'Our mission is to empower users with tools that are intuitive, secure, and reliable. Whether you\'re managing your profile, staying updated with notifications, or exploring new features, everything is designed with you in mind.',
                 style: TextStyle(
-                  fontSize: 14.sp,
+                  fontSize: 16.sp,
                   color: Colors.black87,
-                  height: 1.5,
+                  height: 1.7,
                 ),
               ),
               SizedBox(height: 12.h),
@@ -54,9 +54,9 @@ class AboutScreen extends StatelessWidget {
               Text(
                 'At [Skin care], we embrace core values:',
                 style: TextStyle(
-                  fontSize: 14.sp,
+                  fontSize: 16.sp,
                   color: Colors.black87,
-                  height: 1.5,
+                  height: 1.7,
                 ),
               ),
               SizedBox(height: 8.h),
@@ -118,18 +118,18 @@ class _BulletPoint extends StatelessWidget {
           Text(
             '• ',
             style: TextStyle(
-              fontSize: 12.sp,
+              fontSize: 16.sp,
               color: Colors.black87,
-              height: 1.5,
+              height: 1.7,
             ),
           ),
           Expanded(
             child: Text(
               text,
               style: TextStyle(
-                fontSize: 12.sp,
+                fontSize: 16.sp,
                 color: Colors.black87,
-                height: 1.5,
+                height: 1.7,
               ),
             ),
           ),

@@ -48,7 +48,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
             child: Text(
               'Community',
               style: TextStyle(
-                fontSize: 20.sp,
+                fontSize: 22.sp,
                 fontWeight: FontWeight.w900,
                 color: Colors.black87,
               ),

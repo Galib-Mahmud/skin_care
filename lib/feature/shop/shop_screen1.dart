@@ -24,18 +24,12 @@ class ShopScreen1 extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 8.w),
               child: Row(
                 children: [
-                  IconButton(
-                    onPressed: () => Navigator.maybePop(context),
-                    icon: Icon(Icons.arrow_back_ios_new,
-                        size: 18.sp, color: Colors.black87),
-                  ),
                   Expanded(
                     child: Center(
                       child: Text('Shop',
                           style: TextStyle(
-                              fontSize: 20.sp,
-                              fontFamily: 'Playfair Display',
-                              fontWeight: FontWeight.w800)),
+                              fontSize: 24.sp,
+                              fontWeight: FontWeight.w900)),
                     ),
                   ),
                   Obx(() => Stack(
@@ -45,7 +39,7 @@ class ShopScreen1 extends StatelessWidget {
                         onPressed: () =>
                             Get.toNamed(RouteName.placeOrder),
                         icon: Icon(Icons.shopping_cart_outlined,
-                            size: 22.sp, color: Colors.black87),
+                            size: 24.sp, color: Colors.black87),
                       ),
                       if (c.cartCount > 0)
                         Positioned(
@@ -385,20 +379,20 @@ class _ProductCard extends StatelessWidget {
                             Container(color: Colors.grey[200]))
                         : Container(color: Colors.grey[200]),
                   ),
-                  Positioned(
-                    top: 8.h,
-                    right: 8.w,
-                    child: Container(
-                      width: 26.w,
-                      height: 26.w,
-                      decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.92),
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(Icons.favorite_border,
-                          size: 14.sp, color: Colors.white),
-                    ),
-                  ),
+                  // Positioned(
+                  //   top: 8.h,
+                  //   right: 8.w,
+                  //   child: Container(
+                  //     width: 30.w,
+                  //     height: 30.w,
+                  //     decoration: BoxDecoration(
+                  //       color: Colors.black.withOpacity(0.92),
+                  //       shape: BoxShape.circle,
+                  //     ),
+                  //     child: Icon(Icons.favorite_border,
+                  //         size: 14.sp, color: Colors.white),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -420,6 +414,8 @@ class _ProductCard extends StatelessWidget {
                           color: Colors.black54, fontSize: 12.sp, fontWeight: FontWeight.w500, fontFamily: 'Playfair Display')),
                   SizedBox(height: 6.h),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         '\$${product.price.toStringAsFixed(2)}',
@@ -430,13 +426,17 @@ class _ProductCard extends StatelessWidget {
                       ),
                       const Spacer(),
                       Icon(Icons.star,
-                          size: 12.sp,
+                          size: 20.sp,
                           color: const Color(0xFFFFC107)),
                       SizedBox(width: 2.w),
                       Text(
                         product.averageRating.toStringAsFixed(1),
                         style: TextStyle(
-                            fontSize: 10.sp, color: Colors.black87),
+                          fontFamily: 'Playfair Display',
+                            fontSize: 14.sp,
+                            color: Colors.black87,
+                            fontWeight: FontWeight.w500
+                        ),
                       ),
                     ],
                   ),

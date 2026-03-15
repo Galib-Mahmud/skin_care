@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:skincare/core/snackbar/app_snackbar.dart';
 import '../../../core/endpoint/api_client.dart';
 import '../../../core/endpoint/api_endpoint.dart';
 import '../../../routes/route_name.dart';
@@ -367,7 +368,7 @@ class ShopController extends GetxController {
       print('✅ addToCart SUCCESS → $res');
       await fetchCart();
       print('🛒 cartItems after fetch: ${cartItems.length}');
-      _showSuccess('Added to cart!');
+      AppSnackbar.success('Added to cart!');
     } on HttpException catch (e) {
       print('❌ HttpException → status: ${e.statusCode}, msg: ${e.message}, body: ${e.body}');
       _showError(_extractMessage(_tryParseBody(e.body)) ?? e.message);
@@ -516,11 +517,12 @@ class ShopController extends GetxController {
       reviewCommentCtrl.clear();
       reviewRating.value = 5;
       await fetchProductDetail(productId);
-      _showSuccess('Review submitted!');
+      AppSnackbar.success('Review submitted!');
     } on HttpException catch (e) {
-      _showError(_extractMessage(_tryParseBody(e.body)) ?? e.message);
+      print('❌ submitReview HttpException: ${e.message}, body: ${e.body}');
     } catch (e) {
       print('❌ submitReview: $e');
+      AppSnackbar.error('Failed to submit review.');
     } finally {
       isSubmittingReview.value = false;
     }
@@ -611,21 +613,6 @@ class ShopController extends GetxController {
           borderRadius: BorderRadius.circular(10)),
     ));
   }
-
-  void _showSuccess(String msg) {
-    final ctx = Get.context;
-    if (ctx == null) return;
-    ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
-      content:
-      Text(msg, style: const TextStyle(color: Colors.white)),
-      backgroundColor: Colors.green.shade700,
-      behavior: SnackBarBehavior.floating,
-      margin: const EdgeInsets.all(16),
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10)),
-    ));
-  }
-
   @override
   void onClose() {
     reviewCommentCtrl.dispose();

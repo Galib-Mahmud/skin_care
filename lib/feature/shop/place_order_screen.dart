@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:skincare/core/endpoint/api_endpoint.dart';
+import 'package:skincare/widget/auth/custom_appbar.dart';
 import '../../../routes/route_name.dart';
 import 'controller/shop_controller.dart';
 
@@ -17,48 +18,7 @@ class PlaceOrderScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(56.h),
-        child: SafeArea(
-          bottom: false,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12.w),
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: InkWell(
-                    onTap: () => Navigator.maybePop(context),
-                    borderRadius: BorderRadius.circular(8),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                          vertical: 8.h, horizontal: 6.w),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(Icons.arrow_back_ios_new_rounded,
-                              size: 16.sp, color: Colors.black87),
-                          SizedBox(width: 4.w),
-                          Text('Back',
-                              style: TextStyle(
-                                  fontSize: 14.sp,
-                                  color: Colors.black87)),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Text('Place order',
-                    style: TextStyle(
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black87)),
-              ],
-            ),
-          ),
-        ),
-      ),
+      appBar: CustomAppBar(title: 'Place Order'),
       body: Obx(() {
         if (c.isLoadingCart.value && c.cartItems.isEmpty) {
           return const Center(
@@ -234,15 +194,13 @@ class _OrderCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(item.productName,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                        fontSize: 14.sp,
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.w600)),
                 SizedBox(height: 4.h),
                 Text('\$${item.productPrice.toStringAsFixed(2)}',
                     style: TextStyle(
-                        fontSize: 13.sp, color: Colors.black87)),
+                        fontSize: 14.sp, color: Colors.black87)),
               ],
             ),
           ),
@@ -267,11 +225,11 @@ class _SummaryRow extends StatelessWidget {
       children: [
         Text(label,
             style:
-            TextStyle(fontSize: 15.sp, color: Colors.black87)),
+            TextStyle(fontSize: 16.sp, color: Colors.black87)),
         const Spacer(),
         Text(value,
             style:
-            TextStyle(fontSize: 15.sp, color: Colors.black87)),
+            TextStyle(fontSize: 16.sp, color: Colors.black87)),
       ],
     );
   }
