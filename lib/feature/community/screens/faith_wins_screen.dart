@@ -151,9 +151,9 @@ class _FaithWinsTestimoniesScreenState extends State<FaithWinsTestimoniesScreen>
                           child: ElevatedButton(
                             onPressed: _sendPost,
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.black87,
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.r)),
-                              padding: EdgeInsets.symmetric(vertical: 12.h),
+                              backgroundColor:
+                              const Color.fromRGBO(47, 46, 46, 1),
+                              minimumSize: Size(double.infinity, 50.h),
                             ),
                             child: Obx(() => communityController.isCreating.value
                                 ? SizedBox(height: 16.h, width: 16.h, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))

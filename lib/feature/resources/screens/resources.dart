@@ -100,7 +100,7 @@ class CheckinScreen2 extends StatelessWidget {
               /// Recommended Reading Title
               Text(
                 'Recommended Reading',
-                style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w700),
+                style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w700),
               ),
 
               SizedBox(height: 16.h),

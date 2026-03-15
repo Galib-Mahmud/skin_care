@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import '../../../routes/route_name.dart';
 import '../../../widget/auth/custom_appbar.dart';
 import '../controller/water_goal_controller.dart';
 
@@ -104,7 +105,7 @@ class WaterGoalsScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         _CounterButton(
-                          icon: Icons.remove,
+                          icon: controller.prayerValue.value > 0 ? Icons.remove : Icons.block,
                           onTap: () => controller.prayerValue.value > 0 ? controller.prayerValue.value-- : null,
                         ),
                         Padding(
@@ -115,8 +116,8 @@ class WaterGoalsScreen extends StatelessWidget {
                           ),
                         ),
                         _CounterButton(
-                          icon: Icons.add,
-                          onTap: () => controller.prayerValue.value++,
+                          icon: controller.prayerValue.value < 4 ? Icons.add : Icons.block,
+                          onTap: () => controller.prayerValue.value < 4 ? controller.prayerValue.value++ : null,
                         ),
                       ],
                     ),
@@ -128,18 +129,19 @@ class WaterGoalsScreen extends StatelessWidget {
               // ─── Save Button ─────────────────────────────────────
               controller.isSaving.value
                   ? const CircularProgressIndicator(color: Colors.black)
-                  : SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                    padding: EdgeInsets.symmetric(vertical: 14.h),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+                  : ElevatedButton(
+                      onPressed:controller.saveAll,
+                      style: ElevatedButton.styleFrom(
+                      backgroundColor:
+                      const Color.fromRGBO(47, 46, 46, 1),
+                      minimumSize: Size(double.infinity, 50.h),
+                      ),
+                      child: Text('Save Goals',
+                      style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white)),
                   ),
-                  onPressed: controller.saveAll,
-                  child: Text('Save Goals', style: TextStyle(color: Colors.white, fontSize: 16.sp)),
-                ),
-              ),
             ],
           ),
         );

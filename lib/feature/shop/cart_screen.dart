@@ -36,11 +36,11 @@ class CartScreen extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Icon(Icons.arrow_back_ios_new_rounded,
-                              size: 16.sp, color: Colors.black87),
+                              size: 18.sp, color: Colors.black87),
                           SizedBox(width: 4.w),
                           Text('Back',
                               style: TextStyle(
-                                  fontSize: 14.sp,
+                                  fontSize: 16.sp,
                                   color: Colors.black87)),
                         ],
                       ),
@@ -72,7 +72,7 @@ class CartScreen extends StatelessWidget {
                 SizedBox(height: 12.h),
                 Text('Your cart is empty',
                     style: TextStyle(
-                        fontSize: 16.sp, color: Colors.black54)),
+                        fontSize: 18.sp, color: Colors.black54)),
               ],
             ),
           );
@@ -124,18 +124,16 @@ class CartScreen extends StatelessWidget {
                     width: 230.w,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.black87,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                            borderRadius:
-                            BorderRadius.circular(24.r)),
-                        elevation: 0,
+                          backgroundColor:
+                          const Color.fromRGBO(47, 46, 46, 1),
+                          minimumSize: Size(double.infinity, 50.h)
                       ),
                       onPressed: () =>
                           Get.toNamed(RouteName.placeOrder),
                       child: Text('Continue',
                           style: TextStyle(
-                              fontSize: 14.sp,
+                              fontSize: 16.sp,
+                              color: Colors.white,
                               fontWeight: FontWeight.w600)),
                     ),
                   ),
@@ -182,8 +180,8 @@ class _CartCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(8.r),
             child: item.productImage.isNotEmpty
                 ? Image.network("${ApiEndpoint.baseUrl}${item.productImage}",
-                width: 56.w,
-                height: 56.w,
+                width: 100.w,
+                height: 100.w,
                 fit: BoxFit.cover,
                 errorBuilder: (_, __, ___) =>
                     Container(
@@ -204,29 +202,13 @@ class _CartCard extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                        fontSize: 14.sp,
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.w600)),
                 SizedBox(height: 4.h),
                 Text(
                     '\$${item.productPrice.toStringAsFixed(2)}',
                     style: TextStyle(fontSize: 13.sp)),
               ],
-            ),
-          ),
-          InkWell(
-            onTap: onRemove,
-            child: Container(
-              width: 32.w,
-              height: 32.w,
-              margin: EdgeInsets.only(right: 8.w),
-              decoration: BoxDecoration(
-                color: const Color.fromRGBO(255, 255, 255, 0.4),
-                borderRadius: BorderRadius.circular(8.r),
-                border: Border.all(color: Colors.black12),
-              ),
-              alignment: Alignment.center,
-              child: Icon(Icons.delete_outline,
-                  size: 18.sp, color: Colors.black54),
             ),
           ),
           _QtyPill(
@@ -260,7 +242,7 @@ class _QtyPill extends StatelessWidget {
           border: Border.all(color: Colors.black12),
         ),
         alignment: Alignment.center,
-        child: Icon(ic, size: 16.sp, color: Colors.black87),
+        child: Icon(ic, size: 18.sp, color: Colors.black87),
       ),
     );
     return Container(

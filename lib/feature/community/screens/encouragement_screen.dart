@@ -88,50 +88,47 @@ class _EncouragementBoardScreenState extends State<EncouragementBoardScreen> {
                       // Share Button
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16.w),
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed:  () {
-                              String content = _controller.text.trim();
-                              if (content.isNotEmpty) {
-                                communityController.createPosts(content, null);
-                                _controller.clear();
-                              } else {
-                                Get.snackbar(
-                                  'Error',
-                                  'Please enter some encouragement to share.',
-                                  backgroundColor: Colors.redAccent,
-                                  colorText: Colors.white,
-                                );
-                              }
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.black87,
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.r)),
-                              padding: EdgeInsets.symmetric(vertical: 12.h),
-                            ),
-                            child: Obx(() {
-                              if (communityController.isCreating.value) {
-                                return SizedBox(
-                                  height: 16.h,
-                                  width: 16.h,
-                                  child: const CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    color: Colors.white,
-                                  ),
-                                );
-                              } else {
-                                return Text(
-                                  'Share Encouragement',
-                                  style: TextStyle(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white,
-                                  ),
-                                );
-                              }
-                            })
+                        child: ElevatedButton(
+                          onPressed:   () {
+                            String content = _controller.text.trim();
+                            if (content.isNotEmpty) {
+                              communityController.createPosts(content, null);
+                              _controller.clear();
+                            } else {
+                              Get.snackbar(
+                                'Error',
+                                'Please enter some encouragement to share.',
+                                backgroundColor: Colors.redAccent,
+                                colorText: Colors.white,
+                              );
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                            const Color.fromRGBO(47, 46, 46, 1),
+                            minimumSize: Size(double.infinity, 50.h),
                           ),
+                          child:  Obx(() {
+                            if (communityController.isCreating.value) {
+                              return SizedBox(
+                                height: 16.h,
+                                width: 16.h,
+                                child: const CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: Colors.white,
+                                ),
+                              );
+                            } else {
+                              return Text(
+                                'Share Encouragement',
+                                style: TextStyle(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              );
+                            }
+                          })
                         ),
                       ),
 

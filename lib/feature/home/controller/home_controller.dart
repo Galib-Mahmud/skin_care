@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:skincare/core/snackbar/app_snackbar.dart';
 import '../../../core/endpoint/api_client.dart';
 import '../../../core/endpoint/api_endpoint.dart';
 import '../../profile/controller/weekly_goal_controller.dart';
@@ -176,7 +177,7 @@ class HomeController extends GetxController {
         noteText.value = response['notes'] ?? text;
       }
 
-      _showSuccess('Note saved!');
+      AppSnackbar.success('Note saved successfully!');
     } on HttpException catch (e) {
       _showError(_extractMessage(_tryParseBody(e.body)) ?? e.message);
     } catch (e) {
@@ -288,18 +289,6 @@ class HomeController extends GetxController {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(message, style: const TextStyle(color: Colors.white)),
       backgroundColor: Colors.red.shade700,
-      behavior: SnackBarBehavior.floating,
-      margin: const EdgeInsets.all(16),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-    ));
-  }
-
-  void _showSuccess(String message) {
-    final context = Get.context;
-    if (context == null) return;
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(message, style: const TextStyle(color: Colors.white)),
-      backgroundColor: Colors.green.shade700,
       behavior: SnackBarBehavior.floating,
       margin: const EdgeInsets.all(16),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),

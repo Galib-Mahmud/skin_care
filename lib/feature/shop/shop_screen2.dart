@@ -37,7 +37,7 @@ class ShopScreen2 extends StatelessWidget {
         if (p == null) {
           return Center(
               child: Text('Product not found',
-                  style: TextStyle(fontSize: 14.sp)));
+                  style: TextStyle(fontSize: 16.sp)));
         }
         return SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -171,11 +171,11 @@ class ShopScreen2 extends StatelessWidget {
 
                       // Description
                       Text(p.description,
-                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               fontSize: 13.sp,
                               color: Colors.black87,
-                              height: 1.45)),
+                              height: 1.45)
+                      ),
                       SizedBox(height: 16.h),
 
                       // Add to Cart button
@@ -219,7 +219,7 @@ class ShopScreen2 extends StatelessWidget {
                                 'Add to Cart  |  \$${(p.price * c.detailQty.value).toStringAsFixed(2)}',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w700,
-                                    fontSize: 14.sp),
+                                    fontSize: 16.sp),
                               )),
                             ],
                           ),
@@ -272,7 +272,7 @@ class ShopScreen2 extends StatelessWidget {
                       // ── Write Review ───────────────────────────
                       Text('Write a Review',
                           style: TextStyle(
-                              fontSize: 14.sp,
+                              fontSize: 16.sp,
                               fontWeight: FontWeight.w600)),
                       SizedBox(height: 10.h),
 
@@ -325,12 +325,9 @@ class ShopScreen2 extends StatelessWidget {
                         height: 46.h,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black87,
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                BorderRadius.circular(24.r)),
-                            elevation: 0,
+                              backgroundColor:
+                              const Color.fromRGBO(47, 46, 46, 1),
+                              minimumSize: Size(double.infinity, 50.h)
                           ),
                           onPressed: c.isSubmittingReview.value
                               ? null
@@ -341,7 +338,8 @@ class ShopScreen2 extends StatelessWidget {
                               strokeWidth: 2)
                               : Text('Submit Review',
                               style: TextStyle(
-                                  fontSize: 14.sp,
+                                  fontSize: 16.sp,
+                                  color: Colors.white,
                                   fontWeight: FontWeight.w600)),
                         ),
                       )),
@@ -379,7 +377,7 @@ class _ReviewTile extends StatelessWidget {
               ...List.generate(5, (i) => Icon(
                 i < review.rating ? Icons.star : Icons.star_border,
                 color: const Color(0xFFFFC107),
-                size: 14.sp,
+                size: 16.sp,
               )),
               const Spacer(),
               Text(

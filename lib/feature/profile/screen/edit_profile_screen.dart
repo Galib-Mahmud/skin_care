@@ -31,7 +31,7 @@ class EditProfileScreen extends StatelessWidget {
                     child: const Text(
                       'Cancel',
                       style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 18,
                           color: Colors.black87,
                           fontWeight: FontWeight.w500),
                     ),
@@ -50,7 +50,7 @@ class EditProfileScreen extends StatelessWidget {
                     child: const Text(
                       'Save',
                       style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 18,
                           color: Colors.black87,
                           fontWeight: FontWeight.w600),
                     ),

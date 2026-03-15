@@ -107,7 +107,7 @@ class ProfileScreen1 extends StatelessWidget {
                         SizedBox(height: 15.h),
                         _GoalRow(
                           goalTitle: 'Daily Water Goal',
-                          goalValue: '${controller.waterGoal.value} glasses',
+                          goalValue: '${controller.waterGoal.value} oz',
                         ),
                         SizedBox(height: 10.h),
                         Container(height: 1, color: Colors.grey.withOpacity(0.25)),
@@ -148,14 +148,20 @@ class ProfileScreen1 extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Obx(() => _StatusBox(
-                              label: '${goalTrackerController.waterGoalDays}/7',
-                              statusText: 'Days water goal met',
+                            Obx(() => Expanded(
+                              child: _StatusBox(
+                                label: '${goalTrackerController.waterGoalDays}/7',
+                                statusText: 'Days water goal met',
+                              ),
                             )),
-
-                            Obx(() => _StatusBox(
-                              label: '${goalTrackerController.checkedInDays}/7',
-                              statusText: 'Days checked in',
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Obx(() => Expanded(
+                              child: _StatusBox(
+                                label: '${goalTrackerController.checkedInDays}/7',
+                                statusText: 'Days checked in',
+                              ),
                             )),
                           ],
                         ),

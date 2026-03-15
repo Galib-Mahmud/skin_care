@@ -43,7 +43,7 @@ class ShopScreen1 extends StatelessWidget {
                     children: [
                       IconButton(
                         onPressed: () =>
-                            Get.toNamed(RouteName.cart),
+                            Get.toNamed(RouteName.placeOrder),
                         icon: Icon(Icons.shopping_cart_outlined,
                             size: 22.sp, color: Colors.black87),
                       ),
