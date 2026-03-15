@@ -75,7 +75,7 @@ class HomeScreen extends StatelessWidget {
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 24.sp,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w900,
                             shadows: const [
                               Shadow(
                                   offset: Offset(0, 1),
@@ -127,7 +127,7 @@ class HomeScreen extends StatelessWidget {
                                 'Bible Verse',
                                 style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 16.sp,
+                                  fontSize: 18.sp,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -138,7 +138,7 @@ class HomeScreen extends StatelessWidget {
                                     : 'Loading verse...',
                                 style: TextStyle(
                                   color: Colors.black87,
-                                  fontSize: 14.sp,
+                                  fontSize: 16.sp,
                                   height: 1.5,
                                 ),
                               )),
@@ -412,7 +412,7 @@ class HomeScreen extends StatelessWidget {
                                 Text(
                                   "Today's Notes",
                                   style: TextStyle(
-                                      fontSize: 16.sp,
+                                      fontSize: 18.sp,
                                       fontWeight:
                                       FontWeight.bold),
                                 ),
@@ -453,7 +453,7 @@ class HomeScreen extends StatelessWidget {
                                     color: const Color
                                         .fromRGBO(
                                         0, 0, 0, 0.4),
-                                    fontSize: 14.sp),
+                                    fontSize: 16.sp),
                                 border: OutlineInputBorder(
                                   borderRadius:
                                   BorderRadius.circular(
@@ -474,7 +474,7 @@ class HomeScreen extends StatelessWidget {
                                 : Text(
                               c.noteText.value.isEmpty ? 'No notes for today. Tap edit to add some thoughts!' : c.noteText.value,
                               style: TextStyle(
-                                  fontSize: 14.sp,
+                                  fontSize: 16.sp,
                                   color: const Color
                                       .fromRGBO(
                                       0, 0, 0, 0.6)),
@@ -540,7 +540,7 @@ class _MoodItem extends StatelessWidget {
                 label,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 11.sp,
+                  fontSize: 12.sp,
                   color: Colors.black87,
                   fontWeight: isSelected
                       ? FontWeight.w600
@@ -598,7 +598,7 @@ class _SkinChip extends StatelessWidget {
             style: TextStyle(
               color: isSelected ? Colors.white : Colors.black87,
               fontWeight: FontWeight.w600,
-              fontSize: 13.sp,
+              fontSize: 14.sp,
             ),
           ),
         ),
@@ -633,7 +633,7 @@ class _SectionCard extends StatelessWidget {
         children: [
           Text(title,
               style: TextStyle(
-                  fontSize: 16.sp,
+                  fontSize: 18.sp,
                   color: Colors.black,
                   fontWeight: FontWeight.bold)),
           SizedBox(height: 8.h),

@@ -3,13 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../../routes/route_name.dart';
+import '../../../../widget/auth/custom_appbar.dart';
 
 class ScreenCareGuide extends StatelessWidget {
   const ScreenCareGuide({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+      appBar: const CustomAppBar(title: ''),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
@@ -17,7 +18,6 @@ class ScreenCareGuide extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 60.h),
-
               // Headline
               Text(
                 "Hello! How can I assist you\ntoday?",

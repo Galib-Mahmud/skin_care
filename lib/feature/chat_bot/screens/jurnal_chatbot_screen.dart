@@ -323,7 +323,7 @@ class _BotAvatar extends StatelessWidget {
         shape: BoxShape.circle,
         image: const DecorationImage(
           fit: BoxFit.cover,
-          image: AssetImage('assets/images/home/bot.png'),
+          image: AssetImage('assets/images/home/img_1.png'),
         ),
         border: Border.all(color: Colors.white, width: 1),
       ),

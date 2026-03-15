@@ -3,13 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../../routes/route_name.dart';
+import '../../../../widget/auth/custom_appbar.dart';
 
 class DailyDaviationScreen extends StatelessWidget {
   const DailyDaviationScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+      appBar: const CustomAppBar(title: ''),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),

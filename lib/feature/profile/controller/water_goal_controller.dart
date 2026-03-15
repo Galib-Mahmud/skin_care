@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:skincare/core/snackbar/app_snackbar.dart';
 import 'package:skincare/feature/profile/controller/profile_controller.dart';
 import '../../../core/endpoint/api_client.dart';
 import '../../../core/endpoint/api_endpoint.dart';
@@ -79,23 +80,12 @@ class WaterGoalController extends GetxController {
       if (Get.isRegistered<ProfileController>()) {
         await Get.find<ProfileController>().fetchGoals();
       }
-
-      _showSnackBar('Goals saved successfully!', isError: false);
-      Get.back();
+      AppSnackbar.success('Goals updated successfully!');
     } catch (e) {
-      _showSnackBar('Failed to save goals. Please try again.', isError: true);
+      debugPrint('Error saving goals: $e');
+      AppSnackbar.error('Failed to update goals. Please try again.');
     } finally {
       isSaving.value = false;
     }
-  }
-
-  void _showSnackBar(String message, {required bool isError}) {
-    Get.rawSnackbar(
-      message: message,
-      backgroundColor: isError ? Colors.red.shade700 : Colors.green.shade700,
-      snackPosition: SnackPosition.BOTTOM,
-      margin: const EdgeInsets.all(16),
-      borderRadius: 10,
-    );
   }
 }
