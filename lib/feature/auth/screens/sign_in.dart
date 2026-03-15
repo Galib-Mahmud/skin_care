@@ -83,7 +83,7 @@ class SignInScreen extends StatelessWidget {
                 )),
                 CustomButton(
                   text: 'Sign Up',
-                  onPressed: () => Get.toNamed(RouteName.signup),
+                  onPressed: () => Get.toNamed(RouteName.question1),
                 ),
                 SizedBox(height: 20.h),
                 // Row(

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import '../../profile/controller/weekly_goal_controller.dart';
 import '../controller/home_controller.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -24,6 +25,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = Get.put(HomeController());
+    final GoalTrackerController goalTrackerController =
+    Get.put(GoalTrackerController());
 
     return Scaffold(
       body: SafeArea(
@@ -445,8 +448,7 @@ class HomeScreen extends StatelessWidget {
                               controller: c.noteController,
                               maxLines: 4,
                               decoration: InputDecoration(
-                                hintText:
-                                'How is your skin feeling today?',
+                                hintText: 'Type your today note ?',
                                 hintStyle: TextStyle(
                                     color: const Color
                                         .fromRGBO(
@@ -470,7 +472,7 @@ class HomeScreen extends StatelessWidget {
                               ),
                             )
                                 : Text(
-                              c.noteText.value,
+                              c.noteText.value.isEmpty ? 'No notes for today. Tap edit to add some thoughts!' : c.noteText.value,
                               style: TextStyle(
                                   fontSize: 14.sp,
                                   color: const Color

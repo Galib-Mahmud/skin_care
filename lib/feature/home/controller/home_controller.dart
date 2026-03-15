@@ -5,10 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/endpoint/api_client.dart';
 import '../../../core/endpoint/api_endpoint.dart';
+import '../../profile/controller/weekly_goal_controller.dart';
 
 class HomeController extends GetxController {
 
   static HomeController get to => Get.put(HomeController());
+  final GoalTrackerController goalTrackerController =
+  Get.put(GoalTrackerController());
   final ApiClient _apiClient = ApiClient(baseUrl: ApiEndpoint.baseUrl);
 
   final RxBool isLoading = false.obs;
@@ -31,8 +34,7 @@ class HomeController extends GetxController {
   // ─── Notes ────────────────────────────────────────────────────────
   final RxBool   isEditingNote = false.obs;
   final RxBool   isSavingNote  = false.obs;
-  final RxString noteText      = RxString(
-      'How is your skin feeling today? Any concerns or improvements?');
+  final RxString noteText      = ''.obs;
   final RxInt    noteId        = 0.obs;
   final RxString noteDate      = ''.obs;
   final noteController         = TextEditingController();
@@ -204,6 +206,10 @@ class HomeController extends GetxController {
         body: {'water_goal_achieved': newVal},
         requiresAuth: true,
       );
+
+      goalTrackerController.markWaterGoal(newVal >= waterGoal.value);
+
+
     } on HttpException catch (e) {
       waterAchieved.value =
           (waterAchieved.value - delta).clamp(0, waterGoal.value * 10);
@@ -233,6 +239,8 @@ class HomeController extends GetxController {
         body: body,
         requiresAuth: true,
       );
+
+      goalTrackerController.checkInToday();
     } on HttpException catch (e) {
       _showError(_extractMessage(_tryParseBody(e.body)) ?? e.message);
     } catch (e) {

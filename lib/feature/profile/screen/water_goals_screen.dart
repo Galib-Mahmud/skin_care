@@ -55,8 +55,10 @@ class WaterGoalsScreen extends StatelessWidget {
                       ),
                       child: Slider(
                         value: controller.waterSliderValue.value,
-                        min: 0, max: 32, divisions: 32,
-                        onChanged: (val) => controller.waterSliderValue.value = val,
+                        min: 0, max: 32,
+                        onChanged: (val) {
+                          controller.waterSliderValue.value = (val / 8).round() * 8;
+                        },
                       ),
                     ),
                   ],

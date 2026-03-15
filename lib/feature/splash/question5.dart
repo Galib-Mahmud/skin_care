@@ -13,7 +13,7 @@ class Question5 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(AuthController());
+    final controller = Get.find<AuthController>();
     final options = [
       "Hydration",
       "Dry",
@@ -67,7 +67,7 @@ class Question5 extends StatelessWidget {
             SizedBox(height: 20.h),
             CustomButton(
               text: 'Continue',
-              onPressed: () => Get.toNamed(RouteName.subscription),
+              onPressed: () => Get.toNamed(RouteName.signup),
             ),
           ],
         ),

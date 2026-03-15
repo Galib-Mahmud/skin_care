@@ -9,7 +9,8 @@ class CheckinScreen2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ResourcesController resourcesController = Get.put(ResourcesController());
+    final ResourcesController resourcesController =
+    Get.put(ResourcesController(), permanent: true);
 
     return Scaffold(
       body: SafeArea(
@@ -19,6 +20,8 @@ class CheckinScreen2 extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SizedBox(height: 8.h),
+
+              /// Title
               Text(
                 'Resources',
                 textAlign: TextAlign.center,
@@ -32,11 +35,15 @@ class CheckinScreen2 extends StatelessWidget {
               Text(
                 'Grow in faith and wellness',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 20.sp, color: Colors.black,fontWeight: FontWeight.w700),
+                style: TextStyle(
+                    fontSize: 20.sp,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w700),
               ),
+
               SizedBox(height: 16.h),
 
-              // Resource Cards Grid
+              /// Resource Grid
               GridView.count(
                 crossAxisCount: 2,
                 crossAxisSpacing: 12.w,
@@ -46,25 +53,41 @@ class CheckinScreen2 extends StatelessWidget {
                 shrinkWrap: true,
                 children: [
                   _ResourceCard(
-                    icon: Image.asset('assets/images/home/book.png', width: 24.w, height: 24.w),
+                    icon: Image.asset(
+                      'assets/images/home/book.png',
+                      width: 24.w,
+                      height: 24.w,
+                    ),
                     title: 'Skincare Guides',
                     subtitle: 'Faith-based beauty tips',
                     onTap: () => Get.toNamed(RouteName.skincareGuide),
                   ),
                   _ResourceCard(
-                    icon: Image.asset('assets/images/home/love.png', width: 24.w, height: 24.w),
+                    icon: Image.asset(
+                      'assets/images/home/love.png',
+                      width: 24.w,
+                      height: 24.w,
+                    ),
                     title: 'Daily Devotions',
                     subtitle: 'Spiritual nourishment',
                     onTap: () => Get.toNamed(RouteName.dailyDaviation),
                   ),
                   _ResourceCard(
-                    icon: Image.asset('assets/images/home/man.png', width: 24.w, height: 24.w),
+                    icon: Image.asset(
+                      'assets/images/home/man.png',
+                      width: 24.w,
+                      height: 24.w,
+                    ),
                     title: 'AI Recipe Generator',
                     subtitle: 'Healthy meals for glow',
                     onTap: () => Get.toNamed(RouteName.recipe),
                   ),
                   _ResourceCard(
-                    icon: Image.asset('assets/images/home/add.png', width: 24.w, height: 24.w),
+                    icon: Image.asset(
+                      'assets/images/home/add.png',
+                      width: 24.w,
+                      height: 24.w,
+                    ),
                     title: 'Journal Prompts',
                     subtitle: 'AI-guided reflection',
                     onTap: () => Get.toNamed(RouteName.jurnalprompts),
@@ -72,43 +95,62 @@ class CheckinScreen2 extends StatelessWidget {
                 ],
               ),
 
-              SizedBox(height: 20.h),
+              SizedBox(height: 24.h),
 
-              // Recommended Reading
+              /// Recommended Reading Title
               Text(
-                ' Recommended Reading',
+                'Recommended Reading',
                 style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w700),
               ),
-              SizedBox(height: 18.h),
-              Obx(
-                () => resourcesController.isLoading.value
-                    ? Center(child: LinearProgressIndicator(minHeight: 0.1,))
-                    : _ReadingCard(
-                  title: resourcesController.recommendedReading.value?.skincare!.title ?? '',
-                  content: resourcesController.recommendedReading.value?.skincare?.content ?? '',
-                )
-              ),
-              SizedBox(height: 12.h),
-              Obx(
-                () => resourcesController.isLoading.value
-                    ? Center(child: LinearProgressIndicator(minHeight: 0.1,))
-                    : _ReadingCard(
-                  title: resourcesController.recommendedReading.value?.devotion?.title ?? '',
-                  content: resourcesController.recommendedReading.value?.devotion?.content ?? '',
-                )
-              ),
-              SizedBox(height: 80.h), // leave space above bottom bar
+
+              SizedBox(height: 16.h),
+
+              /// Recommended Reading Section
+              Obx(() {
+                if (resourcesController.isLoading.value) {
+                  return const Center(
+                    child: LinearProgressIndicator(minHeight: 2),
+                  );
+                }
+
+                final reading =
+                    resourcesController.recommendedReading.value;
+
+                if (reading == null) {
+                  return const SizedBox();
+                }
+
+                return Column(
+                  children: [
+                    if (reading.skincare != null)
+                      _ReadingCard(
+                        title: reading.skincare?.title ?? '',
+                        content: reading.skincare?.content ?? '',
+                      ),
+
+                    SizedBox(height: 12.h),
+
+                    if (reading.devotion != null)
+                      _ReadingCard(
+                        title: reading.devotion?.title ?? '',
+                        content: reading.devotion?.content ?? '',
+                      ),
+                  ],
+                );
+              }),
+
+              SizedBox(height: 80.h),
             ],
           ),
         ),
       ),
-
-
     );
   }
 }
 
-/// ==== Widgets ====
+/// =========================
+/// Resource Card
+/// =========================
 
 class _ResourceCard extends StatelessWidget {
   final Widget icon;
@@ -130,7 +172,7 @@ class _ResourceCard extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color:  Color.fromRGBO(255, 255, 255, 0.4),
+          color: const Color.fromRGBO(255, 255, 255, 0.4),
           borderRadius: BorderRadius.circular(16.r),
           boxShadow: [
             BoxShadow(
@@ -143,15 +185,13 @@ class _ResourceCard extends StatelessWidget {
         ),
         padding: EdgeInsets.all(12.w),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Icon inside soft circle
             Container(
               width: 40.w,
               height: 40.w,
               decoration: BoxDecoration(
-                color: Color.fromRGBO(255, 255, 255, 0.4),
+                color: const Color.fromRGBO(255, 255, 255, 0.4),
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
@@ -167,7 +207,6 @@ class _ResourceCard extends StatelessWidget {
             SizedBox(height: 20.h),
             Text(
               title,
-              textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 17.sp,
                 fontWeight: FontWeight.bold,
@@ -177,7 +216,6 @@ class _ResourceCard extends StatelessWidget {
             SizedBox(height: 8.h),
             Text(
               subtitle,
-              textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14.sp,
                 color: Colors.black,
@@ -193,47 +231,69 @@ class _ResourceCard extends StatelessWidget {
   }
 }
 
+/// =========================
+/// Reading Card
+/// =========================
+
 class _ReadingCard extends StatelessWidget {
   final String title;
   final String content;
 
-  _ReadingCard({required this.title, required this.content});
+  const _ReadingCard({
+    required this.title,
+    required this.content,
+  });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-          Get.dialog(
-            AlertDialog(
-              backgroundColor: Color.fromRGBO(217, 217, 217, 1),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
-              title: Text(title, style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold)),
-              content: Text(content, style: TextStyle(fontSize: 16.sp, color: Colors.black87, height: 1.6)),
-              actions: [
-                TextButton(
-                  onPressed: () => Get.back(),
-                  child: Text('Close', style: TextStyle(fontSize: 14.sp)),
-                ),
-              ],
+      onTap: () {
+        Get.dialog(
+          AlertDialog(
+            backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.r)),
+            title: Text(
+              title,
+              style:
+              TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
             ),
-          );
+            content: SingleChildScrollView(
+              child: Text(
+                content,
+                style: TextStyle(
+                    fontSize: 16.sp,
+                    color: Colors.black87,
+                    height: 1.6),
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Get.back(),
+                child: Text(
+                  'Close',
+                  style: TextStyle(fontSize: 14.sp),
+                ),
+              ),
+            ],
+          ),
+        );
       },
       child: Container(
         decoration: BoxDecoration(
-          color: Color.fromRGBO(255, 255, 255, 0.4),
+          color: const Color.fromRGBO(255, 255, 255, 0.4),
           borderRadius: BorderRadius.circular(16.r),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.05),
               blurRadius: 8,
-              offset:  Offset(0, 2),
+              offset: const Offset(0, 2),
             ),
           ],
         ),
         padding: EdgeInsets.all(14.w),
         child: Row(
           children: [
-            // leading pill
             Container(
               width: 6.w,
               height: 70.h,
@@ -247,9 +307,20 @@ class _ReadingCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold)),
+                  Text(
+                    title,
+                    style: TextStyle(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.bold),
+                  ),
                   SizedBox(height: 6.h),
-                  Text(content, style: TextStyle(fontSize: 14.sp, color: Colors.black87), maxLines: 2, overflow: TextOverflow.ellipsis),
+                  Text(
+                    content,
+                    style: TextStyle(
+                        fontSize: 14.sp, color: Colors.black87),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ],
               ),
             ),
@@ -259,5 +330,3 @@ class _ReadingCard extends StatelessWidget {
     );
   }
 }
-
-

@@ -38,11 +38,11 @@ class AuthController extends GetxController {
   List.generate(6, (_) => TextEditingController());
 
   // ─── Onboarding Answers ───────────────────────────────────────────
-  final RxString skinStatus = 'Dry'.obs;
-  final RxString waterGoal  = '64 oz'.obs;
-  final RxString feeling    = 'Tired 😴'.obs;
-  final RxString remainder  = '3 time'.obs;
-  final RxString skinGoal   = 'Anti-aging & wrinkle care'.obs;
+  final RxString skinStatus = ''.obs;
+  final RxString waterGoal  = ''.obs;
+  final RxString feeling    = ''.obs;
+  final RxString remainder  = ''.obs;
+  final RxString skinGoal   = ''.obs;
 
   // ──────────────────────────────────────────────────────────────────
   // REGISTER
@@ -72,6 +72,8 @@ class AuthController extends GetxController {
         'remainder'    : _parseRemainder(remainder.value),
         'skin_goal'    : skinGoal.value,
       };
+
+      print('📤 Registering with body: $body');
 
       await _apiClient.post(
         '/api/v1/auth/register/',
