@@ -113,7 +113,7 @@ class OrderFailedScreen extends StatelessWidget {
                   elevation: 0,
                 ),
                 onPressed: onReorder ?? () {
-                  Get.toNamed(RouteName.homeScreen);
+                  Get.offAllNamed(RouteName.homeScreen);
                 },
                 child: Text(
                   'Re Order',
