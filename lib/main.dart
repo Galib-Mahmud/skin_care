@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:skincare/core/local_storage/user_info.dart';
+import 'package:skincare/feature/payment/screens/pay_screen.dart';
 import 'package:skincare/routes/app_route.dart';
 import 'package:skincare/routes/route_name.dart';
 import 'core/theme/color_theme.dart';
