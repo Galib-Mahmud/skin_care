@@ -221,43 +221,6 @@ class ShopController extends GetxController {
     }
   }
 
-  // ──────────────────────────────────────────────────────────────────
-  // GET /api/v1/shop/products/active/?page=N
-  // ──────────────────────────────────────────────────────────────────
-  // Future<void> fetchProducts({bool loadMore = false}) async {
-  //   if (isLoadingProducts.value) return;
-  //   isLoadingProducts.value = true;
-  //   try {
-  //     final url = loadMore && nextPageUrl.value.isNotEmpty
-  //         ? nextPageUrl.value
-  //         : '/api/v1/shop/products/active/';
-  //
-  //     final res = await _api.get(url, requiresAuth: false);
-  //     if (res is Map<String, dynamic>) {
-  //       totalCount.value  = res['count'] ?? 0;
-  //       nextPageUrl.value = res['next'] ?? '';
-  //       hasMore.value     = nextPageUrl.value.isNotEmpty;
-  //
-  //       final list = (res['results'] as List? ?? [])
-  //           .map((j) => ProductModel.fromJson(j))
-  //           .toList();
-  //
-  //       if (loadMore) {
-  //         products.addAll(list);
-  //       } else {
-  //         products.value = list;
-  //       }
-  //       _applyFilter();
-  //     }
-  //   } on HttpException catch (e) {
-  //     print('❌ fetchProducts: ${e.message}');
-  //   } catch (e) {
-  //     print('❌ fetchProducts: $e');
-  //   } finally {
-  //     isLoadingProducts.value = false;
-  //   }
-  // }
-
   Future<void> fetchProducts({bool loadMore = false}) async {
     if (isLoadingProducts.value) return;
 
@@ -474,6 +437,7 @@ class ShopController extends GetxController {
         body: {
           'shipping_address': shippingAddress,
           'payment_method'  : paymentMethod,
+          'payment_response': 'sdfsdgdfgfdgf',
           'is_paid'         : false,
           'delivery_charges': '3.99',
           'order_items'     : orderItems,

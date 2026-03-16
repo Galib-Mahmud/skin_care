@@ -155,6 +155,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   Widget build(BuildContext context) {
     final c = Get.find<ShopController>();
 
+    String selectedPayment = 'Cash on Delivery';
     return Scaffold(
       appBar: CustomAppBar(title: 'Checkout'),
       body: Obx(() => Column(
@@ -177,12 +178,57 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   onTap: _openAddressSheet,
                 ),
                 SizedBox(height: 10.h),
-                _SelectionCard(
-                  label: 'Payment from',
-                  leading: Icons.credit_card,
-                  value: 'Cash on Delivery',
-                  onTap: () {},
+
+          _SelectionCard(
+          label: 'Payment from',
+            leading: Icons.credit_card,
+            value: selectedPayment,
+            onTap: () {
+              showModalBottomSheet(
+                context: context,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
                 ),
+                builder: (context) {
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const SizedBox(height: 15),
+                      const Text(
+                        "Select Payment Method",
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      const Divider(),
+
+                      ListTile(
+                        leading: const Icon(Icons.money),
+                        title: const Text("Cash on Delivery"),
+                        onTap: () {
+                          setState(() {
+                            selectedPayment = "Cash on Delivery";
+                          });
+                          Navigator.pop(context);
+                        },
+                      ),
+
+                      ListTile(
+                        leading: const Icon(Icons.account_balance_wallet),
+                        title: const Text("Pay with wallet"),
+                        onTap: () {
+                          setState(() {
+                            selectedPayment = "Bkash";
+                          });
+                          Navigator.pop(context);
+                        },
+                      ),
+
+                      const SizedBox(height: 10),
+                    ],
+                  );
+                },
+              );
+            },
+          ),
               ],
             ),
           ),
