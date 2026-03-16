@@ -6,6 +6,59 @@ import 'package:pay/pay.dart';
 
 class PayController extends GetxController {
 
+  final String googlePayConfig = '''
+{
+  "provider": "google_pay",
+  "data": {
+    "environment": "TEST",
+    "apiVersion": 2,
+    "apiVersionMinor": 0,
+    "allowedPaymentMethods": [
+      {
+        "type": "CARD",
+        "parameters": {
+          "allowedAuthMethods": ["PAN_ONLY", "CRYPTOGRAM_3DS"],
+          "allowedCardNetworks": ["AMEX", "DISCOVER", "MASTERCARD", "VISA"]
+        },
+        "tokenizationSpecification": {
+          "type": "PAYMENT_GATEWAY",
+          "parameters": {
+            "gateway": "stripe",
+            "stripe:publishableKey": "pk_test_51T9fbJGmiuH1TWCJkdakHn9C6ASLHjkNus1N59aooE4LM65BduaKJ6GE9DKnhaH3UDMSH0aLES7hgMSGvGcVOb1K00yo5V9Ej9",
+            "stripe:version":"2024-06-20"
+          }
+        }
+      }
+    ],
+    "merchantInfo": {
+      "merchantName": "Test Store"
+    },
+    "transactionInfo": {
+      "totalPriceStatus": "FINAL",
+      "totalPrice": "99.99",
+      "currencyCode": "USD",
+      "countryCode": "US"
+    }
+  }
+}
+''';
+
+
+
+  final String applePayConfig = '''
+{
+  "provider": "apple_pay",
+  "data": {
+    "merchantIdentifier": "merchant.com.YOUR_BUNDLE_ID",
+    "displayName": "Demo Store",
+    "merchantCapabilities": ["supports3DS"],
+    "supportedNetworks": ["visa", "masterCard", "amex", "discover"],
+    "countryCode": "US",
+    "currencyCode": "USD"
+  }
+}
+''';
+
   final devicePlatform = GetPlatform.isAndroid
       ? 'Android'
       : GetPlatform.isIOS

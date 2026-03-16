@@ -3,8 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:pay/pay.dart';
 import 'package:skincare/widget/auth/custom_appbar.dart';
 
+import '../payment/controllers/pay_controller.dart';
 import 'controller/shop_controller.dart';
 
 
@@ -154,6 +156,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   @override
   Widget build(BuildContext context) {
     final c = Get.find<ShopController>();
+    final PayController controller = Get.put(PayController());
 
     String selectedPayment = 'Cash on Delivery';
     return Scaffold(
@@ -182,7 +185,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           _SelectionCard(
           label: 'Payment from',
             leading: Icons.credit_card,
-            value: selectedPayment,
+            value: c.paymentMethod.value.isEmpty
+                ? 'Tap to select payment method'
+                : c.paymentMethod.value,
             onTap: () {
               showModalBottomSheet(
                 context: context,
@@ -204,10 +209,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         leading: const Icon(Icons.money),
                         title: const Text("Cash on Delivery"),
                         onTap: () {
-                          setState(() {
-                            selectedPayment = "Cash on Delivery";
-                          });
-                          Navigator.pop(context);
+                          c.paymentMethod.value = "Cash on Delivery";
+                          c.isWalletSelected.value = false;
+                          Get.back();
                         },
                       ),
 
@@ -215,10 +219,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         leading: const Icon(Icons.account_balance_wallet),
                         title: const Text("Pay with wallet"),
                         onTap: () {
-                          setState(() {
-                            selectedPayment = "Bkash";
-                          });
-                          Navigator.pop(context);
+                          c.paymentMethod.value = "Pay with wallet";
+                          c.isWalletSelected.value = true;
+                          Get.back();
                         },
                       ),
 
@@ -311,11 +314,76 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         _openAddressSheet();
                         return;
                       }
-                      c.placeOrder(
-                        shippingAddress: addr,
-                        paymentMethod:
-                        'Cash on Delivery',
-                      );
+                      // c.placeOrder(
+                      //   shippingAddress: addr,
+                      //   paymentMethod: c.paymentMethod.value.isEmpty
+                      //       ? 'Cash on Delivery'
+                      //       : c.paymentMethod.value,
+                      // );
+
+                      if(c.isWalletSelected.value) {
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) {
+                            return Container(
+                              height: 200.h,
+                              padding: EdgeInsets.all(20.w),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Confirm Payment',
+                                    style: TextStyle(
+                                      fontSize: 18.sp,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.black87,
+                                    ),
+                                  ),
+                                  SizedBox(height: 20.h),
+                                  Text(
+                                    'You are about to pay \$${c.cartTotal.toStringAsFixed(2)} from your wallet. Do you want to proceed?',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 14.sp,
+                                      color: Colors.black54,
+                                    ),
+                                  ),
+                                  if (GetPlatform.isAndroid)
+                                    GooglePayButton(
+                                      paymentConfiguration:
+                                      PaymentConfiguration.fromJsonString(controller.googlePayConfig),
+                                      paymentItems: controller.paymentItems,
+                                      type: GooglePayButtonType.buy,
+                                      onPaymentResult:null,
+                                      loadingIndicator: const CircularProgressIndicator(),
+                                    ),
+
+                                  const SizedBox(height: 20),
+
+                                  if (controller.devicePlatform == "iOS")
+                                    ApplePayButton(
+                                      paymentConfiguration:
+                                      PaymentConfiguration.fromJsonString(controller.applePayConfig),
+                                      paymentItems: controller.paymentItems,
+                                      type: ApplePayButtonType.buy,
+                                      onPaymentResult: null,
+                                      loadingIndicator: const CircularProgressIndicator(),
+                                    ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      } else {
+                        c.placeOrder(
+                          shippingAddress: addr,
+                          paymentMethod: c.paymentMethod.value.isEmpty
+                              ? 'Cash on Delivery'
+                              : c.paymentMethod.value,
+                        );
+                      }
+
                     },
                     child: c.isPlacingOrder.value
                         ? const CircularProgressIndicator(

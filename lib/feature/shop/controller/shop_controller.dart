@@ -1,6 +1,7 @@
 // lib/feature/shop/controller/shop_controller.dart
 
 import 'dart:convert';
+import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:skincare/core/snackbar/app_snackbar.dart';
@@ -184,6 +185,9 @@ class ShopController extends GetxController {
   // ── Review form ────────────────────────────────────────────────────
   final RxInt          reviewRating     = 5.obs;
   final TextEditingController reviewCommentCtrl = TextEditingController();
+
+  RxString paymentMethod = 'Cash on Delivery'.obs;
+  RxBool isWalletSelected = false.obs;
 
   @override
   void onInit() {
@@ -419,8 +423,7 @@ class ShopController extends GetxController {
   // ORDER — POST /api/v1/shop/orders/
   // ──────────────────────────────────────────────────────────────────
   Future<void> placeOrder({
-    required String shippingAddress,
-    String paymentMethod = 'Cash on Delivery',
+    required String shippingAddress, required String paymentMethod,
   }) async {
     if (cartItems.isEmpty) return;
     isPlacingOrder.value = true;
@@ -432,18 +435,25 @@ class ShopController extends GetxController {
       })
           .toList();
 
-      await _api.post(
-        '/api/v1/shop/orders/',
-        body: {
-          'shipping_address': shippingAddress,
-          'payment_method'  : paymentMethod,
-          'payment_response': 'sdfsdgdfgfdgf',
-          'is_paid'         : false,
-          'delivery_charges': '3.99',
-          'order_items'     : orderItems,
-        },
-        requiresAuth: true,
-      );
+      if(isWalletSelected.value){
+        developer.log('Wallet selected, applying wallet balance to order total');
+
+      }else{
+        await _api.post(
+          '/api/v1/shop/orders/',
+          body: {
+            'shipping_address': shippingAddress,
+            'payment_method'  : paymentMethod,
+            'payment_response': 'sdfsdgdfgfdgf',
+            'is_paid'         : false,
+            'delivery_charges': '3.99',
+            'order_items'     : orderItems,
+          },
+          requiresAuth: true,
+        );
+      }
+
+
 
       cartItems.clear();
       Get.offAllNamed(RouteName.orderSuccess);
