@@ -44,16 +44,11 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           theme: AppTheme.lightTheme,
-          // initialRoute: initialRoute,
-          // getPages: AppRoute.pages,
-
-          home: PayScreen(),
-
-          initialBinding: AppBinding(),
+          initialRoute: initialRoute,
+          getPages: AppRoute.pages,
           defaultTransition: Transition.fade,
         );
       },
@@ -61,18 +56,3 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// ─── App Bindings ──────────────────────────────────────────────────
-class AppBinding extends Bindings {
-  @override
-  void dependencies() {
-    Get.put(AuthController(), permanent: true);
-    Get.put(ProfileController(), permanent: true);
-    Get.put(NotificationController(), permanent: true);
-    Get.put(WaterGoalController(), permanent: true);
-    Get.put(EditProfileController(), permanent: true);
-    Get.put(OrderController(), permanent: true);
-    Get.put(HomeController(), permanent: true);
-    Get.put(ShopController(), permanent: true);
-
-  }
-}

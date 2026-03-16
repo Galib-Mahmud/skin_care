@@ -14,7 +14,7 @@ class SignInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<AuthController>();
+    final controller = Get.put(AuthController());
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -83,32 +83,32 @@ class SignInScreen extends StatelessWidget {
                 )),
                 CustomButton(
                   text: 'Sign Up',
-                  onPressed: () => Get.toNamed(RouteName.signup),
+                  onPressed: () => Get.toNamed(RouteName.question1),
                 ),
                 SizedBox(height: 20.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: 120.w, height: 56.h,
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: Image.asset('assets/images/auth/Google.png',
-                            fit: BoxFit.contain),
-                      ),
-                    ),
-                    SizedBox(width: 20.w),
-                    SizedBox(
-                      width: 120.w, height: 50.h,
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: Image.asset('assets/images/auth/apple.png',
-                            fit: BoxFit.contain),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 30.h),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     SizedBox(
+                //       width: 120.w, height: 56.h,
+                //       child: GestureDetector(
+                //         onTap: () {},
+                //         child: Image.asset('assets/images/auth/Google.png',
+                //             fit: BoxFit.contain),
+                //       ),
+                //     ),
+                //     SizedBox(width: 20.w),
+                //     SizedBox(
+                //       width: 120.w, height: 50.h,
+                //       child: GestureDetector(
+                //         onTap: () {},
+                //         child: Image.asset('assets/images/auth/apple.png',
+                //             fit: BoxFit.contain),
+                //       ),
+                //     ),
+                //   ],
+                // ),
+                // SizedBox(height: 30.h),
               ],
             ),
           ),

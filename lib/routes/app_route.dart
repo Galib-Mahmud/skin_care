@@ -6,7 +6,6 @@ import 'package:skincare/feature/auth/screens/forget_password_screen.dart';
 import 'package:skincare/feature/auth/screens/sign_in.dart';
 import 'package:skincare/feature/auth/screens/signup.dart';
 import 'package:skincare/feature/auth/screens/account_created_successfully.dart';
-import 'package:skincare/feature/shop/cart_screen.dart';
 import 'package:skincare/feature/community/screens/community_screen.dart';
 import 'package:skincare/feature/shop/order_failed_screen.dart';
 import 'package:skincare/feature/shop/order_success_screen.dart';
@@ -31,9 +30,9 @@ import '../feature/community/screens/encouragement_screen.dart';
 import '../feature/home/screen/checkin_screen1.dart';
 import '../feature/chat_bot/screens/chatbot_splash_screen/daily_daviation.dart';
 import '../feature/home/screen/encouragement_screen.dart';
-import '../feature/home/screen/jurnal_prompts_screen.dart';
+import '../feature/chat_bot/screens/chatbot_splash_screen/jurnal_prompts_screen.dart';
 import '../feature/home/screen/main_screen.dart';
-import '../feature/home/screen/recipe_screen.dart';
+import '../feature/chat_bot/screens/chatbot_splash_screen/recipe_screen.dart';
 import '../feature/profile/screen/about_contact_screen.dart';
 import '../feature/profile/screen/edit_profile_screen.dart';
 import '../feature/profile/screen/full_story.dart';
@@ -215,11 +214,6 @@ class AppRoute {
     ),GetPage(
       name: RouteName.shopScreen2,
       page: () =>ShopScreen2(),
-      transition: Transition.rightToLeft,
-      transitionDuration: Duration(milliseconds: 300),
-    ),GetPage(
-      name: RouteName.cart,
-      page: () =>CartScreen(),
       transition: Transition.rightToLeft,
       transitionDuration: Duration(milliseconds: 300),
     ),GetPage(

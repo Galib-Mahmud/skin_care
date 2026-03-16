@@ -10,7 +10,7 @@ class EditProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<EditProfileController>();
+    final controller = Get.put(EditProfileController());
 
     return Scaffold(
       backgroundColor: const Color(0xFFD9D9D9),
@@ -31,7 +31,7 @@ class EditProfileScreen extends StatelessWidget {
                     child: const Text(
                       'Cancel',
                       style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 18,
                           color: Colors.black87,
                           fontWeight: FontWeight.w500),
                     ),
@@ -50,7 +50,7 @@ class EditProfileScreen extends StatelessWidget {
                     child: const Text(
                       'Save',
                       style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 18,
                           color: Colors.black87,
                           fontWeight: FontWeight.w600),
                     ),
@@ -79,7 +79,7 @@ class EditProfileScreen extends StatelessWidget {
                           controller.currentImageUrl.value);
                     } else {
                       imageProvider = const AssetImage(
-                          'assets/images/home/bot.png');
+                          'assets/images/home/img.png');
                     }
                     return CircleAvatar(
                       radius: 48.r,
@@ -172,6 +172,7 @@ class EditProfileScreen extends StatelessWidget {
 
                   // Email
                   TextField(
+                    enabled: false,
                     controller: controller.emailController,
                     keyboardType: TextInputType.emailAddress,
                     decoration: _fieldDecoration('Email'),

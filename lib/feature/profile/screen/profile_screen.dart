@@ -5,13 +5,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../routes/route_name.dart';
 import '../controller/profile_controller.dart';
+import '../controller/weekly_goal_controller.dart';
 
 class ProfileScreen1 extends StatelessWidget {
   const ProfileScreen1({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<ProfileController>();
+    final controller = Get.put(ProfileController());
+    final GoalTrackerController goalTrackerController =
+    Get.put(GoalTrackerController());
 
     return Scaffold(
       backgroundColor: const Color(0xFFD9D9D9),
@@ -44,7 +47,7 @@ class ProfileScreen1 extends StatelessWidget {
                           controller.profileImage.value.isNotEmpty
                               ? NetworkImage(controller.profileImage.value)
                               : const AssetImage(
-                              'assets/images/home/bot.png')
+                              'assets/images/home/img.png')
                           as ImageProvider,
                         ),
                         SizedBox(width: 10.w),
@@ -104,7 +107,7 @@ class ProfileScreen1 extends StatelessWidget {
                         SizedBox(height: 15.h),
                         _GoalRow(
                           goalTitle: 'Daily Water Goal',
-                          goalValue: '${controller.waterGoal.value} glasses',
+                          goalValue: '${controller.waterGoal.value} oz',
                         ),
                         SizedBox(height: 10.h),
                         Container(height: 1, color: Colors.grey.withOpacity(0.25)),
@@ -145,12 +148,21 @@ class ProfileScreen1 extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            _StatusBox(
-                                label: '6/7',
-                                statusText: 'Days water goal met'),
-                            _StatusBox(
-                                label: '7/7',
-                                statusText: 'Days checked in'),
+                            Obx(() => Expanded(
+                              child: _StatusBox(
+                                label: '${goalTrackerController.waterGoalDays}/7',
+                                statusText: 'Days water goal met',
+                              ),
+                            )),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Obx(() => Expanded(
+                              child: _StatusBox(
+                                label: '${goalTrackerController.checkedInDays}/7',
+                                statusText: 'Days checked in',
+                              ),
+                            )),
                           ],
                         ),
                         SizedBox(height: 10.h),

@@ -121,6 +121,7 @@ class _NavItem extends StatelessWidget {
                 style: TextStyle(
                   color: isSelected ? Colors.white : Colors.black,
                   fontWeight: FontWeight.w700,
+                  fontFamily: 'Playfair Display',
                   fontSize: 14.sp, // Scaled text size
                 ),
               ),

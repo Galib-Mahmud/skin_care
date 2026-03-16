@@ -13,7 +13,7 @@ class OtpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<AuthController>();
+    final controller = Get.put(AuthController());
 
     return Scaffold(
       backgroundColor: const Color(0xFFD9D9D9),

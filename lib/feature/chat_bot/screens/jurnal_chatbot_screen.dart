@@ -127,7 +127,7 @@ class _JurnalChatBotState extends State<JurnalChatBot> {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 if (!isUser) ...[
-                                  _BotAvatar(size: 22.w),
+                                  _BotAvatar(size: 35.w),
                                   SizedBox(width: 6.w),
                                 ],
                                 _Bubble(
@@ -304,29 +304,7 @@ class _Bubble extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: TextStyle(fontSize: 14.sp, color: txtColor, height: 1.35),
-      ),
-    );
-  }
-}
-
-class _TimeChip extends StatelessWidget {
-  final String text;
-  const _TimeChip({required this.text});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 4.h),
-      child: Center(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
-          decoration: BoxDecoration(
-            color: Colors.black.withOpacity(0.25),
-            borderRadius: BorderRadius.circular(10.r),
-          ),
-          child: Text(text, style: TextStyle(color: Colors.white70, fontSize: 11.sp)),
-        ),
+        style: TextStyle(fontSize: 16.sp, color: txtColor, height: 1.5),
       ),
     );
   }
@@ -345,7 +323,7 @@ class _BotAvatar extends StatelessWidget {
         shape: BoxShape.circle,
         image: const DecorationImage(
           fit: BoxFit.cover,
-          image: AssetImage('assets/images/home/bot.png'),
+          image: AssetImage('assets/images/home/img_1.png'),
         ),
         border: Border.all(color: Colors.white, width: 1),
       ),

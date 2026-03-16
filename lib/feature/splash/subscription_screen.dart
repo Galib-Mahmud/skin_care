@@ -111,7 +111,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
             CustomButton(
               text: 'Start 3-day free trial',
               onPressed: () {
-                Get.toNamed(RouteName.signup);
+                Get.toNamed(RouteName.signin);
               },
             ),
 

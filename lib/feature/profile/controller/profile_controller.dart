@@ -10,7 +10,7 @@ import '../../../routes/route_name.dart';
 
 class ProfileController extends GetxController {
 
-  static ProfileController get to => Get.find();
+  static ProfileController get to => Get.put(ProfileController());
   final ApiClient _apiClient = ApiClient(baseUrl: ApiEndpoint.baseUrl);
 
   final RxBool isLoading     = false.obs;
@@ -78,16 +78,33 @@ class ProfileController extends GetxController {
   void logout() {
     Get.defaultDialog(
       title: 'Logout',
+      titleStyle: Get.textTheme.titleLarge!.copyWith(
+        fontWeight: FontWeight.bold,
+        color: Colors.black87,
+      ),
       middleText: 'Are you sure you want to logout?',
-      textConfirm: 'Logout',
+      middleTextStyle: Get.textTheme.bodyMedium!.copyWith(
+        color: Colors.black54,
+        fontSize: 16,
+      ),
+      backgroundColor: Colors.white,
+      radius: 16,
+      barrierDismissible: true,
       textCancel: 'Cancel',
+      cancelTextColor: Colors.black87,
+      onCancel: () {
+        Get.back();
+      },
+      textConfirm: 'Logout',
       confirmTextColor: Colors.white,
-      buttonColor: Colors.black,
+      buttonColor: Get.theme.colorScheme.secondary, // theme color
       onConfirm: () async {
         final prefs = await SharedPreferences.getInstance();
         await prefs.clear();
         Get.offAllNamed(RouteName.signin);
       },
+      // Optional: content padding
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
     );
   }
 

@@ -12,7 +12,7 @@ class ShopScreen1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = Get.find<ShopController>();
+    final c = Get.put(ShopController());
     final searchCtrl = TextEditingController();
 
     return Scaffold(
@@ -24,18 +24,12 @@ class ShopScreen1 extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 8.w),
               child: Row(
                 children: [
-                  IconButton(
-                    onPressed: () => Navigator.maybePop(context),
-                    icon: Icon(Icons.arrow_back_ios_new,
-                        size: 18.sp, color: Colors.black87),
-                  ),
                   Expanded(
                     child: Center(
                       child: Text('Shop',
                           style: TextStyle(
-                              fontSize: 20.sp,
-                              fontFamily: 'Playfair Display',
-                              fontWeight: FontWeight.w800)),
+                              fontSize: 24.sp,
+                              fontWeight: FontWeight.w900)),
                     ),
                   ),
                   Obx(() => Stack(
@@ -43,9 +37,9 @@ class ShopScreen1 extends StatelessWidget {
                     children: [
                       IconButton(
                         onPressed: () =>
-                            Get.toNamed(RouteName.cart),
+                            Get.toNamed(RouteName.placeOrder),
                         icon: Icon(Icons.shopping_cart_outlined,
-                            size: 22.sp, color: Colors.black87),
+                            size: 24.sp, color: Colors.black87),
                       ),
                       if (c.cartCount > 0)
                         Positioned(
@@ -104,59 +98,67 @@ class ShopScreen1 extends StatelessWidget {
                               id: 0, name: 'All', description: ''),
                           ...c.categories,
                         ];
-                        return SizedBox(
-                          height: 50.h,
-                          child: ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: cats.length,
-                            separatorBuilder: (_, __) =>
-                                SizedBox(width: 12.w),
-                            itemBuilder: (_, i) {
-                              final cat = cats[i];
-                              // ← Obx INSIDE each chip item
-                              return Obx(() {
-                                final selected =
-                                    c.selectedCategory.value ==
-                                        cat.name;
-                                return GestureDetector(
-                                  onTap: () =>
-                                      c.selectCategory(cat.name),
-                                  child: Container(
-                                    margin: EdgeInsets.symmetric(
-                                        vertical: 8.h),
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 16.w),
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      color: selected
-                                          ? Colors.black
-                                          : Colors.white
-                                          .withOpacity(0.85),
-                                      borderRadius:
-                                      BorderRadius.circular(20.r),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black
-                                              .withOpacity(0.2),
-                                          blurRadius: 8,
-                                          offset: const Offset(0, 2),
-                                        )
-                                      ],
-                                    ),
-                                    child: Text(
-                                      cat.name,
-                                      style: TextStyle(
-                                        fontSize: 13.sp,
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SizedBox(
+                            height: 50.h,
+                            child: ListView.separated(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: cats.length,
+                              separatorBuilder: (_, __) =>
+                                  SizedBox(width: 12.w),
+                              itemBuilder: (_, i) {
+                                final cat = cats[i];
+                                // ← Obx INSIDE each chip item
+                                return Obx(() {
+                                  final selected =
+                                      c.selectedCategory.value ==
+                                          cat.name;
+                                  return GestureDetector(
+                                    onTap: () =>
+                                        c.selectCategory(cat.name),
+                                    child: Container(
+                                      margin: EdgeInsets.symmetric(
+                                          vertical: 8.h),
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 16.w, vertical: 10.h),
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
                                         color: selected
-                                            ? Colors.white
-                                            : Colors.black87,
-                                        fontWeight: FontWeight.w600,
+                                            ? Colors.black
+                                            : Colors.white
+                                            .withOpacity(0.85),
+                                        borderRadius:
+                                        BorderRadius.circular(20.r),
+                                        border: Border.all(
+                                            color: selected
+                                                ? Colors.black87
+                                                : Colors.white,
+                                            width: 1.5),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black
+                                                .withOpacity(0.2),
+                                            blurRadius: 8,
+                                            offset: const Offset(0, 2),
+                                          )
+                                        ],
+                                      ),
+                                      child: Text(
+                                        cat.name,
+                                        style: TextStyle(
+                                          fontSize: 13.sp,
+                                          color: selected
+                                              ? Colors.white
+                                              : Colors.black87,
+                                          fontWeight: FontWeight.w600,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                );
-                              });
-                            },
+                                  );
+                                });
+                              },
+                            ),
                           ),
                         );
                       }),
@@ -170,22 +172,12 @@ class ShopScreen1 extends StatelessWidget {
                         children: [
                           Text('AI Recommendation Products',
                               style: TextStyle(
-                                  fontSize: 15.sp,
+                                  fontSize: 18.sp,
                                   fontWeight: FontWeight.bold,
                                   fontFamily: 'Playfair Display')),
-                          TextButton(
-                            onPressed: () {},
-                            style: TextButton.styleFrom(
-                                padding: EdgeInsets.zero),
-                            child: Text('See More',
-                                style: TextStyle(
-                                    fontSize: 13.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black87)),
-                          ),
                         ],
                       ),
-                      SizedBox(height: 10.h),
+                      SizedBox(height: 25.h),
 
                       Obx(() {
                         if (c.isLoadingProducts.value &&
@@ -387,20 +379,20 @@ class _ProductCard extends StatelessWidget {
                             Container(color: Colors.grey[200]))
                         : Container(color: Colors.grey[200]),
                   ),
-                  Positioned(
-                    top: 8.h,
-                    right: 8.w,
-                    child: Container(
-                      width: 26.w,
-                      height: 26.w,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.92),
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(Icons.favorite_border,
-                          size: 14.sp, color: Colors.black87),
-                    ),
-                  ),
+                  // Positioned(
+                  //   top: 8.h,
+                  //   right: 8.w,
+                  //   child: Container(
+                  //     width: 30.w,
+                  //     height: 30.w,
+                  //     decoration: BoxDecoration(
+                  //       color: Colors.black.withOpacity(0.92),
+                  //       shape: BoxShape.circle,
+                  //     ),
+                  //     child: Icon(Icons.favorite_border,
+                  //         size: 14.sp, color: Colors.white),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -413,30 +405,38 @@ class _ProductCard extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 12.sp)),
-                  SizedBox(height: 2.h),
+                          fontWeight: FontWeight.w600,
+                          fontFamily: 'Playfair Display',
+                          fontSize: 14.sp)),
+                  SizedBox(height: 4.h),
                   Text(product.category,
                       style: TextStyle(
-                          color: Colors.black54, fontSize: 11.sp)),
+                          color: Colors.black54, fontSize: 12.sp, fontWeight: FontWeight.w500, fontFamily: 'Playfair Display')),
                   SizedBox(height: 6.h),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         '\$${product.price.toStringAsFixed(2)}',
                         style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 12.sp),
+                            fontWeight: FontWeight.w900,
+                            fontFamily: 'Playfair Display',
+                            fontSize: 13.sp),
                       ),
                       const Spacer(),
                       Icon(Icons.star,
-                          size: 12.sp,
+                          size: 20.sp,
                           color: const Color(0xFFFFC107)),
                       SizedBox(width: 2.w),
                       Text(
                         product.averageRating.toStringAsFixed(1),
                         style: TextStyle(
-                            fontSize: 10.sp, color: Colors.black87),
+                          fontFamily: 'Playfair Display',
+                            fontSize: 14.sp,
+                            color: Colors.black87,
+                            fontWeight: FontWeight.w500
+                        ),
                       ),
                     ],
                   ),

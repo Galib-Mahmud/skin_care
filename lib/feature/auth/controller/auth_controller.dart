@@ -10,7 +10,7 @@ import '../../../routes/route_name.dart';
 
 class AuthController extends GetxController {
 
-  static AuthController get to => Get.find();
+  static AuthController get to => Get.put(AuthController());
 
   final ApiClient _apiClient = ApiClient(baseUrl: ApiEndpoint.baseUrl);
 
@@ -38,11 +38,11 @@ class AuthController extends GetxController {
   List.generate(6, (_) => TextEditingController());
 
   // ─── Onboarding Answers ───────────────────────────────────────────
-  final RxString skinStatus = 'Dry'.obs;
-  final RxString waterGoal  = '64 oz'.obs;
-  final RxString feeling    = 'Tired 😴'.obs;
-  final RxString remainder  = '3 time'.obs;
-  final RxString skinGoal   = 'Anti-aging & wrinkle care'.obs;
+  final RxString skinStatus = ''.obs;
+  final RxString waterGoal  = ''.obs;
+  final RxString feeling    = ''.obs;
+  final RxString remainder  = ''.obs;
+  final RxString skinGoal   = ''.obs;
 
   // ──────────────────────────────────────────────────────────────────
   // REGISTER
@@ -72,6 +72,8 @@ class AuthController extends GetxController {
         'remainder'    : _parseRemainder(remainder.value),
         'skin_goal'    : skinGoal.value,
       };
+
+      print('📤 Registering with body: $body');
 
       await _apiClient.post(
         '/api/v1/auth/register/',
@@ -390,7 +392,7 @@ class AuthController extends GetxController {
         ),
         backgroundColor: Colors.red.shade700,
         behavior: SnackBarBehavior.floating,
-        margin: const EdgeInsets.all(16),
+        margin: const EdgeInsets.only(left: 16, right: 16, top: 50), // Adjusted margin for top
         duration: const Duration(seconds: 3),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
@@ -418,7 +420,7 @@ class AuthController extends GetxController {
         ),
         backgroundColor: Colors.green.shade700,
         behavior: SnackBarBehavior.floating,
-        margin: const EdgeInsets.all(16),
+        margin: const EdgeInsets.only(left: 16, right: 16, top: 50), // Adjusted margin for top
         duration: const Duration(seconds: 3),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),

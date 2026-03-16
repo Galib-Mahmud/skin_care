@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:skincare/core/snackbar/app_snackbar.dart';
 import '../../../core/endpoint/api_client.dart';
 import '../../../core/endpoint/api_endpoint.dart';
 import '../../../routes/route_name.dart';
@@ -117,14 +118,27 @@ class CartItemModel {
   factory CartItemModel.fromJson(Map<String, dynamic> j) {
     final product = j['product'];
     final isMap = product is Map<String, dynamic>;
+
     return CartItemModel(
       id: j['id'] ?? 0,
-      productId: isMap ? (product['id'] ?? 0) : (product ?? 0),
-      productName: isMap ? (product['name'] ?? '') : '',
-      productImage: isMap ? (product['image'] ?? '') : '',
+
+      // API returns product as String (name), not Map — so no productId available
+      productId: isMap ? (product['id'] ?? 0) : 0,
+
+      // product is a plain String → use it directly as name
+      productName: isMap
+          ? (product['name'] ?? '')
+          : (product?.toString() ?? ''),
+
+      // image & price are top-level fields in this API response
+      productImage: isMap
+          ? (product['image'] ?? '')
+          : (j['image'] ?? ''),
+
       productPrice: isMap
           ? (double.tryParse(product['price']?.toString() ?? '0') ?? 0)
-          : 0,
+          : (double.tryParse(j['price']?.toString() ?? '0') ?? 0),
+
       quantity: j['quantity'] ?? 1,
       totalPrice:
       double.tryParse(j['total_price']?.toString() ?? '0') ?? 0,
@@ -137,7 +151,7 @@ class CartItemModel {
 // ─── Controller ───────────────────────────────────────────────────────────────
 
 class ShopController extends GetxController {
-  static ShopController get to => Get.find();
+  static ShopController get to => Get.put(ShopController());
   final ApiClient _api = ApiClient(baseUrl: ApiEndpoint.baseUrl);
 
   // ── Loading states ─────────────────────────────────────────────────
@@ -210,19 +224,65 @@ class ShopController extends GetxController {
   // ──────────────────────────────────────────────────────────────────
   // GET /api/v1/shop/products/active/?page=N
   // ──────────────────────────────────────────────────────────────────
+  // Future<void> fetchProducts({bool loadMore = false}) async {
+  //   if (isLoadingProducts.value) return;
+  //   isLoadingProducts.value = true;
+  //   try {
+  //     final url = loadMore && nextPageUrl.value.isNotEmpty
+  //         ? nextPageUrl.value
+  //         : '/api/v1/shop/products/active/';
+  //
+  //     final res = await _api.get(url, requiresAuth: false);
+  //     if (res is Map<String, dynamic>) {
+  //       totalCount.value  = res['count'] ?? 0;
+  //       nextPageUrl.value = res['next'] ?? '';
+  //       hasMore.value     = nextPageUrl.value.isNotEmpty;
+  //
+  //       final list = (res['results'] as List? ?? [])
+  //           .map((j) => ProductModel.fromJson(j))
+  //           .toList();
+  //
+  //       if (loadMore) {
+  //         products.addAll(list);
+  //       } else {
+  //         products.value = list;
+  //       }
+  //       _applyFilter();
+  //     }
+  //   } on HttpException catch (e) {
+  //     print('❌ fetchProducts: ${e.message}');
+  //   } catch (e) {
+  //     print('❌ fetchProducts: $e');
+  //   } finally {
+  //     isLoadingProducts.value = false;
+  //   }
+  // }
+
   Future<void> fetchProducts({bool loadMore = false}) async {
     if (isLoadingProducts.value) return;
+
     isLoadingProducts.value = true;
+
     try {
-      final url = loadMore && nextPageUrl.value.isNotEmpty
-          ? nextPageUrl.value
-          : '/api/v1/shop/products/active/';
+      String url;
+
+      if (loadMore && nextPageUrl.value.isNotEmpty) {
+        // next URL full url -> domain remove
+        url = nextPageUrl.value.replaceFirst(
+          'http://beauty.dsrt321.online',
+          '',
+        );
+      } else {
+        url = '/api/v1/shop/products/active/';
+      }
 
       final res = await _api.get(url, requiresAuth: false);
+
       if (res is Map<String, dynamic>) {
-        totalCount.value  = res['count'] ?? 0;
+        totalCount.value = res['count'] ?? 0;
+
         nextPageUrl.value = res['next'] ?? '';
-        hasMore.value     = nextPageUrl.value.isNotEmpty;
+        hasMore.value = nextPageUrl.value.isNotEmpty;
 
         final list = (res['results'] as List? ?? [])
             .map((j) => ProductModel.fromJson(j))
@@ -233,6 +293,7 @@ class ShopController extends GetxController {
         } else {
           products.value = list;
         }
+
         _applyFilter();
       }
     } on HttpException catch (e) {
@@ -296,17 +357,24 @@ class ShopController extends GetxController {
   Future<void> addToCart(int productId, int quantity) async {
     isUpdatingCart.value = true;
     try {
-      await _api.post(
+      print('🛒 addToCart CALLED → productId: $productId, qty: $quantity');
+
+      final res = await _api.post(
         '/api/v1/shop/cart/',
         body: {'product': productId, 'quantity': quantity},
         requiresAuth: true,
       );
+
+      print('✅ addToCart SUCCESS → $res');
       await fetchCart();
-      _showSuccess('Added to cart!');
+      print('🛒 cartItems after fetch: ${cartItems.length}');
+      AppSnackbar.success('Added to cart!');
     } on HttpException catch (e) {
+      print('❌ HttpException → status: ${e.statusCode}, msg: ${e.message}, body: ${e.body}');
       _showError(_extractMessage(_tryParseBody(e.body)) ?? e.message);
-    } catch (e) {
-      print('❌ addToCart: $e');
+    } catch (e, st) {
+      print('❌ Unknown error → $e');
+      print('📍 StackTrace → $st');
     } finally {
       isUpdatingCart.value = false;
     }
@@ -449,11 +517,12 @@ class ShopController extends GetxController {
       reviewCommentCtrl.clear();
       reviewRating.value = 5;
       await fetchProductDetail(productId);
-      _showSuccess('Review submitted!');
+      AppSnackbar.success('Review submitted!');
     } on HttpException catch (e) {
-      _showError(_extractMessage(_tryParseBody(e.body)) ?? e.message);
+      print('❌ submitReview HttpException: ${e.message}, body: ${e.body}');
     } catch (e) {
       print('❌ submitReview: $e');
+      AppSnackbar.error('Failed to submit review.');
     } finally {
       isSubmittingReview.value = false;
     }
@@ -544,21 +613,6 @@ class ShopController extends GetxController {
           borderRadius: BorderRadius.circular(10)),
     ));
   }
-
-  void _showSuccess(String msg) {
-    final ctx = Get.context;
-    if (ctx == null) return;
-    ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
-      content:
-      Text(msg, style: const TextStyle(color: Colors.white)),
-      backgroundColor: Colors.green.shade700,
-      behavior: SnackBarBehavior.floating,
-      margin: const EdgeInsets.all(16),
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10)),
-    ));
-  }
-
   @override
   void onClose() {
     reviewCommentCtrl.dispose();

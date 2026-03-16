@@ -116,7 +116,7 @@ class OrderModel {
 
 class OrderController extends GetxController {
 
-  static OrderController get to => Get.find();
+  static OrderController get to => Get.put(OrderController());
   final ApiClient _apiClient = ApiClient(baseUrl: ApiEndpoint.baseUrl);
 
   final RxList<OrderModel> orders = <OrderModel>[].obs;

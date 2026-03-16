@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import '../../profile/controller/weekly_goal_controller.dart';
 import '../controller/home_controller.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -14,6 +15,7 @@ class HomeScreen extends StatelessWidget {
     {'label': 'Good',       'emoji': '😊', 'key': 'Good 😊'},
     {'label': 'Great',      'emoji': '😄', 'key': 'Great 😄'},
     {'label': 'Blessed',    'emoji': '🙏', 'key': 'Blessed 🙏'},
+
   ];
 
   static const List<String> _skinOptions = [
@@ -22,7 +24,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = Get.find<HomeController>();
+    final c = Get.put(HomeController());
 
     return Scaffold(
       body: SafeArea(
@@ -71,7 +73,7 @@ class HomeScreen extends StatelessWidget {
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 24.sp,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w900,
                             shadows: const [
                               Shadow(
                                   offset: Offset(0, 1),
@@ -81,23 +83,6 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 8.h),
-                        Obx(() => Text(
-                          c.bibleVerse.value.isNotEmpty
-                              ? '"${c.bibleVerse.value}"'
-                              : '',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 13.sp,
-                            height: 1.4,
-                            shadows: const [
-                              Shadow(
-                                  offset: Offset(0, 1),
-                                  blurRadius: 2,
-                                  color: Colors.black26)
-                            ],
-                          ),
-                        )),
-                        SizedBox(height: 16.h),
                         Container(
                           width: double.infinity,
                           padding: EdgeInsets.all(14.r),
@@ -123,7 +108,7 @@ class HomeScreen extends StatelessWidget {
                                 'Bible Verse',
                                 style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 16.sp,
+                                  fontSize: 20.sp,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -134,7 +119,7 @@ class HomeScreen extends StatelessWidget {
                                     : 'Loading verse...',
                                 style: TextStyle(
                                   color: Colors.black87,
-                                  fontSize: 14.sp,
+                                  fontSize: 18.sp,
                                   height: 1.5,
                                 ),
                               )),
@@ -159,6 +144,8 @@ class HomeScreen extends StatelessWidget {
                           SizedBox(height: 8.h),
                           Wrap(
                             alignment: WrapAlignment.spaceAround,
+                            spacing: 12.h,
+
                             runSpacing: 12.h,
                             children: _moods.map((m) {
                               return _MoodItem(
@@ -217,10 +204,7 @@ class HomeScreen extends StatelessWidget {
                                   height: 140.w,
                                   child:
                                   CircularProgressIndicator(
-                                    value: (c.waterPercentage
-                                        .value
-                                        .clamp(0, 100)) /
-                                        100,
+                                    value: (c.waterPercentage.value.clamp(0, 100)) / 100,
                                     strokeWidth: 10.w,
                                     valueColor:
                                     const AlwaysStoppedAnimation(
@@ -233,20 +217,21 @@ class HomeScreen extends StatelessWidget {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Text(
-                                      '${c.waterPercentage.value.toStringAsFixed(1)}%',
+                                      '${c.waterAchieved.value} oz',
                                       style: TextStyle(
-                                          fontSize: 22.sp,
-                                          fontWeight:
-                                          FontWeight.w700),
+                                        fontSize: 22.sp,
+                                        fontWeight: FontWeight.w700,
+                                      ),
                                     ),
                                     Text(
-                                      '${c.waterAchieved.value}/${c.waterGoal.value} oz',
+                                      '/ ${c.waterGoal.value} oz',
                                       style: TextStyle(
-                                          fontSize: 11.sp,
-                                          color: Colors.black54),
+                                        fontSize: 14.sp,
+                                        color: Colors.black54,
+                                      ),
                                     ),
                                   ],
-                                ),
+                                )
                               ],
                             )),
                           ),
@@ -268,12 +253,10 @@ class HomeScreen extends StatelessWidget {
                                       bottomLeft:
                                       Radius.circular(24.r),
                                     ),
-                                    onTap: () =>
-                                        c.updateWaterAchieved(
-                                            -8),
-                                    child: Padding(
-                                      padding: EdgeInsets
-                                          .symmetric(
+                                    onTap: c.waterAchieved.value > 0 ? () => c.updateWaterAchieved(-8) : null,
+                                    child:  c.waterAchieved.value > 0
+                                        ? Padding(
+                                      padding: EdgeInsets.symmetric(
                                           vertical: 12.h),
                                       child: Row(
                                         mainAxisAlignment:
@@ -291,7 +274,27 @@ class HomeScreen extends StatelessWidget {
                                                   16.sp)),
                                         ],
                                       ),
-                                    ),
+                                    )
+                                        : Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 12.h),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment
+                                            .center,
+                                        children: [
+                                          const Icon(Icons.remove,
+                                              color: Colors.grey),
+                                          SizedBox(width: 5.w),
+                                          Text('8 oz',
+                                              style: TextStyle(
+                                                  color: Colors
+                                                      .grey,
+                                                  fontSize:
+                                                  16.sp)),
+                                        ],
+                                      ),
+                                    )
                                   ),
                                 ),
                                 Container(
@@ -307,11 +310,10 @@ class HomeScreen extends StatelessWidget {
                                       bottomRight:
                                       Radius.circular(24.r),
                                     ),
-                                    onTap: () =>
-                                        c.updateWaterAchieved(8),
-                                    child: Padding(
-                                      padding: EdgeInsets
-                                          .symmetric(
+                                    onTap:c.waterAchieved.value < c.waterGoal.value ? () => c.updateWaterAchieved(8) : null,
+                                    child: c.waterAchieved.value < c.waterGoal.value
+                                        ? Padding(
+                                      padding: EdgeInsets.symmetric(
                                           vertical: 12.h),
                                       child: Row(
                                         mainAxisAlignment:
@@ -329,7 +331,28 @@ class HomeScreen extends StatelessWidget {
                                                   16.sp)),
                                         ],
                                       ),
-                                    ),
+                                    )
+                                        : Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 12.h),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment
+                                            .center,
+                                        children: [
+                                          const Icon(Icons.add,
+                                              color: Colors.grey),
+                                          SizedBox(width: 5.w),
+                                          Text('8 oz',
+                                              style: TextStyle(
+                                                  color: Colors
+                                                      .grey,
+                                                  fontSize:
+                                                  16.sp)),
+
+                                        ],
+                                      ),
+                                    )
                                   ),
                                 ),
                               ],
@@ -370,7 +393,7 @@ class HomeScreen extends StatelessWidget {
                                 Text(
                                   "Today's Notes",
                                   style: TextStyle(
-                                      fontSize: 16.sp,
+                                      fontSize: 18.sp,
                                       fontWeight:
                                       FontWeight.bold),
                                 ),
@@ -406,13 +429,12 @@ class HomeScreen extends StatelessWidget {
                               controller: c.noteController,
                               maxLines: 4,
                               decoration: InputDecoration(
-                                hintText:
-                                'How is your skin feeling today?',
+                                hintText: 'Type your today note ?',
                                 hintStyle: TextStyle(
                                     color: const Color
                                         .fromRGBO(
                                         0, 0, 0, 0.4),
-                                    fontSize: 14.sp),
+                                    fontSize: 16.sp),
                                 border: OutlineInputBorder(
                                   borderRadius:
                                   BorderRadius.circular(
@@ -431,9 +453,9 @@ class HomeScreen extends StatelessWidget {
                               ),
                             )
                                 : Text(
-                              c.noteText.value,
+                              c.noteText.value.isEmpty ? 'No notes for today. Tap edit to add some thoughts!' : c.noteText.value,
                               style: TextStyle(
-                                  fontSize: 14.sp,
+                                  fontSize: 16.sp,
                                   color: const Color
                                       .fromRGBO(
                                       0, 0, 0, 0.6)),
@@ -499,7 +521,7 @@ class _MoodItem extends StatelessWidget {
                 label,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 11.sp,
+                  fontSize: 12.sp,
                   color: Colors.black87,
                   fontWeight: isSelected
                       ? FontWeight.w600
@@ -557,7 +579,7 @@ class _SkinChip extends StatelessWidget {
             style: TextStyle(
               color: isSelected ? Colors.white : Colors.black87,
               fontWeight: FontWeight.w600,
-              fontSize: 13.sp,
+              fontSize: 14.sp,
             ),
           ),
         ),
@@ -592,7 +614,7 @@ class _SectionCard extends StatelessWidget {
         children: [
           Text(title,
               style: TextStyle(
-                  fontSize: 16.sp,
+                  fontSize: 18.sp,
                   color: Colors.black,
                   fontWeight: FontWeight.bold)),
           SizedBox(height: 8.h),
